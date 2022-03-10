@@ -1,6 +1,6 @@
 const client = require('./index');
 const bcrypt = require('bcrypt');
-const SALT_ROUNDS = 10
+const SALT_ROUNDS = 10;
 
 const createUser = async ({ username, password }) => {
     const hashPwd = await bcrypt.hash(password, SALT_ROUNDS);
