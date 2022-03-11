@@ -20,6 +20,14 @@ const createProduct = async ({ title, description, price, inventoryQuantity, img
   }
 }
 
+const getProductsOnly = async () => {
+  try {
+
+  } catch (error) {
+    throw error;
+  }
+}
+
 // helper function to both get a single product by id AND 
 // construct our ideal product object that contains both the reviews and categories
 const getProductById = async (productId) => {
@@ -55,5 +63,6 @@ const getProductById = async (productId) => {
 }
 
 module.exports = {
-  createProduct
+  createProduct,
+  getProductById
 }
