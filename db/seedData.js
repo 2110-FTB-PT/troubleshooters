@@ -1,10 +1,9 @@
 const {
   client,
-  createOrder
+  createOrder,
   // declare your model imports here
   // for example, User
 } = require("./");
-// const {createOrder} = require("./orders")
 
 // drop tables in correct order
 async function dropTables() {
@@ -14,17 +13,14 @@ async function dropTables() {
       DROP TABLE IF EXISTS orders;
       DROP TABLE IF EXISTS users;      
       DROP TABLE IF EXISTS products;
-
     `);
 
     console.log("Finished dropping tables!");
   } catch (error) {
     console.error("Error while dropping tables!");
-
     throw error;
   }
 }
-
 // build tables in correct order
 async function buildTables() {
   try {
@@ -56,7 +52,7 @@ async function buildTables() {
 
     console.log("Finished constructing tables");
   } catch (error) {
-    console.error(error)
+    console.error(error);
     throw "Error constructing tables!";
   }
 }
@@ -83,7 +79,7 @@ async function createInitialOrders() {
       {
         creatorId: 2,
         name: "Hungry Hippy",
-        subtotal: 21.10,
+        subtotal: 21.1,
       },
     ];
     const orders = await Promise.all(
@@ -106,7 +102,7 @@ async function createInitialOrders() {
 // }
 async function rebuildDB() {
   try {
-    console.log("buildingdb")
+    console.log("buildingdb");
     client.connect();
     await dropTables();
     await buildTables();
