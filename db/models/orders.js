@@ -1,4 +1,4 @@
-const client = require("./client");
+const { client } = require("./");
 
 const getAllOrders = async () => {
   try {
@@ -54,7 +54,6 @@ const createOrder = async ({ creatorId, name, subtotal }) => {
 };
 
 module.exports = {
-  client,
   getAllOrders,
   getOrderById,
   createOrder,
