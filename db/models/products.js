@@ -87,9 +87,24 @@ const getAllProducts = async () => {
   }
 }
 
+const getProductsByCategory = async (categoryId) => {
+  try {
+    const { rows: productIds } = await client.query(`
+      SELECT products.id FROM products
+      JOIN product_categories ON products.id = product_categories."productId"
+      WHERE product_categories."categoryId" = $1;
+    `, [categoryId]);
+
+    const productsByCategory = await Promise.all(productIds.map(product => getProductById(product.id)));
+    return productsByCategory;
+  } catch (error) {
+    throw error;
+  }
+}
 module.exports = {
   createProduct,
   getProductById,
   getProductsOnly,
-  getAllProducts
+  getAllProducts,
+  getProductsByCategory
 }
