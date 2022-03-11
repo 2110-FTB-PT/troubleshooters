@@ -2,9 +2,24 @@ const client = require('./index');
 const bcrypt = require('bcrypt');
 const SALT_ROUNDS = 10;
 
+/* THINGS TO CONSIDER:
+
++ what if user wants to update email?
++ what if user wants to delete their own account
+
+*/
+
 const createUser = async ({ username, password }) => {
-    const hashPwd = await bcrypt.hash(password, SALT_ROUNDS);
     try {
+        if (!username || !password) {
+            throw {
+                name: "FieldsRequired",
+                message: "You must provide both a username and password!"
+            }
+        }
+
+        const hashPwd = await bcrypt.hash(password, SALT_ROUNDS);
+
         const { rows: [user] } = await client.query(`
             INSERT INTO users (username, email, password)
             VALUES ($1, $2, $3)
