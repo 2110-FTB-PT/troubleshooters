@@ -101,10 +101,35 @@ const getProductsByCategory = async (categoryId) => {
     throw error;
   }
 }
+
+const updateProduct = async ({ id, ...fields }) => {
+  const setString = Object.keys(fields).map(
+    (key, index) => `"${key}" = $${index + 1}`
+  ).join(', ');
+
+  if (setString.length === 0) {
+    return;
+  }
+  const valuesArray = [...Object.values(fields), id];
+
+  try {
+    const { rows: [updatedProduct] } = await client.query(`
+      UPDATE routines
+      SET ${setString}
+      WHERE id = $${valuesArray.length} 
+      RETURNING *;
+    `, valuesArray);
+
+    return updatedProduct;
+  } catch (error) {
+    throw error;
+  }
+}
 module.exports = {
   createProduct,
   getProductById,
   getProductsOnly,
   getAllProducts,
-  getProductsByCategory
+  getProductsByCategory,
+  updateProduct
 }
