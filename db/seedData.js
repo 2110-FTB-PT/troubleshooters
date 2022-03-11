@@ -1,6 +1,6 @@
 const {
   client,
-  orders,
+  orders
   // declare your model imports here
   // for example, User
 } = require("./");
@@ -28,17 +28,27 @@ async function buildTables() {
   try {
     console.log("Starting to build tables...");
     await client.query(`
-      CREATE TABLE orders(
-        id SERIAL PRIMARY KEY,
-        "creatorId" INTEGER REFERENCES users(id),
-        name VARCHAR(255) UNIQUE NOT NULL,
-        subtotal INTEGER,      
+        CREATE TABLE products(
+          id SERIAL PRIMARY KEY,
+          title VARCHAR(255) UNIQUE NOT NULL,
+          description VARCHAR(255) NOT NULL,
+          price DECIMAL(38, 2) NOT NULL,
+          "inventoryQuantity" INTEGER NOT NULL,
+          "imgURL" VARCHAR(255)
+        );
+
+        CREATE TABLE orders(
+          id SERIAL PRIMARY KEY,
+          "creatorId" INTEGER REFERENCES users(id),
+          name VARCHAR(255) UNIQUE NOT NULL,
+          subtotal INTEGER,      
         );
       `);
 
     console.log("Finished constructing tables");
   } catch (error) {
-    throw error("Error constructing tables!");
+    console.error(error)
+    throw "Error constructing tables!";
   }
 }
 async function createInitialOrders() {
@@ -87,6 +97,7 @@ async function createInitialOrders() {
 // }
 async function rebuildDB() {
   try {
+    console.log("buildingdb")
     client.connect();
     await dropTables();
     await buildTables();
@@ -100,4 +111,3 @@ async function rebuildDB() {
 module.exports = {
   rebuildDB,
 };
-
