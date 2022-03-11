@@ -1,6 +1,6 @@
 const {
   client,
-  orders
+  createOrder
   // declare your model imports here
   // for example, User
 } = require("./");
@@ -11,8 +11,10 @@ async function dropTables() {
   try {
     console.log("Dropping All Tables...");
     client.query(`
+      DROP TABLE IF EXISTS orders;
+      DROP TABLE IF EXISTS users;      
       DROP TABLE IF EXISTS products;
-      DROP TABLE IF EXISTS users;
+
     `);
 
     console.log("Finished dropping tables!");
@@ -37,11 +39,18 @@ async function buildTables() {
           "imgURL" VARCHAR(255)
         );
 
+        CREATE TABLE users(
+          id SERIAL PRIMARY KEY,
+          username VARCHAR(255) UNIQUE NOT NULL,
+          password VARCHAR(255) NOT NULL,
+          email VARCHAR(255) UNIQUE NOT NULL
+        );
+
         CREATE TABLE orders(
           id SERIAL PRIMARY KEY,
           "creatorId" INTEGER REFERENCES users(id),
           name VARCHAR(255) UNIQUE NOT NULL,
-          subtotal INTEGER,      
+          subtotal DECIMAL(38,2) 
         );
       `);
 
@@ -59,22 +68,22 @@ async function createInitialOrders() {
       {
         creatorId: 2,
         name: "Hungry Hippy",
-        subtotal: "$11.11",
+        subtotal: 11.11,
       },
       {
         creatorId: 1,
         name: "Campy Carnivore",
-        subtotal: "$19.55",
+        subtotal: 19.55,
       },
       {
         creatorId: 3,
         name: "Single Mom",
-        subtotal: "$20.22",
+        subtotal: 20.22,
       },
       {
         creatorId: 2,
         name: "Hungry Hippy",
-        subtotal: "$21.10",
+        subtotal: 21.10,
       },
     ];
     const orders = await Promise.all(
