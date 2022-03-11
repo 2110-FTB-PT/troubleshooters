@@ -1,6 +1,6 @@
 const {
   client,
-  orders,
+  orders
   // declare your model imports here
   // for example, User
 } = require("./");
@@ -47,7 +47,8 @@ async function buildTables() {
 
     console.log("Finished constructing tables");
   } catch (error) {
-    throw error("Error constructing tables!");
+    console.error(error)
+    throw "Error constructing tables!";
   }
 }
 async function createInitialOrders() {
@@ -96,6 +97,7 @@ async function createInitialOrders() {
 // }
 async function rebuildDB() {
   try {
+    console.log("buildingdb")
     client.connect();
     await dropTables();
     await buildTables();
@@ -109,4 +111,3 @@ async function rebuildDB() {
 module.exports = {
   rebuildDB,
 };
-
