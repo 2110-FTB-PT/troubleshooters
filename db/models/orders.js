@@ -1,4 +1,4 @@
-const { client } = require("./");
+const client = require("../client.js");
 
 const getAllOrders = async () => {
   try {
@@ -46,6 +46,8 @@ const createOrder = async ({ creatorId, name, subtotal }) => {
           `,
       [creatorId, name, subtotal]
     );
+    console.log("hello")
+
     return order;
   } catch (error) {
     console.log("Error at createOrder", error);

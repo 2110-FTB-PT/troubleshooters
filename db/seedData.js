@@ -1,6 +1,6 @@
 const {
   client,
-  orders
+  createOrder
   // declare your model imports here
   // for example, User
 } = require("./");
@@ -50,7 +50,7 @@ async function buildTables() {
           id SERIAL PRIMARY KEY,
           "creatorId" INTEGER REFERENCES users(id),
           name VARCHAR(255) UNIQUE NOT NULL,
-          subtotal INTEGER      
+          subtotal DECIMAL(38,2) 
         );
       `);
 
@@ -68,22 +68,22 @@ async function createInitialOrders() {
       {
         creatorId: 2,
         name: "Hungry Hippy",
-        subtotal: "$11.11",
+        subtotal: 11.11,
       },
       {
         creatorId: 1,
         name: "Campy Carnivore",
-        subtotal: "$19.55",
+        subtotal: 19.55,
       },
       {
         creatorId: 3,
         name: "Single Mom",
-        subtotal: "$20.22",
+        subtotal: 20.22,
       },
       {
         creatorId: 2,
         name: "Hungry Hippy",
-        subtotal: "$21.10",
+        subtotal: 21.10,
       },
     ];
     const orders = await Promise.all(
