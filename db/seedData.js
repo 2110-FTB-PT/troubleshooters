@@ -87,7 +87,6 @@ async function createInitialOrders() {
     );
     console.log("Orders Created: ", orders);
     console.log("Finished creating orders");
-    return orders;
   } catch (error) {
     throw error;
   }

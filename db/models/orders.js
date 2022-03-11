@@ -11,7 +11,7 @@ const addProductsToOrders = async (orders) => {
                   SELECT products.*, order_products.quantity, order_products.price, order_products."orderId", order_products.id AS "orderProductId"
                   FROM products
                   JOIN order_products
-                  ON products.id = order_products."orderId"
+                  ON products.id = order_products."productId"
                   WHERE order_products."orderId" IN (${orderIdArray});
               `);
 
@@ -135,19 +135,19 @@ const destroyOrder = async (id) => {
       rows: [order],
     } = await client.query(
       `
-              DELETE FROM orders
-              WHERE id = $1
-              RETURNING *;
-          `,
+          DELETE FROM order_products
+          WHERE "orderId" = $1
+          RETURNING *;
+      `,
       [id]
     );
 
     await client.query(
       `
-          DELETE FROM order_products
-          WHERE "orderId" = $1
-          RETURNING *;
-      `,
+              DELETE FROM orders
+              WHERE id = $1
+              RETURNING *;
+          `,
       [id]
     );
 
