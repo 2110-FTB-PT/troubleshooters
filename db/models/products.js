@@ -22,7 +22,18 @@ const createProduct = async ({ title, description, price, inventoryQuantity, img
 
 const getProductsOnly = async () => {
   try {
+    const { rows: products } = await client.query(`
+      SELECT * FROM products;
+    `)
 
+    if (!products) {
+      throw {
+        name: "MissingInformation",
+        message: "No products exist yet"
+      }
+    }
+
+    return products;
   } catch (error) {
     throw error;
   }
@@ -64,5 +75,6 @@ const getProductById = async (productId) => {
 
 module.exports = {
   createProduct,
-  getProductById
+  getProductById,
+  getProductsOnly
 }
