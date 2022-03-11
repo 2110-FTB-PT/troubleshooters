@@ -9,8 +9,25 @@ const {
       client.connect();
   
       // drop tables in correct order
+      console.log('Dropping All Tables...');
+
+      await client.query(`
+        DROP TABLE IF EXISTS products; 
+      `);
   
       // build tables in correct order
+      console.log('Starting to build tables...');
+
+      await client.query(`
+        CREATE TABLE products(
+          id SERIAL PRIMARY KEY,
+          title VARCHAR(255) UNIQUE NOT NULL,
+          description VARCHAR(255) NOT NULL,
+          price DECIMAL(38, 2) NOT NULL,
+          "inventoryQuantity" INTEGER NOT NULL,
+          "imgURL" VARCHAR(255)
+        );
+      `);
     } catch (error) {
       throw error;
     }
