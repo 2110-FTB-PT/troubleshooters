@@ -35,9 +35,9 @@ const createUser = async ({ username, password }) => {
 const getUser = async ({ username, password }) => {
     try {
         const { rows: [user] } = await client.query(`
-        SELECT *
-        FROM users
-        WHERE username=$1;
+            SELECT *
+            FROM users
+            WHERE username=$1;
         `, [username])
 
         if (!user) {
@@ -84,9 +84,32 @@ const getUserByUsername = async (username) => {
     }
 }
 
+const updateUser = async ({ id, ...userField }) => {
+    const setString = Object.keys(userField).map((key, index) =>
+    `"${key}" = $${index + 1}`).join(', ')
+
+    if (setString.length === 0){
+        return;
+    }
+    const valuesArray = [...Object.values(fields), id];
+    try{
+        const { rows: [user] } = await client.query(`
+            UPDATE users
+            SET ${setString}
+            WHERE id=$${valuesArray.length}
+            RETURNING *;
+        `, valuesArray);
+
+        return user
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
     createUser,
     getUser,
     getUserById,
-    getUserByUsername
+    getUserByUsername,
+    updateUser
 }
