@@ -125,11 +125,41 @@ const updateProduct = async ({ id, ...fields }) => {
     throw error;
   }
 }
+
+const deleteProduct = async (productId) => {
+  try {
+    await client.query(`
+      DELETE FROM order_products
+      WHERE "productId" = $1; 
+    `, [productId]);
+
+    await client.query(`
+      DELETE FROM product_categories
+      WHERE "productId" = $1;
+    `, [productId]);
+
+    await client.query(`
+      DELETE FROM reviews
+      WHERE "productId" = $1; 
+    `, [productId]);
+
+    const { rows: [deletedProduct] } = await client.query(`
+      DELETE FROM products
+      WHERE id = $1
+      RETURNING *; 
+    `, [productId]);
+
+    return deletedProduct;
+  } catch (error) {
+    throw error;
+  }
+}
 module.exports = {
   createProduct,
   getProductById,
   getProductsOnly,
   getAllProducts,
   getProductsByCategory,
-  updateProduct
+  updateProduct,
+  deleteProduct
 }
