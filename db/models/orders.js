@@ -46,7 +46,6 @@ const createOrder = async ({ creatorId, name, subtotal }) => {
           `,
       [creatorId, name, subtotal]
     );
-    console.log("hello")
 
     return order;
   } catch (error) {
