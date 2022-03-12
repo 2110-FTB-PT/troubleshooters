@@ -19,20 +19,21 @@ const createReviews = async ({ creatorId, productId, description }) => {
     }
 }
 
-const getReviews = async ({ description }) => {
+const getReviewsByUser = async ({ creatorId }) => {
     try{
         const { rows: [reviews] } = await client.query(`
             SELECT *
             FROM reviews
-            WHERE username=$1;
-        `, [description])
+            WHERE "creatorId"=$1;
+        `, [creatorId])
 
-        if(!description){
+        if(!reviews){
             throw{
                 name: "ReviewNotFound",
                 message: "No review found."
             }
         }
+        return reviews
     }catch(error){
     throw error;
     }
@@ -45,23 +46,9 @@ const getReviewById = async (userId) => {
             FROM reviews
             WHERE id=$1;
         `, [userId]);
-        delete user.password;
         return reviews;
     }catch(error){
     throw error
-    }
-}
-
-const getReviewByUsername = async (username) => {
-    try{
-        const { rows: [user] } = await client.query(`
-            SELECT *
-            FROM reviews
-            WHERE username=$1
-        `, [username]);
-        return reviews;
-    }catch(error){
-        throw error;
     }
 }
 
@@ -88,8 +75,7 @@ const updateReviews = async ({ id, ...reviewField }) => {
 
 module.exports = {
     createReviews,
-    getReviews,
+    getReviewsByUser,
     getReviewById,
-    getReviewByUsername,
     updateReviews
 }
