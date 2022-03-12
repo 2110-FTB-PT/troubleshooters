@@ -1,5 +1,4 @@
 const client = require("../client.js");
-const { getUserById } = require("./users.js");
 
 const createReview = async ({ creatorId, productId, description }) => {
     try{
