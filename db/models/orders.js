@@ -1,6 +1,5 @@
 const client = require("../client.js");
 
-// helper function
 const getOrdersWithoutProducts = async () => {
   try {
     const { rows: orders } = await client.query(`
@@ -121,7 +120,9 @@ const updateOrder = async ({ id, ...fields }) => {
     })
     .join(", ");
   if (setString.length === 0) {
-    return;
+    throw {
+      message: "You must update at least one field."
+    };
   }
   try {
     const {
