@@ -83,7 +83,12 @@ const getOrderById = async (id) => {
             `,
       [id]
     );
-
+    if (!order) {
+      throw {
+        name: "NoExistingInformation",
+        message: "No order currently exist.",
+      };
+    }
     return await addProductsToOrders(order);
   } catch (error) {
     console.log("Error at getOrderById", error);
