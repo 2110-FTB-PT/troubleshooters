@@ -1,4 +1,3 @@
-const { user } = require("pg/lib/defaults");
 const {
   client,
   createOrder,
@@ -13,7 +12,8 @@ async function dropTables() {
     console.log("Dropping All Tables...");
     client.query(`
       DROP TABLE IF EXISTS orders;
-      DROP TABLE IF EXISTS users;      
+      DROP TABLE IF EXISTS users; 
+      DROP TABLE IF EXISTS categories;     
       DROP TABLE IF EXISTS products;
     `);
 
@@ -35,6 +35,11 @@ async function buildTables() {
           price DECIMAL(38, 2) NOT NULL,
           "inventoryQuantity" INTEGER NOT NULL,
           "imgURL" VARCHAR(255)
+        );
+        
+        CREATE TABLE categories (
+          id SERIAL PRIMARY KEY,
+          name VARCHAR(255) UNIQUE NOT NULL
         );
 
         CREATE TABLE users(
