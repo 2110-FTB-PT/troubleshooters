@@ -183,27 +183,30 @@ const updateOrder = async ({ id, ...fields }) => {
 
 const destroyOrder = async (id) => {
   try {
-    const {
-      rows: [order],
-    } = await client.query(
+     await client.query(
       `
           DELETE FROM order_products
-          WHERE "orderId" = $1
-          RETURNING *;
+          WHERE "orderId" = $1;
       `,
       [id]
     );
-
-    await client.query(
+    const {
+      rows: [orderId],
+    } = await client.query(
       `
               DELETE FROM orders
               WHERE id = $1
-              RETURNING *;
+              RETURNING id;
           `,
       [id]
     );
-
-    return order;
+    if (!orderId) {
+      throw {
+        name: "NoExistingInformation",
+        message: "No order currently exist.",
+      };
+    }
+    return orderId;
   } catch (error) {
     console.log("Error at destroyOrder", error);
     throw error;
