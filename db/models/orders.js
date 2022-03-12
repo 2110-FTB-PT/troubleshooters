@@ -110,17 +110,17 @@ const getAllOrdersByUser = async ({ username }) => {
   }
 };
 
-const createOrder = async ({ creatorId, name, subtotal }) => {
+const createOrder = async ({ creatorId, subtotal }) => {
   try {
     const {
       rows: [order],
     } = await client.query(
       `
-                INSERT INTO orders("creatorId", name, subtotal)
-                VALUES($1, $2, $3)
+                INSERT INTO orders("creatorId", subtotal)
+                VALUES($1, $2)
                 RETURNING *
             `,
-      [creatorId, name, subtotal]
+      [creatorId, subtotal]
     );
 
     return order;
