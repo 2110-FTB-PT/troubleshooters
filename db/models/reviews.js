@@ -1,4 +1,5 @@
 const client = require("../client.js");
+const { getUserById } = require("./users.js");
 
 const createReview = async ({ creatorId, productId, description }) => {
     try{
@@ -21,6 +22,13 @@ const createReview = async ({ creatorId, productId, description }) => {
 
 const getReviewsByUser = async ({ creatorId }) => {
     try{
+        const user = await getUserById(creatorId)
+        if (!user){
+            throw{
+                name: "InvalidUser",
+                message: "User does not exist."
+            }
+        }
         const { rows: reviews } = await client.query(`
             SELECT *
             FROM reviews
@@ -70,7 +78,20 @@ const updateReview = async ({ id, ...reviewField }) => {
             WHERE id=$${valuesArray.length}
             RETURNING *;
         `, valuesArray);
-        return review
+        return review;
+    }catch(error){
+        throw error;
+    }
+}
+
+const destroyReview = async (reviewId) => {
+    try{
+        const { rows: [deletedReviewId] } = await client.query(`
+            DELETE FROM reviews
+            WHERE id=$1
+            RETURNING id;
+        `, [reviewId])
+        return deletedReviewId;
     }catch(error){
         throw error;
     }
@@ -80,5 +101,6 @@ module.exports = {
     createReview,
     getReviewsByUser,
     getReviewById,
-    updateReview
+    updateReview,
+    destroyReview
 }
