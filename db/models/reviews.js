@@ -39,13 +39,13 @@ const getReviewsByUser = async ({ creatorId }) => {
     }
 }
 
-const getReviewById = async (userId) => {
+const getReviewById = async (id) => {
     try{
         const { rows: [reviews] } = await client.query(`
             SELECT *
             FROM reviews
             WHERE id=$1;
-        `, [userId]);
+        `, [id]);
         return reviews;
     }catch(error){
     throw error
