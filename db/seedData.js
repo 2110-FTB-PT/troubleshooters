@@ -2,7 +2,7 @@ const {
   client,
   createOrder,
   getOrdersWithoutProducts,
-  getAllProducts,
+  getProductsOnly,
   addProductToOrder,
   createUser,
   // declare your model imports here
@@ -119,7 +119,7 @@ async function createInitialOrderProducts() {
     const [orderOne, orderTwo, orderThree, orderFour] =
       await getOrdersWithoutProducts();
     const [product1, product2, product3, product4, product5, product6, product7] =
-      await getAllProducts();
+      await getProductsOnly();
     console.log(orderOne, orderFour);
     const orderProductsToCreate = [
       {
