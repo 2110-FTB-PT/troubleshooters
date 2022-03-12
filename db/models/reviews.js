@@ -54,6 +54,12 @@ const getReviewById = async (id) => {
             FROM reviews
             WHERE id=$1;
         `, [id]);
+        if (!review){
+            throw{
+                name: "MissingReview",
+                message: "No review by that id exists."
+            }
+        }
         return review;
     }catch(error){
     throw error
