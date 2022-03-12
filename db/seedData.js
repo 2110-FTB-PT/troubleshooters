@@ -1,7 +1,7 @@
 const {
   client,
   createOrder,
-  createReviews,
+  createReview,
   getOrdersWithoutProducts,
   getProductsOnly,
   addProductToOrder,
@@ -339,7 +339,7 @@ async function createInitialReviews(){
       },
     ]
     const reviews = await Promise.all(
-      reviewsToCreate.map((reviews) => createReviews(reviews))
+      reviewsToCreate.map((reviews) => createReview(reviews))
     )
     console.log("Reviews", reviews)
     console.log("Finished creating reviews.");
