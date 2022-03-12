@@ -68,7 +68,7 @@ async function buildTables() {
         CREATE TABLE orders(
           id SERIAL PRIMARY KEY,
           "creatorId" INTEGER REFERENCES users(id),
-          subtotal DECIMAL(38,2) 
+          subtotal DECIMAL(38,2) NOT NULL
         );
 
         CREATE TABLE order_products(
