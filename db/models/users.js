@@ -4,7 +4,6 @@ const SALT_ROUNDS = 10;
 
 /* THINGS TO CONSIDER:
 
-+ what if user wants to update email?
 + what if user wants to delete their own account
 
 */
