@@ -57,7 +57,10 @@ const updateReviews = async ({ id, ...reviewField }) => {
     `"${key}" = $${index + 1}`).join(', ')
 
     if(setString.length === 0){
-        return;
+        throw {
+            name: "MissingFields",
+            message: "No fields were provided to be updated. You must update at least one field."
+        };
     }
     const valuesArray = [...Object.values(fields), id];
     try{
