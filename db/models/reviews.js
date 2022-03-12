@@ -78,6 +78,8 @@ const updateReview = async ({ id, ...reviewField }) => {
     }
     const valuesArray = [...Object.values(fields), id];
     try{
+        // if no review by that id exists; throw an error
+        await getReviewById(id) 
         const { rows: [review] } = await client.query(`
             UPDATE reviews
             SET ${setString}
@@ -92,6 +94,8 @@ const updateReview = async ({ id, ...reviewField }) => {
 
 const destroyReview = async (reviewId) => {
     try{
+        // if no review by that id exists; throw an error
+        await getReviewById(reviewId)
         const { rows: [deletedReviewId] } = await client.query(`
             DELETE FROM reviews
             WHERE id=$1
