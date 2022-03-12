@@ -1,6 +1,6 @@
 const client = require("../client.js");
 
-const createReviews = async ({ creatorId, productId, description }) => {
+const createReview = async ({ creatorId, productId, description }) => {
     try{
         if (!description) {
             throw{
@@ -8,12 +8,12 @@ const createReviews = async ({ creatorId, productId, description }) => {
                 message: "Please provide the review."
             }
         }
-        const { rows: [reviews]} = await client.query(`
+        const { rows: [review]} = await client.query(`
             INSERT INTO reviews ("creatorId", "productId", description)
             VALUES ($1, $2, $3)
             RETURNING *;
         `, [creatorId, productId, description]);
-        return reviews
+        return review
     }catch(error){
     throw error;
     }
@@ -21,7 +21,7 @@ const createReviews = async ({ creatorId, productId, description }) => {
 
 const getReviewsByUser = async ({ creatorId }) => {
     try{
-        const { rows: [reviews] } = await client.query(`
+        const { rows: reviews } = await client.query(`
             SELECT *
             FROM reviews
             WHERE "creatorId"=$1;
@@ -41,18 +41,18 @@ const getReviewsByUser = async ({ creatorId }) => {
 
 const getReviewById = async (id) => {
     try{
-        const { rows: [reviews] } = await client.query(`
+        const { rows: [review] } = await client.query(`
             SELECT *
             FROM reviews
             WHERE id=$1;
         `, [id]);
-        return reviews;
+        return review;
     }catch(error){
     throw error
     }
 }
 
-const updateReviews = async ({ id, ...reviewField }) => {
+const updateReview = async ({ id, ...reviewField }) => {
     const setString = Object.keys(reviewField).map((key, index) =>
     `"${key}" = $${index + 1}`).join(', ')
 
@@ -64,21 +64,21 @@ const updateReviews = async ({ id, ...reviewField }) => {
     }
     const valuesArray = [...Object.values(fields), id];
     try{
-        const { rows: [reviews] } = await client.query(`
+        const { rows: [review] } = await client.query(`
             UPDATE reviews
             SET ${setString}
             WHERE id=$${valuesArray.length}
             RETURNING *;
         `, valuesArray);
-        return reviews
+        return review
     }catch(error){
         throw error;
     }
 }
 
 module.exports = {
-    createReviews,
+    createReview,
     getReviewsByUser,
     getReviewById,
-    updateReviews
+    updateReview
 }
