@@ -1,7 +1,7 @@
-const { user } = require("pg/lib/defaults");
 const client = require("../client.js");
+const { getUserById } = require("./users.js");
 
-const createReviews = async ({ creatorId, productId, description }) => {
+const createReview = async ({ creatorId, productId, description }) => {
     try{
         if (!description) {
             throw{
@@ -9,88 +9,108 @@ const createReviews = async ({ creatorId, productId, description }) => {
                 message: "Please provide the review."
             }
         }
-        const { rows: [reviews]} = await client.query(`
+        const { rows: [review]} = await client.query(`
             INSERT INTO reviews ("creatorId", "productId", description)
             VALUES ($1, $2, $3)
             RETURNING *;
         `, [creatorId, productId, description]);
-        return reviews
+        return review
     }catch(error){
     throw error;
     }
 }
 
-const getReviews = async ({ description }) => {
+const getReviewsByUser = async ({ creatorId }) => {
     try{
-        const { rows: [reviews] } = await client.query(`
+        const user = await getUserById(creatorId)
+        if (!user){
+            throw{
+                name: "InvalidUser",
+                message: "User does not exist."
+            }
+        }
+        const { rows: reviews } = await client.query(`
             SELECT *
             FROM reviews
-            WHERE username=$1;
-        `, [description])
+            WHERE "creatorId"=$1;
+        `, [creatorId])
 
-        if(!description){
+        if(!reviews){
             throw{
                 name: "ReviewNotFound",
                 message: "No review found."
             }
         }
+        return reviews
     }catch(error){
     throw error;
     }
 }
 
-const getReviewById = async (userId) => {
+const getReviewById = async (id) => {
     try{
-        const { rows: [reviews] } = await client.query(`
+        const { rows: [review] } = await client.query(`
             SELECT *
             FROM reviews
             WHERE id=$1;
-        `, [userId]);
-        delete user.password;
-        return reviews;
+        `, [id]);
+        if (!review){
+            throw{
+                name: "MissingReview",
+                message: "No review by that id exists."
+            }
+        }
+        return review;
     }catch(error){
     throw error
     }
 }
 
-const getReviewByUsername = async (username) => {
-    try{
-        const { rows: [user] } = await client.query(`
-            SELECT *
-            FROM reviews
-            WHERE username=$1
-        `, [username]);
-        return reviews;
-    }catch(error){
-        throw error;
-    }
-}
-
-const updateReviews = async ({ id, ...reviewField }) => {
+const updateReview = async ({ id, ...reviewField }) => {
     const setString = Object.keys(reviewField).map((key, index) =>
     `"${key}" = $${index + 1}`).join(', ')
 
     if(setString.length === 0){
-        return;
+        throw {
+            name: "MissingFields",
+            message: "No fields were provided to be updated. You must update at least one field."
+        };
     }
     const valuesArray = [...Object.values(fields), id];
     try{
-        const { rows: [reviews] } = await client.query(`
+        // if no review by that id exists; throw an error
+        await getReviewById(id) 
+        const { rows: [review] } = await client.query(`
             UPDATE reviews
             SET ${setString}
             WHERE id=$${valuesArray.length}
             RETURNING *;
         `, valuesArray);
-        return reviews
+        return review;
+    }catch(error){
+        throw error;
+    }
+}
+
+const destroyReview = async (reviewId) => {
+    try{
+        // if no review by that id exists; throw an error
+        await getReviewById(reviewId)
+        const { rows: [deletedReviewId] } = await client.query(`
+            DELETE FROM reviews
+            WHERE id=$1
+            RETURNING id;
+        `, [reviewId])
+        return deletedReviewId;
     }catch(error){
         throw error;
     }
 }
 
 module.exports = {
-    createReviews,
-    getReviews,
+    createReview,
+    getReviewsByUser,
     getReviewById,
-    getReviewByUsername,
-    updateReviews
+    updateReview,
+    destroyReview
 }
