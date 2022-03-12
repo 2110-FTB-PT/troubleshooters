@@ -168,6 +168,12 @@ const updateOrder = async ({ id, ...fields }) => {
             `,
       Object.values(fields)
     );
+    if (!order) {
+      throw {
+        name: "NoExistingInformation",
+        message: "No order currently exist.",
+      };
+    }
     return order;
   } catch (error) {
     console.log("Error at updateOrder", error);
