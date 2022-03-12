@@ -1,6 +1,8 @@
+const { user } = require("pg/lib/defaults");
 const {
   client,
   createOrder,
+  createUser,
   // declare your model imports here
   // for example, User
 } = require("./");
@@ -39,13 +41,14 @@ async function buildTables() {
           id SERIAL PRIMARY KEY,
           username VARCHAR(255) UNIQUE NOT NULL,
           password VARCHAR(255) NOT NULL,
-          email VARCHAR(255) UNIQUE NOT NULL
+          email VARCHAR(255) UNIQUE NOT NULL,
+          "isAdmin" BOOLEAN DEFAULT false
         );
 
         CREATE TABLE orders(
           id SERIAL PRIMARY KEY,
           "creatorId" INTEGER REFERENCES users(id),
-          name VARCHAR(255) UNIQUE NOT NULL,
+          name VARCHAR(255) NOT NULL,
           subtotal DECIMAL(38,2) 
         );
       `);
@@ -63,22 +66,22 @@ async function createInitialOrders() {
     const ordersToCreate = [
       {
         creatorId: 2,
-        name: "Hungry Hippy",
+        name: "Steve",
         subtotal: 11.11,
       },
       {
         creatorId: 1,
-        name: "Campy Carnivore",
+        name: "albert",
         subtotal: 19.55,
       },
       {
         creatorId: 3,
-        name: "Single Mom",
+        name: "Howard",
         subtotal: 20.22,
       },
       {
         creatorId: 2,
-        name: "Hungry Hippy",
+        name: "Steve",
         subtotal: 21.1,
       },
     ];
@@ -91,9 +94,43 @@ async function createInitialOrders() {
     throw error;
   }
 }
-// async function populateInitialData() {
-//   try {
-//     // create useful starting data by leveraging your
+async function createInitialUsers() {
+  try {
+    console.log("Starting to create users...");
+//createUser({ username, password }: { username: any; password: any; }): any
+    const usersToCreate = [
+      {
+      username: 'albert',
+      password: 'bertie99',
+      email: 'albert.bertie99@mail.com'
+    },
+    {
+      username: 'jenny',
+      password: 'jen99',
+      email: 'jenny99@mail.com'
+    },
+    {
+      username: 'Howard',
+      password: 'Howie123',
+      email: 'howard123@mail.com'
+    },
+    {
+      username: 'Steve',
+      password: 'Stevie99',
+      email: 'steve99@mail.com'
+    },
+  ]
+  const users = await Promise.all(
+    usersToCreate.map((users) => createUser(users))
+  )
+    console.log("Users", users)
+    console.log("Finished creating users.");
+  } catch(error){
+    console.error("Error creating users");
+    throw error;
+  }
+}
+  //     // create useful starting data by leveraging your
 //     // Model.method() adapters to seed your db, for example:
 //     // const user1 = await User.createUser({ ...user info goes here... })
 //   } catch (error) {
@@ -106,6 +143,7 @@ async function rebuildDB() {
     client.connect();
     await dropTables();
     await buildTables();
+    await createInitialUsers();
     await createInitialOrders();
   } catch (error) {
     console.log("Error during rebuildDB");
@@ -114,5 +152,5 @@ async function rebuildDB() {
 }
 
 module.exports = {
-  rebuildDB,
-};
+  rebuildDB
+}

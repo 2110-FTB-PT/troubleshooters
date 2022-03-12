@@ -1,4 +1,4 @@
-const client = require('./index');
+const client = require('../client');
 const bcrypt = require('bcrypt');
 const SALT_ROUNDS = 10;
 
@@ -9,9 +9,9 @@ const SALT_ROUNDS = 10;
 
 */
 
-const createUser = async ({ username, password }) => {
+const createUser = async ({ username, password, email }) => {
     try {
-        if (!username || !password) {
+        if (!username || !password || !email) {
             throw {
                 name: "FieldsRequired",
                 message: "You must provide both a username and password!"
