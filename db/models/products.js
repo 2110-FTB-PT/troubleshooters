@@ -1,6 +1,6 @@
 const client = require("../client.js");
 
-const createProduct = async ({ title, description, price, inventoryQuantity, imgURL }) => {
+const createProduct = async ({ title, artist, description, price, inventoryQuantity, imgURL }) => {
   try {
     if (!title, !description, !price, !inventoryQuantity) {
       throw {
@@ -9,10 +9,10 @@ const createProduct = async ({ title, description, price, inventoryQuantity, img
       }
     }
     const { rows: [product] } = await client.query(`
-      INSERT INTO products(title, description, price, "inventoryQuantity", "imgURL") 
-      VALUES ($1, $2, $3, $4, $5)
+      INSERT INTO products(title, artist, description, price, "inventoryQuantity", "imgURL") 
+      VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING *;
-    `, [title, description, price, inventoryQuantity, imgURL]);
+    `, [title, artist, description, price, inventoryQuantity, imgURL]);
 
     return product;
   } catch (error) {
