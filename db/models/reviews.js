@@ -78,14 +78,18 @@ const updateReview = async ({ id, ...reviewField }) => {
     }
     const valuesArray = [...Object.values(fields), id];
     try{
-        // if no review by that id exists; throw an error
-        await getReviewById(id) 
         const { rows: [review] } = await client.query(`
             UPDATE reviews
             SET ${setString}
             WHERE id=$${valuesArray.length}
             RETURNING *;
         `, valuesArray);
+        if (!review){
+            throw{
+                name: "MissingReview",
+                message: "No review by that id exists."
+            }
+        }
         return review;
     }catch(error){
         throw error;
@@ -94,13 +98,17 @@ const updateReview = async ({ id, ...reviewField }) => {
 
 const destroyReview = async (reviewId) => {
     try{
-        // if no review by that id exists; throw an error
-        await getReviewById(reviewId)
         const { rows: [deletedReviewId] } = await client.query(`
             DELETE FROM reviews
             WHERE id=$1
             RETURNING id;
         `, [reviewId])
+        if (!deletedReviewId){
+            throw{
+                name: "MissingReview",
+                message: "No review by that id exists."
+            }
+        }
         return deletedReviewId;
     }catch(error){
         throw error;
