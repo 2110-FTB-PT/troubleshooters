@@ -1,6 +1,9 @@
 const {
   client,
   createOrder,
+  getOrdersWithoutProducts,
+  getProductsOnly,
+  addProductToOrder,
   createUser,
   // declare your model imports here
   // for example, User
@@ -11,6 +14,7 @@ async function dropTables() {
   try {
     console.log("Dropping All Tables...");
     client.query(`
+      DROP TABLE IF EXISTS order_products;
       DROP TABLE IF EXISTS orders;
       DROP TABLE IF EXISTS users; 
       DROP TABLE IF EXISTS categories;     
@@ -56,6 +60,15 @@ async function buildTables() {
           name VARCHAR(255) NOT NULL,
           subtotal DECIMAL(38,2) 
         );
+
+        CREATE TABLE order_products(
+          id SERIAL PRIMARY KEY,
+          "orderId" INTEGER REFERENCES orders(id),
+          "productId" INTEGER REFERENCES products(id),
+          quantity INTEGER,	
+          price DECIMAL(38,2),
+          UNIQUE("orderId", "productId")
+        );
       `);
 
     console.log("Finished constructing tables");
@@ -99,6 +112,84 @@ async function createInitialOrders() {
     throw error;
   }
 }
+
+async function createInitialOrderProducts() {
+  try {
+    console.log("Starting to create order_products...");
+    const [orderOne, orderTwo, orderThree, orderFour] =
+      await getOrdersWithoutProducts();
+    const [product1, product2, product3, product4, product5, product6, product7] =
+      await getProductsOnly();
+    console.log(orderOne, orderFour);
+    const orderProductsToCreate = [
+      {
+        orderId: orderOne.id,
+        productId: product1.id,
+        quantity: 7,
+        price: 11,
+      },
+      {
+        orderId: orderOne.id,
+        productId: product2.id,
+        quantity: 3,
+        price: 16,
+      },
+      {
+        orderId: orderTwo.id,
+        productId: product3.id,
+        quantity: 6,
+        price: 22,
+      },
+      {
+        orderId: orderTwo.id,
+        productId: product4.id,
+        quantity: 10,
+        price: 7,
+      },
+      {
+        orderId: orderThree.id,
+        productId: product5.id,
+        quantity: 2,
+        price: 10,
+      },
+      {
+        orderId: orderThree.id,
+        productId: product6.id,
+        quantity: 1,
+        price: 100,
+      },
+      {
+        orderId: orderFour.id,
+        productId: product7.id,
+        quantity: 10,
+        price: 7,
+      },
+      {
+        orderId: orderFour.id,
+        productId: product1.id,
+        quantity: 4,
+        price: 4,
+      },
+      {
+        orderId: orderFour.id,
+        productId: product2.id,
+        quantity: 10,
+        price: 15,
+      },
+    ];
+    const orderProducts = await Promise.all(
+      orderProductsToCreate.map(addProductToOrder)
+    );
+    console.log("order_products created: ", orderProducts);
+    console.log("Finished creating order_products!");
+  } catch (error) {
+    throw error;
+  }
+}
+
+// async function populateInitialData() {
+//   try {
+//     // create useful starting data by leveraging your
 async function createInitialUsers() {
   try {
     console.log("Starting to create users...");
@@ -150,6 +241,7 @@ async function rebuildDB() {
     await buildTables();
     await createInitialUsers();
     await createInitialOrders();
+    await createInitialOrderProducts();
   } catch (error) {
     console.log("Error during rebuildDB");
     throw error;
