@@ -107,7 +107,12 @@ const getAllOrdersByUser = async ({ username }) => {
           `,
       [username]
     );
-
+    if (!orders) {
+      throw {
+        name: "NoExistingInformation",
+        message: "No orders currently exist.",
+      };
+    }
     return await addProductsToOrders(orders);
   } catch (error) {
     console.log("Error at getAllOrdersByUser", error);
