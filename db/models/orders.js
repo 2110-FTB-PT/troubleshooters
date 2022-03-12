@@ -122,6 +122,12 @@ const getAllOrdersByUser = async ({ username }) => {
 
 const createOrder = async ({ creatorId, subtotal }) => {
   try {
+    if (!creatorId || !subtotal) {
+      throw {
+        name: "MissingOrderInput",
+        message: "Cannot proceed without required information.",
+      };
+    }
     const {
       rows: [order],
     } = await client.query(
@@ -132,7 +138,6 @@ const createOrder = async ({ creatorId, subtotal }) => {
             `,
       [creatorId, subtotal]
     );
-
     return order;
   } catch (error) {
     console.log("Error at createOrder", error);
