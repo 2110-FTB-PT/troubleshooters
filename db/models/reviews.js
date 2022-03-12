@@ -22,13 +22,6 @@ const createReview = async ({ creatorId, productId, description }) => {
 
 const getReviewsByUser = async ({ creatorId }) => {
     try{
-        const user = await getUserById(creatorId)
-        if (!user){
-            throw{
-                name: "InvalidUser",
-                message: "User does not exist."
-            }
-        }
         const { rows: reviews } = await client.query(`
             SELECT *
             FROM reviews
