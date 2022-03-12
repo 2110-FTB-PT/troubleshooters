@@ -1,6 +1,19 @@
 const client = require("../client.js");
 
 // helper function
+const getOrdersWithoutProducts = async () => {
+  try {
+    const { rows: orders } = await client.query(`
+              SELECT * FROM orders
+          `);
+
+    return orders;
+  } catch (error) {
+    console.log("Error at getOrdersWithoutProducts", error);
+    throw error;
+  }
+};
+
 const addProductsToOrders = async (orders) => {
   try {
     const orderIdArray = orders.map((order) => {
@@ -161,6 +174,7 @@ const destroyOrder = async (id) => {
 module.exports = {
   getAllOrders,
   getOrderById,
+  getOrdersWithoutProducts,
   addProductsToOrders,
   getAllOrdersByUser,
   createOrder,
