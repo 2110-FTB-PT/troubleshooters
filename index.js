@@ -2,6 +2,22 @@
 const express = require('express');
 const server = express();
 
+// bring in the DB connection
+const { client } = require('./db');
+
+// connect to the server
+const PORT = process.env.PORT || 4000;
+
+server.listen(PORT, async () => {
+  console.log(`Server is listening on http://localhost:${PORT}/api`);
+  try {
+    await client.connect();
+    console.log('Database is opened up!');
+  } catch (error) {
+    console.error('Something went wrong in the database startup:', error);
+  }
+});
+
 // enable cross-origin resource sharing to proxy api requests
 // from localhost:3000 to localhost:4000 in local dev env
 const cors = require('cors');
@@ -26,26 +42,6 @@ server.use((req, res, next) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-// bring in the DB connection
-const { client } = require('./db');
-
-// connect to the server
-const PORT = process.env.PORT || 4000;
-
-// define a server handle to close open tcp connection after unit tests have run
-const handle = server.listen(PORT, async () => {
-  console.log(`Server is running on ${PORT}!`);
-
-  // if server is running in github actions context skip db connection
-  if (!process.env.CI) {
-    try {
-      await client.connect();
-      console.log('Database is open for business!');
-    } catch (error) {
-      console.error('Database is closed for repairs!\n', error);
-    }
-  }
-});
 
 // export server and handle for routes/*.test.js
-module.exports = { server, handle };
+module.exports = { server };
