@@ -18,13 +18,19 @@ const getOrdersWithoutProducts = async () => {
     throw error;
   }
 };
-
+// This function takes all orders that exist and appends a product array into each order.
 const addProductsToOrders = async (orders) => {
   try {
+    if(!orders){
+      throw {
+        name: "NoExistingInformation",
+        message: "No orders currently exist."
+      }
+    }
     const orderIdArray = orders.map((order) => {
       return order.id;
     });
-    // orderProductId created for the frontend
+    // orderProductId created for the front end.
     const { rows: products } = await client.query(`
                   SELECT products.*, order_products.quantity, order_products.price, order_products."orderId", order_products.id AS "orderProductId"
                   FROM products
