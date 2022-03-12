@@ -5,12 +5,12 @@ const getOrdersWithoutProducts = async () => {
     const { rows: orders } = await client.query(`
               SELECT * FROM orders
           `);
-          if(!orders){
-            throw {
-              name: "NoExistingInformation",
-              message: "No orders currently exist."
-            }
-          }
+    if (!orders) {
+      throw {
+        name: "NoExistingInformation",
+        message: "No orders currently exist.",
+      };
+    }
 
     return orders;
   } catch (error) {
@@ -21,11 +21,11 @@ const getOrdersWithoutProducts = async () => {
 // This function takes all orders that exist and appends a product array into each order.
 const addProductsToOrders = async (orders) => {
   try {
-    if(!orders){
+    if (!orders) {
       throw {
         name: "NoExistingInformation",
-        message: "No orders currently exist."
-      }
+        message: "No orders currently exist.",
+      };
     }
     const orderIdArray = orders.map((order) => {
       return order.id;
@@ -50,7 +50,7 @@ const addProductsToOrders = async (orders) => {
     throw error;
   }
 };
-
+// This function selects all orders, adds the creatorName to the order
 const getAllOrders = async () => {
   try {
     const { rows: orders } = await client.query(`
@@ -58,7 +58,12 @@ const getAllOrders = async () => {
         FROM orders
         JOIN users ON orders."creatorId" = users.id; 
             `);
-
+    if (!orders) {
+      throw {
+        name: "NoExistingInformation",
+        message: "No orders currently exist.",
+      };
+    }
     return await addProductsToOrders(orders);
   } catch (error) {
     console.log("Error at getAllOrders", error);
@@ -133,7 +138,7 @@ const updateOrder = async ({ id, ...fields }) => {
     .join(", ");
   if (setString.length === 0) {
     throw {
-      message: "You must update at least one field."
+      message: "You must update at least one field.",
     };
   }
   try {
