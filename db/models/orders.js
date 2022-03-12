@@ -5,6 +5,12 @@ const getOrdersWithoutProducts = async () => {
     const { rows: orders } = await client.query(`
               SELECT * FROM orders
           `);
+          if(!orders){
+            throw {
+              name: "NoExistingInformation",
+              message: "No orders currently exist."
+            }
+          }
 
     return orders;
   } catch (error) {
