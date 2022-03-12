@@ -1,6 +1,7 @@
 const {
   client,
   createOrder,
+  createReviews,
   getOrdersWithoutProducts,
   getProductsOnly,
   addProductToOrder,
@@ -17,7 +18,8 @@ async function dropTables() {
     client.query(`
       DROP TABLE IF EXISTS order_products;
       DROP TABLE IF EXISTS orders;
-      DROP TABLE IF EXISTS users; 
+      DROP TABLE IF EXISTS reviews;
+      DROP TABLE IF EXISTS users;      
       DROP TABLE IF EXISTS categories;     
       DROP TABLE IF EXISTS products;
     `);
@@ -54,6 +56,13 @@ async function buildTables() {
           password VARCHAR(255) NOT NULL,
           email VARCHAR(255) UNIQUE NOT NULL,
           "isAdmin" BOOLEAN DEFAULT false
+        );
+
+        CREATE TABLE reviews(
+          id SERIAL PRIMARY KEY,
+          "creatorId" INTEGER REFERENCES users(id),
+          "productId" INTEGER REFERENCES products(id),
+          description VARCHAR(255) NOT NULL
         );
 
         CREATE TABLE orders(
@@ -269,12 +278,12 @@ async function createInitialOrderProducts() {
 async function createInitialUsers() {
   try {
     console.log("Starting to create users...");
-//createUser({ username, password }: { username: any; password: any; }): any
     const usersToCreate = [
       {
       username: 'albert',
       password: 'bertie99',
-      email: 'albert.bertie99@mail.com'
+      email: 'albert.bertie99@mail.com',
+      isAdmin: true
     },
     {
       username: 'jenny',
@@ -302,13 +311,44 @@ async function createInitialUsers() {
     throw error;
   }
 }
-  //     // create useful starting data by leveraging your
-//     // Model.method() adapters to seed your db, for example:
-//     // const user1 = await User.createUser({ ...user info goes here... })
-//   } catch (error) {
-//     throw error;
-//   }
-// }
+
+async function createInitialReviews(){
+  try{
+    console.log("Starting creating reviews table...");
+    const reviewsToCreate = [
+      {
+        creatorId: 4,
+        username: 'jenny',
+        productId: 1,
+        description: 'This album came in good condition.'
+
+      },
+      {
+        creatorId: 2,
+        username: 'Steve',
+        productId: 4,
+        description: 'I would def make this my go to shop for vinyls'
+
+      },
+      {
+        creatorId: 3,
+        username: 'Howard',
+        productId: 7,
+        description: 'My order came in on time.'
+
+      },
+    ]
+    const reviews = await Promise.all(
+      reviewsToCreate.map((reviews) => createReviews(reviews))
+    )
+    console.log("Reviews", reviews)
+    console.log("Finished creating reviews.");
+
+  } catch(error){
+    console.error(error)
+  }
+}
+
 async function rebuildDB() {
   try {
     console.log("buildingdb");
@@ -317,6 +357,7 @@ async function rebuildDB() {
     await buildTables();
     await createInitialUsers();
     await createInitialProducts();
+    await createInitialReviews();
     await createInitialOrders();
     await createInitialOrderProducts();
   } catch (error) {
