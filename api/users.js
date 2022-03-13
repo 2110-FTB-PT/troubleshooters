@@ -14,6 +14,19 @@ router.get('/', async (req, res, next) => {
     })
 });
 
+route.get('/myaccount', async (req, res, next) => {
+    if (!req.user) {
+        next({
+            name: 'NoUserFound',
+            message: 'You must be logged in to perform this action'
+        })
+    } else {
+        res.send({
+            ...req.user
+        })
+    }
+})
+
 router.post('/register', async (req, res, next) => {
     const { username, password, name, email } = req.body
     try {
