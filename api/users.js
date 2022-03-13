@@ -3,7 +3,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt')
 const { JWT_SECRET } = process.env;
-const { createUser, getUser, getUserByUsername, updateUser } = require('../db');
+const { createUser, getUser, getUserByUsername } = require('../db');
 const { route } = require('.');
 
 // users/
@@ -100,3 +100,5 @@ router.post('/login', async (req, res, next) => {
         next({ name, message });
     }
 })
+
+module.exports = router;
