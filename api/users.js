@@ -4,8 +4,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt')
 const { JWT_SECRET } = process.env;
 const { createUser, getUser, getUserByUsername } = require('../db');
-const { route } = require('.');
-
+const { requireUser } = require('./utils')
 // users/
 router.get('/', async (req, res, next) => {
     const users = await getUser();
@@ -19,21 +18,10 @@ router.get('/', async (req, res, next) => {
 });
 
 // users/my account
-route.get('/myaccount', async (req, res, next) => {
-    if (!req.user) {
-        next({
-            name: 'UserError',
-            message: 'You must be logged in to perform this action'
-        })
-    } else {
-        try {
+router.get('/myaccount', requireUser, async (req, res, next) => {
             res.send({
                 ...req.user
             })
-        } catch (error) {
-            next(error)
-        }
-    }
 })
 
 // users/register
