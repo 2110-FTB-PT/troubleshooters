@@ -110,7 +110,7 @@ const getAllOrdersByUser = async ({ username }) => {
     if (!orders) {
       throw {
         name: "NoExistingInformation",
-        message: "No orders currently exist.",
+        message: "You haven't placed any orders",
       };
     }
     return await addProductsToOrders(orders);
@@ -171,7 +171,7 @@ const updateOrder = async ({ id, ...fields }) => {
     if (!order) {
       throw {
         name: "NoExistingInformation",
-        message: "No order currently exist.",
+        message: "The order you tried to update does not exist",
       };
     }
     return order;
@@ -203,7 +203,7 @@ const destroyOrder = async (id) => {
     if (!orderId) {
       throw {
         name: "NoExistingInformation",
-        message: "No order currently exist.",
+        message: "The order you tried to delete does not exist",
       };
     }
     return orderId;
