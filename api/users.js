@@ -9,10 +9,13 @@ const { route } = require('.');
 // users/
 router.get('/', async (req, res, next) => {
     const users = await getUser();
-
-    res.send({
-        users
-    })
+    try {
+        res.send({
+            users
+        })
+    } catch (error) {
+        next(error)
+    }
 });
 
 // users/my account
@@ -23,9 +26,13 @@ route.get('/myaccount', async (req, res, next) => {
             message: 'You must be logged in to perform this action'
         })
     } else {
-        res.send({
-            ...req.user
-        })
+        try {
+            res.send({
+                ...req.user
+            })
+        } catch (error) {
+            next(error)
+        }
     }
 })
 
