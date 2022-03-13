@@ -2,12 +2,6 @@ const client = require('../client');
 const bcrypt = require('bcrypt');
 const SALT_ROUNDS = 10;
 
-/* THINGS TO CONSIDER:
-
-+ what if user wants to delete their own account
-
-*/
-
 const createUser = async ({ username, password, email }) => {
     try {
         if (!username || !password || !email) {
