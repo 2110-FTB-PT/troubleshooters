@@ -68,8 +68,7 @@ async function buildTables() {
         CREATE TABLE orders(
           id SERIAL PRIMARY KEY,
           "creatorId" INTEGER REFERENCES users(id),
-          name VARCHAR(255) NOT NULL,
-          subtotal DECIMAL(38,2) 
+          subtotal DECIMAL(38,2) NOT NULL
         );
 
         CREATE TABLE order_products(
@@ -169,22 +168,18 @@ async function createInitialOrders() {
     const ordersToCreate = [
       {
         creatorId: 2,
-        name: "Steve",
         subtotal: 11.11,
       },
       {
         creatorId: 1,
-        name: "albert",
         subtotal: 19.55,
       },
       {
         creatorId: 3,
-        name: "Howard",
         subtotal: 20.22,
       },
       {
         creatorId: 2,
-        name: "Steve",
         subtotal: 21.1,
       },
     ];

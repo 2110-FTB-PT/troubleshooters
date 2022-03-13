@@ -1,11 +1,16 @@
 const client = require("../client.js");
 
-// helper function
 const getOrdersWithoutProducts = async () => {
   try {
     const { rows: orders } = await client.query(`
               SELECT * FROM orders
           `);
+    if (!orders) {
+      throw {
+        name: "NoExistingInformation",
+        message: "No orders currently exist.",
+      };
+    }
 
     return orders;
   } catch (error) {
@@ -13,13 +18,19 @@ const getOrdersWithoutProducts = async () => {
     throw error;
   }
 };
-
+// This function takes all orders that exist and appends a product array into each order.
 const addProductsToOrders = async (orders) => {
   try {
+    if (!orders) {
+      throw {
+        name: "NoExistingInformation",
+        message: "No orders currently exist.",
+      };
+    }
     const orderIdArray = orders.map((order) => {
       return order.id;
     });
-    // orderProductId created for the frontend
+    // orderProductId created for the front end.
     const { rows: products } = await client.query(`
                   SELECT products.*, order_products.quantity, order_products.price, order_products."orderId", order_products.id AS "orderProductId"
                   FROM products
@@ -39,7 +50,7 @@ const addProductsToOrders = async (orders) => {
     throw error;
   }
 };
-
+// This function selects all orders, adds the creatorName to the order
 const getAllOrders = async () => {
   try {
     const { rows: orders } = await client.query(`
@@ -47,7 +58,12 @@ const getAllOrders = async () => {
         FROM orders
         JOIN users ON orders."creatorId" = users.id; 
             `);
-
+    if (!orders) {
+      throw {
+        name: "NoExistingInformation",
+        message: "No orders currently exist.",
+      };
+    }
     return await addProductsToOrders(orders);
   } catch (error) {
     console.log("Error at getAllOrders", error);
@@ -67,7 +83,12 @@ const getOrderById = async (id) => {
             `,
       [id]
     );
-
+    if (!order) {
+      throw {
+        name: "NoExistingInformation",
+        message: "No order currently exist.",
+      };
+    }
     return await addProductsToOrders(order);
   } catch (error) {
     console.log("Error at getOrderById", error);
@@ -86,7 +107,12 @@ const getAllOrdersByUser = async ({ username }) => {
           `,
       [username]
     );
-
+    if (!orders) {
+      throw {
+        name: "NoExistingInformation",
+        message: "You haven't placed any orders",
+      };
+    }
     return await addProductsToOrders(orders);
   } catch (error) {
     console.log("Error at getAllOrdersByUser", error);
@@ -94,19 +120,24 @@ const getAllOrdersByUser = async ({ username }) => {
   }
 };
 
-const createOrder = async ({ creatorId, name, subtotal }) => {
+const createOrder = async ({ creatorId, subtotal }) => {
   try {
+    if (!creatorId || !subtotal) {
+      throw {
+        name: "MissingOrderInput",
+        message: "Cannot proceed without required information.",
+      };
+    }
     const {
       rows: [order],
     } = await client.query(
       `
-                INSERT INTO orders("creatorId", name, subtotal)
-                VALUES($1, $2, $3)
+                INSERT INTO orders("creatorId", subtotal)
+                VALUES($1, $2)
                 RETURNING *
             `,
-      [creatorId, name, subtotal]
+      [creatorId, subtotal]
     );
-
     return order;
   } catch (error) {
     console.log("Error at createOrder", error);
@@ -121,7 +152,9 @@ const updateOrder = async ({ id, ...fields }) => {
     })
     .join(", ");
   if (setString.length === 0) {
-    return;
+    throw {
+      message: "You must update at least one field.",
+    };
   }
   try {
     const {
@@ -135,6 +168,12 @@ const updateOrder = async ({ id, ...fields }) => {
             `,
       Object.values(fields)
     );
+    if (!order) {
+      throw {
+        name: "NoExistingInformation",
+        message: "The order you tried to update does not exist",
+      };
+    }
     return order;
   } catch (error) {
     console.log("Error at updateOrder", error);
@@ -144,27 +183,30 @@ const updateOrder = async ({ id, ...fields }) => {
 
 const destroyOrder = async (id) => {
   try {
-    const {
-      rows: [order],
-    } = await client.query(
+     await client.query(
       `
           DELETE FROM order_products
-          WHERE "orderId" = $1
-          RETURNING *;
+          WHERE "orderId" = $1;
       `,
       [id]
     );
-
-    await client.query(
+    const {
+      rows: [orderId],
+    } = await client.query(
       `
               DELETE FROM orders
               WHERE id = $1
-              RETURNING *;
+              RETURNING id;
           `,
       [id]
     );
-
-    return order;
+    if (!orderId) {
+      throw {
+        name: "NoExistingInformation",
+        message: "The order you tried to delete does not exist",
+      };
+    }
+    return orderId;
   } catch (error) {
     console.log("Error at destroyOrder", error);
     throw error;
