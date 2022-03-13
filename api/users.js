@@ -6,6 +6,7 @@ const { JWT_SECRET } = process.env;
 const { createUser, getUser, getUserByUsername, updateUser } = require('../db');
 const { route } = require('.');
 
+// users/
 router.get('/', async (req, res, next) => {
     const users = await getUser();
 
@@ -14,10 +15,11 @@ router.get('/', async (req, res, next) => {
     })
 });
 
+// users/my account
 route.get('/myaccount', async (req, res, next) => {
     if (!req.user) {
         next({
-            name: 'NoUserFound',
+            name: 'UserError',
             message: 'You must be logged in to perform this action'
         })
     } else {
@@ -27,6 +29,7 @@ route.get('/myaccount', async (req, res, next) => {
     }
 })
 
+// users/register
 router.post('/register', async (req, res, next) => {
     const { username, password, name, email } = req.body
     try {
@@ -69,6 +72,7 @@ router.post('/register', async (req, res, next) => {
     }
 })
 
+// users/login
 router.post('/login', async (req, res, next) => {
     const { username, password } = req.body;
     try {
