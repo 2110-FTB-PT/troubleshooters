@@ -4,11 +4,14 @@ const router = express.Router();
 const { requireUser } = require('./utils');
 
 // get reviews
-router.get('/reviews', async (req, res, next) => {
+router.get('/:productId', async (req, res, next) => {
+    const { productId } = req.params;
     try{        
-        const reviews = await getReviewById();
-        res.send(getReviewById)
-    }catch(error){
-        next(error)
+        const reviews = await getReviewByProductId(productId);
+        res.send(reviews)
+    }catch({ name, message }){
+        next({ name, message })
     }
 })
+
+module.exports = router;
