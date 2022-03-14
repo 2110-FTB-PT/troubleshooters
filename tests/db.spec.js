@@ -2,8 +2,9 @@ const bcrypt = require('bcrypt');
 const SALT_COUNT = 10;
 
 const { rebuildDB } = require('../db/seedData');
-const { client, getUserById, getUserByUsername, updateUser } = require('../db');
+const { client, getUserById, getUserByUsername, updateUser, addProductToOrder, createOrder } = require('../db');
 const { getUser } = require('../db');
+const { expect } = require('@jest/globals');
 
 describe('Database', () => {
   beforeAll(async () => {
@@ -90,4 +91,43 @@ describe('Database', () => {
       })
     })
   })
+  describe('Order_Products', () => {
+    let newOrder;
+    let product1 = {
+        id: 1,
+        title: 'In Keeping Secrets Of Silent Earth: 3',
+        artist: 'Coheed and Cambria',
+        description: 'The album is the second installment of a tetralogy about the ongoing saga of the Keywork in The Amory Wars. The Amory Wars is also the name of the graphic novel series written by lead singer Claudio Sanchez that details the events foretold in greater detail. There are three notable singles on this album: "A Favor House Atlantic", "Blood Red Summer" and "In Keeping Secrets of Silent Earth: 3".',
+        price: 10.00,
+        inventoryQuantity: 13,
+        imgURL: '../assets/In_Keeping_Secrets_of_Silent_Earth_3_cover.jpg'
+    }
+    let product2 = {
+        id: 2,
+        title: 'always EP',
+        artist: 'Keshi',
+        description: '"Always", stylized as "always", is the fourth extended play (EP) by American singer-songwriter keshi. It was released through Island Records on October 23rd, 2020.',
+        price: 15.99,
+        inventoryQuantity: 20,
+        imgURL: '../assets/Always_EP_Keshi.jpg'
+    }
+    describe('addProductToOrder', () => {
+      beforeAll(async () => {
+        newOrder = await createOrder({ creatorId: 3, subtotal: 1 })
+      })
+      it('properly stores the price from the product being attached', async () => {
+        let order_product = await addProductToOrder({ orderId: newOrder.id, productId: product1.id, quantity: 4, price: product1.price})
+        expect(order_product).toBeTruthy();
+        expect(order_product.price).toBe(product1.price)
+        product1.price = 12.00;
+        expect(order_product.price).not.toBe(product1.price)
+      })
+    })
+  })
+  // describe('Orders', () => {
+  //   let expectedOrder = {
+  //     id: 1,
+  //     subtotal: 
+  //   }
+  // })
 })
