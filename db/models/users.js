@@ -44,11 +44,30 @@ const getUser = async ({ username, password }) => {
         if (isMatch) {
             delete user.password;
             return user;
+        }else{
+            throw{
+                name: 'IncorrectPswd',
+                message: 'The password entered is not correct'
+            }
         }
     } catch (error) {
         throw error;
     }
 }
+
+const getAllUsers = async () => {
+    try{
+        const { rows: users } = await client.query(`
+            SELECT id, username, email, "isAdmin"
+            FROM users;
+        `)
+        return users
+
+    }catch(error){
+        throw error
+    }
+}
+
 
 const getUserById = async (userId) => {
     try {
@@ -71,28 +90,44 @@ const getUserByUsername = async (username) => {
             FROM users
             WHERE username=$1;
         `, [username]);
+        delete user.password;
         return user;
     } catch (error) {
         throw error;
     }
 }
 
-const updateUser = async ({ id, ...userField }) => {
-    const setString = Object.keys(userField).map((key, index) =>
+const getUserByEmail = async (email) => {
+    try {
+        const { rows: [user] } = await client.query(`
+            SELECT *
+            FROM users
+            WHERE email=$1;
+        `, [email]);
+        return user;
+    } catch (error) {
+        throw error;
+    }
+}
+
+const updateUser = async ({ id, ...userFields }) => {
+    const setString = Object.keys(userFields).map((key, index) =>
     `"${key}" = $${index + 1}`).join(', ')
 
     if (setString.length === 0){
         return;
     }
-    const valuesArray = [...Object.values(fields), id];
     try{
+        const hashPwd = await bcrypt.hash(userFields.password, SALT_ROUNDS)
+        userFields.password = hashPwd;    
+        const valuesArray = [...Object.values(userFields), id];
         const { rows: [user] } = await client.query(`
             UPDATE users
             SET ${setString}
             WHERE id=$${valuesArray.length}
             RETURNING *;
         `, valuesArray);
-
+        delete user.password
         return user
     } catch (error) {
         throw error;
@@ -102,7 +137,9 @@ const updateUser = async ({ id, ...userField }) => {
 module.exports = {
     createUser,
     getUser,
+    getAllUsers,
     getUserById,
     getUserByUsername,
+    getUserByEmail,
     updateUser
 }

@@ -3,45 +3,51 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt')
 const { JWT_SECRET } = process.env;
-const { createUser, getUser, getUserByUsername } = require('../db');
+const { createUser, getUser, getAllUsers, getUserByEmail, getUserByUsername } = require('../db');
 const { requireUser, requireAdminUser } = require('./utils');
 
 
 // users/
 router.get('/', async (req, res, next) => {
-    const users = await getUser();
+    const users = await getAllUsers();
     try {
         res.send({
             users
         })
-    } catch (error) {
-        next(error)
+    } catch ({ name, message }) {
+        next({ name, message })
     }
 });
 
 // users/my account
 router.get('/myaccount', requireUser, async (req, res, next) => {
-            res.send({
+        res.send({
                 ...req.user
-            })
+        })
 })
 
 // users/register
 router.post('/register', async (req, res, next) => {
-    const { username, password, name, email } = req.body
+    const { username, password, email } = req.body
     try {
         const _user = await getUserByUsername(username)
+        const emailUsed = await getUserByEmail(email)
         if (_user) {
             next({
                 name: 'UserExistsError',
                 message: 'A user by that username already exists'
+            })
+        } else if (emailUsed) {
+            next({
+                name: 'UserExistsError',
+                message: 'The email has been used already'
             })
         } else if (password.length < 8) {
             next({
                 name: 'PasswordLengthError',
                 message: 'Password must be 8 or more characters long'
             })
-        } else if (!username || !password || !email || !name) {
+        } else if (!username || !password || !email ) {
             next({
                 name: 'MissingCredentials',
                 message: 'Plese fill all required fields'
@@ -50,13 +56,9 @@ router.post('/register', async (req, res, next) => {
             const user = await createUser({
                 username,
                 password,
-                name,
                 email
             });
-            const token = jwt.sign({
-                id: user.id,
-                username
-            }, process.env.JWT_SECRET, {
+            const token = jwt.sign(user, process.env.JWT_SECRET, {
                 expiresIn: '1w'
             })
             res.send({
@@ -79,9 +81,8 @@ router.post('/login', async (req, res, next) => {
                 message: 'Please enter both username and password'
             });
         }
-        const user = await getUserByUsername(username)
-        const isMatch = await bcrypt.compare(password, user.password)
-        if (user && isMatch) {
+        const user = await getUser({username, password})
+        if (user) {
             const token = jwt.sign(user, JWT_SECRET);
             res.send({
                 token,
