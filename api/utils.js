@@ -8,6 +8,17 @@ const requireUser = (req, res, next) => {
     next();
 }
 
+const requireAdminUser = (req, res, next) => {
+    if(!req.user || !req.user.isAdmin ){
+        next({
+            name: 'AuthorizatonError',
+            message: 'You must be an Admin'
+        })
+    }
+    next();
+}
+
 module.exports = { 
-    requireUser 
+    requireUser,
+    requireAdminUser 
 };
