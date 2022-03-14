@@ -44,6 +44,11 @@ const getUser = async ({ username, password }) => {
         if (isMatch) {
             delete user.password;
             return user;
+        }else{
+            throw{
+                name: 'IncorrectPswd',
+                message: 'The password entered is not correct'
+            }
         }
     } catch (error) {
         throw error;
@@ -105,22 +110,24 @@ const getUserByEmail = async (email) => {
     }
 }
 
-const updateUser = async ({ id, ...userField }) => {
-    const setString = Object.keys(userField).map((key, index) =>
+const updateUser = async ({ id, ...userFields }) => {
+    const setString = Object.keys(userFields).map((key, index) =>
     `"${key}" = $${index + 1}`).join(', ')
 
     if (setString.length === 0){
         return;
     }
-    const valuesArray = [...Object.values(fields), id];
     try{
+        const hashPwd = await bcrypt.hash(userFields.password, SALT_ROUNDS)
+        userFields.password = hashPwd;    
+        const valuesArray = [...Object.values(userFields), id];
         const { rows: [user] } = await client.query(`
             UPDATE users
             SET ${setString}
             WHERE id=$${valuesArray.length}
             RETURNING *;
         `, valuesArray);
-
+        delete user.password
         return user
     } catch (error) {
         throw error;
