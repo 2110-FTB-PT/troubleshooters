@@ -14,8 +14,8 @@ router.get('/', async (req, res, next) => {
         res.send({
             users
         })
-    } catch (error) {
-        next(error)
+    } catch ({ name, message }) {
+        next({ name, message })
     }
 });
 
