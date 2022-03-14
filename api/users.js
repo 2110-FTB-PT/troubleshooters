@@ -3,7 +3,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt')
 const { JWT_SECRET } = process.env;
-const { createUser, getUser, getAllUsers, getUserByUsername } = require('../db');
+const { createUser, getUser, getAllUsers, getUserByEmail, getUserByUsername } = require('../db');
 const { requireUser } = require('./utils');
 
 
@@ -31,10 +31,16 @@ router.post('/register', async (req, res, next) => {
     const { username, password, name, email } = req.body
     try {
         const _user = await getUserByUsername(username)
+        const emailUsed = await getUserByEmail(email)
         if (_user) {
             next({
                 name: 'UserExistsError',
                 message: 'A user by that username already exists'
+            })
+        } else if (emailUsed) {
+            next({
+                name: 'UserExistsError',
+                message: 'The email has been used already'
             })
         } else if (password.length < 8) {
             next({
