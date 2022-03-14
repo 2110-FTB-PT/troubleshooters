@@ -42,5 +42,6 @@ router.use(async (req, res, next) => {
 });
 
 // place your routers here
+apiRouter.use('/users', require('./users'));
 
 module.exports = apiRouter;

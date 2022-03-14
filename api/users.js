@@ -21,14 +21,14 @@ router.get('/', async (req, res, next) => {
 
 // users/my account
 router.get('/myaccount', requireUser, async (req, res, next) => {
-            res.send({
+        res.send({
                 ...req.user
-            })
+        })
 })
 
 // users/register
 router.post('/register', async (req, res, next) => {
-    const { username, password, name, email } = req.body
+    const { username, password, email } = req.body
     try {
         const _user = await getUserByUsername(username)
         const emailUsed = await getUserByEmail(email)
@@ -47,7 +47,7 @@ router.post('/register', async (req, res, next) => {
                 name: 'PasswordLengthError',
                 message: 'Password must be 8 or more characters long'
             })
-        } else if (!username || !password || !email || !name) {
+        } else if (!username || !password || !email ) {
             next({
                 name: 'MissingCredentials',
                 message: 'Plese fill all required fields'
@@ -56,13 +56,9 @@ router.post('/register', async (req, res, next) => {
             const user = await createUser({
                 username,
                 password,
-                name,
                 email
             });
-            const token = jwt.sign({
-                id: user.id,
-                username
-            }, process.env.JWT_SECRET, {
+            const token = jwt.sign(user, process.env.JWT_SECRET, {
                 expiresIn: '1w'
             })
             res.send({
@@ -85,9 +81,8 @@ router.post('/login', async (req, res, next) => {
                 message: 'Please enter both username and password'
             });
         }
-        const user = await getUserByUsername(username)
-        const isMatch = await bcrypt.compare(password, user.password)
-        if (user && isMatch) {
+        const user = await getUser({username, password})
+        if (user) {
             const token = jwt.sign(user, JWT_SECRET);
             res.send({
                 token,

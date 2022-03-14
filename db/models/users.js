@@ -85,6 +85,7 @@ const getUserByUsername = async (username) => {
             FROM users
             WHERE username=$1;
         `, [username]);
+        delete user.password;
         return user;
     } catch (error) {
         throw error;
