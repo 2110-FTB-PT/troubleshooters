@@ -58,13 +58,13 @@ const getReviewById = async (id) => {
     }
 }
 
-const getReviewByProductId = async (id) => {
+const getReviewByProductId = async (productId) => {
     try{
         const { rows: [review] } = await client.query(`
             SELECT *
             FROM reviews
             WHERE "productId"=$1;
-        `, [id]);
+        `, [productId]);
         if (!review){
             throw{
                 name: "MissingReview",

@@ -1,5 +1,5 @@
 const express = require('express');
-const { createReview, getReviewsByUser, getReviewById, updateReview } = require('../db');
+const { createReview, getReviewsByUser, getReviewById, getReviewByProductId, updateReview } = require('../db');
 const router = express.Router();
 const { requireUser } = require('./utils');
 
