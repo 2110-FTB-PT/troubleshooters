@@ -24,7 +24,6 @@ router.get('/myaccount', requireUser, async (req, res, next) => {
             res.send({
                 ...req.user
             })
- 
 })
 
 // users/register
