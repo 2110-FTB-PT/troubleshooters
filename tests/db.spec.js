@@ -5,7 +5,7 @@ const { rebuildDB } = require('../db/seedData');
 const { client, getUserById, getUserByUsername, updateUser, addProductToOrder, createOrder } = require('../db');
 const { getUser } = require('../db');
 const { getAllOrders, getAllOrdersByUser } = require('../db/models/orders');
-const { expect, it } = require('@jest/globals');
+const { it, expect } = require('@jest/globals');
 
 describe('Database', () => {
   beforeAll(async () => {
@@ -172,6 +172,25 @@ describe('Database', () => {
         } catch (error) {
           expect(error).toBeTruthy();
         }
+      })
+    })
+    describe('createOrder', () => {
+      let user1;
+      beforeAll(async () => {
+        user1 = await getUserById(1);
+      })
+      it('properly creates the order', async () => {
+        const order = await createOrder({ creatorId: user1.id, subtotal: 0 });
+        expect(order).toBeTruthy();
+      })
+      it('properly adds an empty products array to the orders object before returning', async () => {
+        const order = await createOrder({ creatorId: user1.id, subtotal: 0 });
+        expect(order.products).toBeTruthy(); 
+      })
+      it('can create an order as a guest', async () => {
+        const order = await createOrder({ subtotal: 0 });
+        expect(order).toBeTruthy();
+        console.log(order)
       })
     })
   })
