@@ -27,10 +27,17 @@ describe('Database', () => {
         verifiedUser = await getUser(userCredentials);
       })
       it('Checks the unincrypted password against the hashed password in the database, returning the user only if the bcrypt.compare returns truthy', async () => {
-        const unVerifiedUser = await getUser({username: userCredentials.username, password: "supersecurepassword"});
         expect(verifiedUser).toBeTruthy();
         expect(verifiedUser.username).toBe(userCredentials.username);
-        expect(unVerifiedUser).toBeFalsy();
+      })
+      it('Throws an error if the password is incorrect', async () => {
+        let errResponse;
+        try {
+          const unVerifiedUser = await getUser({username: userCredentials.username, password: "supersecurepassword"});
+        } catch (error) {
+          errResponse = error;
+        }
+        expect(errResponse).toBeTruthy();
       })
       it('Does NOT return the password', async () => {
         expect(verifiedUser.password).toBeFalsy();
@@ -124,10 +131,10 @@ describe('Database', () => {
       })
     })
   })
-  // describe('Orders', () => {
-  //   let expectedOrder = {
-  //     id: 1,
-  //     subtotal: 
-  //   }
-  // })
+  describe('Orders', () => {
+    // let expectedOrder = {
+    //   id: 1,
+    //   subtotal: 
+    // }
+  })
 })
