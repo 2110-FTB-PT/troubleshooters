@@ -73,7 +73,7 @@ const destroyOrderProduct = async (id) => {
       `
         DELETE FROM order_products
         WHERE id = $1
-        RETURNING *;
+        RETURNING id;
       `,
       [id]
     );
