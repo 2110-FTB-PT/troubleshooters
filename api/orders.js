@@ -76,8 +76,8 @@ router.delete("/:orderId", async (req, res, next) => {
   try {
     const orderById = await getOrderById(orderId);
     if (orderById.creatorId === req.user.id) {
-      const destroyedOrder = await destroyOrder(orderId);
-      res.send(destroyedOrder);
+      const destroyedOrderId = await destroyOrder(orderId);
+      res.send(destroyedOrderId);
     } else {
       next({
         name: "UserUnauthorizeToDelete",
