@@ -3,6 +3,7 @@ module.exports = {
     ...require('./users'),
     ...require('./products'),
     ...require('./reviews'),
-    ...require("./order_products")
+    ...require("./order_products"),
+    ...require('./categories')
     // reExportFiles 
 }
