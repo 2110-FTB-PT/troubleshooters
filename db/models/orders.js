@@ -183,7 +183,7 @@ const updateOrder = async ({ id, ...fields }) => {
 
 const destroyOrder = async (id) => {
   try {
-     await client.query(
+    await client.query(
       `
           DELETE FROM order_products
           WHERE "orderId" = $1;
