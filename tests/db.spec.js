@@ -2,10 +2,9 @@ const bcrypt = require('bcrypt');
 const SALT_COUNT = 10;
 
 const { rebuildDB } = require('../db/seedData');
-const { client, getUserById, getUserByUsername, updateUser, addProductToOrder, createOrder } = require('../db');
+const { client, getUserById, getUserByUsername, updateUser, addProductToOrder, createOrder, updateOrderProduct, destroyOrderProduct } = require('../db');
 const { getUser } = require('../db');
 const { getAllOrders, getAllOrdersByUser, updateOrder, destroyOrder, getOrderById } = require('../db/models/orders');
-const { it } = require('@jest/globals');
 
 describe('Database', () => {
   beforeAll(async () => {
@@ -101,6 +100,7 @@ describe('Database', () => {
   })
   describe('Order_Products', () => {
     let newOrder;
+    let order_product;
     let product1 = {
         id: 1,
         title: 'In Keeping Secrets Of Silent Earth: 3',
@@ -110,25 +110,28 @@ describe('Database', () => {
         inventoryQuantity: 13,
         imgURL: '../assets/In_Keeping_Secrets_of_Silent_Earth_3_cover.jpg'
     }
-    let product2 = {
-        id: 2,
-        title: 'always EP',
-        artist: 'Keshi',
-        description: '"Always", stylized as "always", is the fourth extended play (EP) by American singer-songwriter keshi. It was released through Island Records on October 23rd, 2020.',
-        price: 15.99,
-        inventoryQuantity: 20,
-        imgURL: '../assets/Always_EP_Keshi.jpg'
-    }
+    beforeAll(async () => {
+      newOrder = await createOrder({ creatorId: 3, subtotal: 1 })
+      order_product = await addProductToOrder({ orderId: newOrder.id, productId: product1.id, quantity: 4, price: product1.price})
+    })
     describe('addProductToOrder', () => {
-      beforeAll(async () => {
-        newOrder = await createOrder({ creatorId: 3, subtotal: 1 })
-      })
       it('properly stores the price from the product being attached', async () => {
-        let order_product = await addProductToOrder({ orderId: newOrder.id, productId: product1.id, quantity: 4, price: product1.price})
         expect(order_product).toBeTruthy();
-        expect(order_product.price).toBe(product1.price)
+        expect(order_product.price).toBe('10.00')
         product1.price = 12.00;
         expect(order_product.price).not.toBe(product1.price)
+      })
+    })
+    describe('updateOrderProduct', () => {
+      it('properly updates the quantity', async () => {
+        const updatedOrderProduct = await updateOrderProduct({id: order_product.id, quantity: 1});
+        expect(updatedOrderProduct.quantity).toEqual(1)
+      })
+    })
+    describe('destroyOrderProduct', () => {
+      it('deletes the order_product, returning only the id', async () => {
+        const deletedOrderProductId = await destroyOrderProduct(order_product.id)
+        expect(deletedOrderProductId).toEqual({id: order_product.id})
       })
     })
   })
@@ -202,7 +205,7 @@ describe('Database', () => {
         updatedOrder = await updateOrder({ id: order.id, subtotal: 10 });
       })
       it('can update the subtotal', async () => {
-        expect(updatedOrder.subtotal).toEqual(10);
+        expect(updatedOrder.subtotal).toEqual('10.00');
       })
       it('returns our ideal orders object, with the products appended to it', async () => {
         expect(updatedOrder.products).toBeTruthy();
@@ -215,9 +218,9 @@ describe('Database', () => {
         user1 = await getUserById(1);
         order = await createOrder({ creatorId: user1.id, subtotal: 0 });
       })
-      it('destroys the order_products and orders info in the correct order, returning the deleted orders Id', async () => {
-        const { id: deletedOrderId } = await destroyOrder(order.id);
-        expect(deletedOrderId).toEqual(order.id);
+      it('destroys the order_products and orders info in the correct order, returning only the deleted orders Id', async () => {
+        const deletedOrderId = await destroyOrder(order.id);
+        expect(deletedOrderId).toEqual({id: order.id});
       })
     })
     describe('getOrderById', () => {
