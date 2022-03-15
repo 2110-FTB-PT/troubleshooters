@@ -45,5 +45,6 @@ router.use(async (req, res, next) => {
 apiRouter.use('/users', require('./users'));
 apiRouter.use('/orders', require('./orders'));
 apiRouter.use('/reviews', require('./reviews'));
+apiRouter.use('/order_products', require('./order_products'));
 
 module.exports = apiRouter;
