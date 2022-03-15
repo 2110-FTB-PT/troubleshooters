@@ -4,7 +4,7 @@ const SALT_COUNT = 10;
 const { rebuildDB } = require('../db/seedData');
 const { client, getUserById, getUserByUsername, updateUser, addProductToOrder, createOrder } = require('../db');
 const { getUser } = require('../db');
-const { expect } = require('@jest/globals');
+const { getAllOrders, getAllOrdersByUser } = require('../db/models/orders');
 
 describe('Database', () => {
   beforeAll(async () => {
@@ -136,5 +136,34 @@ describe('Database', () => {
     //   id: 1,
     //   subtotal: 
     // }
+    describe('getAllOrders', () => {
+      let orders;
+      beforeAll(async () => {
+        orders = await getAllOrders();
+      })
+      it('properly grabs all orders', async () => {
+        expect(orders).toBeTruthy();
+      })
+      it('attaches the products to the orders object', () => {
+        expect(orders[0].products).toBeTruthy();
+        expect(orders[3].products).toBeTruthy();
+      })
+    })
+    describe('getAllOrdersByUser', () => {
+      let user1order;
+      let user2order;
+      let noOrder;
+      let noUser;
+      beforeAll(async () => {
+        const user1 = await getUserById(1);
+        const user2 = await getUserById(2);
+        user1order = await getAllOrdersByUser(user1);
+        user2order = await getAllOrdersByUser(user2);
+      })
+      it('grabs the orders by username if they exist', async () => {
+        expect(user1order).toBeTruthy();
+        expect(user2order).toBeTruthy();
+      })
+    })
   })
 })
