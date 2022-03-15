@@ -36,8 +36,8 @@ router.post("/", async (req, res) => {
 
     if (!order) {
       next({
-        name: "UserNotAuthorized",
-        message: "User is not authorized to create an order.",
+        name: "ErrorCreatingOrder",
+        message: "There was a problem creating this order.",
       });
     }
 
