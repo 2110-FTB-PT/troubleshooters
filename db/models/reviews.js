@@ -58,6 +58,25 @@ const getReviewById = async (id) => {
     }
 }
 
+const getReviewByProductId = async (productId) => {
+    try{
+        const { rows: [review] } = await client.query(`
+            SELECT *
+            FROM reviews
+            WHERE "productId"=$1;
+        `, [productId]);
+        if (!review){
+            throw{
+                name: "MissingReview",
+                message: "No review found"
+            }
+        }
+        return review;
+    }catch(error){
+    throw error
+    }
+}
+
 const updateReview = async ({ id, ...reviewField }) => {
     const setString = Object.keys(reviewField).map((key, index) =>
     `"${key}" = $${index + 1}`).join(', ')
@@ -111,6 +130,7 @@ module.exports = {
     createReview,
     getReviewsByUser,
     getReviewById,
+    getReviewByProductId,
     updateReview,
     destroyReview
 }
