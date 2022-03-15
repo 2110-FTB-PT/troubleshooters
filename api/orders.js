@@ -10,9 +10,18 @@ const {
 } = require("../db");
 
 router.get("/", async (req, res, next) => {
-  const orders = await getAllOrders();
-
-  res.send(orders);
+  try {
+    const orders = await getAllOrders();
+    if (!orders) {
+      next({
+        name: "NoOrdersExist",
+        message: "There are no orders to retrieve.",
+      });
+    }
+    res.send(orders);
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
 });
 
 router.post("/", async (req, res) => {
