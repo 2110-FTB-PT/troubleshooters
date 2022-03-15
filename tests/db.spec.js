@@ -4,8 +4,8 @@ const SALT_COUNT = 10;
 const { rebuildDB } = require('../db/seedData');
 const { client, getUserById, getUserByUsername, updateUser, addProductToOrder, createOrder } = require('../db');
 const { getUser } = require('../db');
-const { getAllOrders, getAllOrdersByUser } = require('../db/models/orders');
-const { it, expect } = require('@jest/globals');
+const { getAllOrders, getAllOrdersByUser, updateOrder, destroyOrder, getOrderById } = require('../db/models/orders');
+const { it } = require('@jest/globals');
 
 describe('Database', () => {
   beforeAll(async () => {
@@ -191,6 +191,53 @@ describe('Database', () => {
         const order = await createOrder({ subtotal: 0 });
         expect(order).toBeTruthy();
         console.log(order)
+      })
+    })
+    describe('updateOrder', () => {
+      let user1;
+      let updatedOrder;
+      beforeAll(async () => {
+        user1 = await getUserById(1);
+        const order = await createOrder({ creatorId: user1.id, subtotal: 0 });
+        updatedOrder = await updateOrder({ id: order.id, subtotal: 10 });
+      })
+      it('can update the subtotal', async () => {
+        expect(updatedOrder.subtotal).toEqual(10);
+      })
+      it('returns our ideal orders object, with the products appended to it', async () => {
+        expect(updatedOrder.products).toBeTruthy();
+      })
+    })
+    describe('destroyOrder', () => {
+      let user1;
+      let order;
+      beforeAll(async () => {
+        user1 = await getUserById(1);
+        order = await createOrder({ creatorId: user1.id, subtotal: 0 });
+      })
+      it('destroys the order_products and orders info in the correct order, returning the deleted orders Id', async () => {
+        const { id: deletedOrderId } = await destroyOrder(order.id);
+        expect(deletedOrderId).toEqual(order.id);
+      })
+    })
+    describe('getOrderById', () => {
+      let user1;
+      let order;
+      beforeAll(async () => {
+        user1 = await getUserById(1);
+        order = await createOrder({ creatorId: user1.id, subtotal: 0 });
+      })
+      it('grabs the order by id', async () => {
+        const orderById = await getOrderById(order.id);
+        expect(orderById).toBeTruthy();
+      })
+      it('properly appends the products onto the order object', async () => {
+        const orderById = await getOrderById(order.id);
+        expect(orderById.products).toBeTruthy();
+      })
+      it('properly appends the username as creatorName to the order object', async () => {
+        const orderById = await getOrderById(order.id);
+        expect(orderById.creatorName).toBeTruthy();
       })
     })
   })
