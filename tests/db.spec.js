@@ -5,6 +5,7 @@ const { rebuildDB } = require('../db/seedData');
 const { client, getUserById, getUserByUsername, updateUser, addProductToOrder, createOrder } = require('../db');
 const { getUser } = require('../db');
 const { getAllOrders, getAllOrdersByUser } = require('../db/models/orders');
+const { expect, it } = require('@jest/globals');
 
 describe('Database', () => {
   beforeAll(async () => {
@@ -153,16 +154,24 @@ describe('Database', () => {
       let user1order;
       let user2order;
       let noOrder;
-      let noUser;
+      let user5;
       beforeAll(async () => {
         const user1 = await getUserById(1);
         const user2 = await getUserById(2);
+        user5 = await getUserById(5);
         user1order = await getAllOrdersByUser(user1);
         user2order = await getAllOrdersByUser(user2);
       })
       it('grabs the orders by username if they exist', async () => {
         expect(user1order).toBeTruthy();
         expect(user2order).toBeTruthy();
+      })
+      it('throws an error if there are no orders that belong to that user', async () => {
+        try {
+          noOrder = await getAllOrdersByUser(user5);
+        } catch (error) {
+          expect(error).toBeTruthy();
+        }
       })
     })
   })
