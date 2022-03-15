@@ -295,6 +295,11 @@ async function createInitialUsers() {
       password: 'Stevie99',
       email: 'steve99@mail.com'
     },
+    {
+      username: 'kevin',
+      password: 'kevin123',
+      email: 'kevin123@mail.com'
+    }
   ]
   const users = await Promise.all(
     usersToCreate.map((users) => createUser(users))
