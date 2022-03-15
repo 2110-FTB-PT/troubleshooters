@@ -10,7 +10,7 @@ const {
 
 router.patch("/:orderProductId", async (req, res, next) => {
   const { orderProductId } = req.params;
-  const { quantity, price } = req.body;
+  const { quantity } = req.body;
   try {
     const orderProductById = await getOrderProductById(orderProductId);
     const order = await getOrderById(orderProductById.orderId);
@@ -18,14 +18,12 @@ router.patch("/:orderProductId", async (req, res, next) => {
       const updatedGuestOrderProduct = await updateOrderProduct({
         id: orderProductId,
         quantity,
-        price,
       });
       res.send(updatedGuestOrderProduct);
     } else if (order.creatorId === req.user.id) {
       const updatedUserOrderProduct = await updateOrderProduct({
         id: orderProductId,
         quantity,
-        price,
       });
       res.send(updatedUserOrderProduct);
     } else {
@@ -56,7 +54,8 @@ router.delete("/:orderProductId", async (req, res, next) => {
     } else {
       next({
         name: "ErrorDeletingOrderProduct",
-        message: "An error occured when attempting to delete this order product.",
+        message:
+          "An error occured when attempting to delete this order product.",
       });
     }
   } catch ({ name, message }) {
