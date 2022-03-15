@@ -54,7 +54,7 @@ router.patch("/:orderId", async (req, res, next) => {
   try {
     const orderById = await getOrderById(orderId);
 
-    if (!orderById.creatorId === req.user.id) {
+    if (!orderById.creatorId) {
       const updatedGuestOrder = await updateOrder({
         id: orderId,
         subtotal,
@@ -81,7 +81,7 @@ router.delete("/:orderId", async (req, res, next) => {
   const { orderId } = req.params;
   try {
     const orderById = await getOrderById(orderId);
-    if (!orderById.creatorId === req.user.id) {
+    if (!orderById.creatorId) {
       const destroyedGuestOrderId = await destroyOrder(orderId);
       res.send(destroyedGuestOrderId);
     } else if (orderById.creatorId === req.user.id) {
