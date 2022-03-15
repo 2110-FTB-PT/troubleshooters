@@ -54,12 +54,18 @@ router.patch("/:orderId", async (req, res, next) => {
   try {
     const orderById = await getOrderById(orderId);
 
-    if (orderById.creatorId === req.user.id) {
-      const updatedOrder = await updateOrder({
+    if (!orderById.creatorId === req.user.id) {
+      const updatedGuestOrder = await updateOrder({
         id: orderId,
         subtotal,
       });
-      res.send(updatedOrder);
+      res.send(updatedGuestOrder);
+    } else if (orderById.creatorId === req.user.id) {
+      const updatedUserOrder = await updateOrder({
+        id: orderId,
+        subtotal,
+      });
+      res.send(updatedUserOrder);
     } else {
       next({
         name: "userUnauthorizeToUpdate",
