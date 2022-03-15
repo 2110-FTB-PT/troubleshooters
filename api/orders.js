@@ -8,7 +8,6 @@ const {
   addProductToOrder,
   destroyOrder,
 } = require("../db");
-const { requireUser } = require("./utils");
 
 router.get("/", async (req, res, next) => {
   const orders = await getAllOrders();
@@ -16,7 +15,7 @@ router.get("/", async (req, res, next) => {
   res.send(orders);
 });
 
-router.post("/", requireUser, async (req, res) => {
+router.post("/", async (req, res) => {
   const { subtotal } = req.body;
   const orderData = {};
 
