@@ -2,7 +2,7 @@ const client = require("../client.js");
 
 const createProduct = async ({ title, artist, description, price, inventoryQuantity, imgURL }) => {
   try {
-    if (!title, !description, !price, !inventoryQuantity) {
+    if (!title || !description || !price || !inventoryQuantity || !artist) {
       throw {
         name: "MissingRequiredFields",
         message: "Please provide the title, description, price, and quantity"
