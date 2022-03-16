@@ -73,23 +73,48 @@ const getAllOrders = async () => {
 
 const getOrderById = async (id) => {
   try {
-    const {
+    let {
       rows: [order],
     } = await client.query(
       `
-                SELECT * 
-                FROM orders
-                WHERE id = $1;
-            `,
+      SELECT *
+      FROM orders
+      WHERE orders.id = $1;
+    `,
       [id]
     );
+    if (order.creatorId) {
+      const {
+        rows: [userOrder],
+      } = await client.query(
+        `
+                SELECT orders.*, users.username AS "creatorName" 
+                FROM orders
+                JOIN users ON orders."creatorId" = users.id
+                WHERE orders.id = $1;
+            `,
+        [id]
+      );
+      order = userOrder;
+    }
     if (!order) {
       throw {
         name: "NoExistingInformation",
         message: "No order currently exist.",
       };
     }
-    return await addProductsToOrders(order);
+    const { rows: products } = await client.query(
+      `
+                  SELECT products.*, order_products.quantity, order_products.price, order_products."orderId", order_products.id AS "orderProductId"
+                  FROM products
+                  JOIN order_products
+                  ON products.id = order_products."productId"
+                  WHERE order_products."orderId" = $1;
+              `,
+      [order.id]
+    );
+    order.products = products;
+    return order;
   } catch (error) {
     console.log("Error at getOrderById", error);
     throw error;
@@ -110,7 +135,7 @@ const getAllOrdersByUser = async ({ username }) => {
     if (!orders) {
       throw {
         name: "NoExistingInformation",
-        message: "You haven't placed any orders",
+        message: "You haven't placed any orders!"
       };
     }
     return await addProductsToOrders(orders);
@@ -122,7 +147,7 @@ const getAllOrdersByUser = async ({ username }) => {
 
 const createOrder = async ({ creatorId, subtotal }) => {
   try {
-    if (!creatorId || !subtotal) {
+    if (!subtotal && subtotal !== 0) {
       throw {
         name: "MissingOrderInput",
         message: "Cannot proceed without required information.",
@@ -134,11 +159,11 @@ const createOrder = async ({ creatorId, subtotal }) => {
       `
                 INSERT INTO orders("creatorId", subtotal)
                 VALUES($1, $2)
-                RETURNING *
+                RETURNING *;
             `,
       [creatorId, subtotal]
     );
-    return order;
+    return await getOrderById(order.id);
   } catch (error) {
     console.log("Error at createOrder", error);
     throw error;
@@ -174,7 +199,7 @@ const updateOrder = async ({ id, ...fields }) => {
         message: "The order you tried to update does not exist",
       };
     }
-    return order;
+    return await getOrderById(order.id);
   } catch (error) {
     console.log("Error at updateOrder", error);
     throw error;
