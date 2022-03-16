@@ -135,7 +135,7 @@ const getAllOrdersByUser = async ({ username }) => {
     if (!orders) {
       throw {
         name: "NoExistingInformation",
-        message: "You haven't placed any orders",
+        message: "You haven't placed any orders!"
       };
     }
     return await addProductsToOrders(orders);
