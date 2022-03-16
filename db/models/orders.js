@@ -122,7 +122,7 @@ const getAllOrdersByUser = async ({ username }) => {
 
 const createOrder = async ({ creatorId, subtotal }) => {
   try {
-    if (!creatorId || !subtotal) {
+    if (!subtotal && subtotal !== 0) {
       throw {
         name: "MissingOrderInput",
         message: "Cannot proceed without required information.",
