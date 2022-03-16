@@ -6,7 +6,6 @@ const {
   getProductsOnly,
   addProductToOrder,
   createUser,
-  createAdminUser,
   createProduct
   // declare your model imports here
   // for example, User

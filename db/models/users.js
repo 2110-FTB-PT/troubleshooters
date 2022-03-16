@@ -149,7 +149,10 @@ const updateUser = async ({ id, ...userFields }) => {
         `"${key}" = $${index + 1}`).join(', ')
 
     if (setString.length === 0) {
-        return;
+        throw {
+            name: "FieldsRequired",
+            message: "You must provide all required fields"
+        }
     }
     try {
         const hashPwd = await bcrypt.hash(userFields.password, SALT_ROUNDS)
