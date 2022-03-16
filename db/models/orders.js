@@ -77,9 +77,10 @@ const getOrderById = async (id) => {
       rows: [order],
     } = await client.query(
       `
-                SELECT * 
+                SELECT orders.*, users.username AS "creatorName" 
                 FROM orders
-                WHERE id = $1;
+                JOIN users ON orders."creatorId" = users.id
+                WHERE orders.id = $1;
             `,
       [id]
     );
@@ -89,7 +90,18 @@ const getOrderById = async (id) => {
         message: "No order currently exist.",
       };
     }
-    return await addProductsToOrders(order);
+    const { rows: products } = await client.query(
+      `
+                  SELECT products.*, order_products.quantity, order_products.price, order_products."orderId", order_products.id AS "orderProductId"
+                  FROM products
+                  JOIN order_products
+                  ON products.id = order_products."productId"
+                  WHERE order_products."orderId" = $1;
+              `,
+      [order.id]
+    );
+    order.products = products;
+    return order;
   } catch (error) {
     console.log("Error at getOrderById", error);
     throw error;
