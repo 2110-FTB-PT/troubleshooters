@@ -168,19 +168,19 @@ async function createInitialOrders() {
     const ordersToCreate = [
       {
         creatorId: 2,
-        subtotal: 11.11,
+        subtotal: 25.99,
       },
       {
         creatorId: 1,
-        subtotal: 19.55,
+        subtotal: 27.98,
       },
       {
         creatorId: 3,
-        subtotal: 20.22,
+        subtotal: 28.98,
       },
       {
         creatorId: 2,
-        subtotal: 21.1,
+        subtotal: 36.98,
       },
     ];
     const orders = await Promise.all(
@@ -206,55 +206,55 @@ async function createInitialOrderProducts() {
         orderId: orderOne.id,
         productId: product1.id,
         quantity: 7,
-        price: 11,
+        price: product1.price,
       },
       {
         orderId: orderOne.id,
         productId: product2.id,
         quantity: 3,
-        price: 16,
+        price: product2.price,
       },
       {
         orderId: orderTwo.id,
         productId: product3.id,
         quantity: 6,
-        price: 22,
+        price: product3.price,
       },
       {
         orderId: orderTwo.id,
         productId: product4.id,
         quantity: 10,
-        price: 7,
+        price: product4.price,
       },
       {
         orderId: orderThree.id,
         productId: product5.id,
         quantity: 2,
-        price: 10,
+        price: product5.price,
       },
       {
         orderId: orderThree.id,
         productId: product6.id,
         quantity: 1,
-        price: 100,
+        price: product6.price,
       },
       {
         orderId: orderFour.id,
         productId: product7.id,
         quantity: 10,
-        price: 7,
+        price: product7.price,
       },
       {
         orderId: orderFour.id,
         productId: product1.id,
         quantity: 4,
-        price: 4,
+        price: product1.price,
       },
       {
         orderId: orderFour.id,
         productId: product2.id,
         quantity: 10,
-        price: 15,
+        price: product2.price,
       },
     ];
     const orderProducts = await Promise.all(
@@ -267,12 +267,14 @@ async function createInitialOrderProducts() {
   }
 }
 
-// populate user table
+// async function populateInitialData() {
+//   try {
+//     // create useful starting data by leveraging your
 async function createInitialUsers() {
   try {
     console.log("Starting to create users...");
     const usersToCreate = [
-    {
+      {
       username: 'albert',
       password: 'bertie99',
       email: 'albert.bertie99@mail.com',
@@ -302,7 +304,6 @@ async function createInitialUsers() {
   const users = await Promise.all(
     usersToCreate.map((users) => createUser(users))
   )
-
     console.log("Users", users)
     console.log("Finished creating users.");
   } catch(error){
