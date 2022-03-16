@@ -73,17 +73,30 @@ const getAllOrders = async () => {
 
 const getOrderById = async (id) => {
   try {
-    const {
+    let {
       rows: [order],
     } = await client.query(
       `
+      SELECT *
+      FROM orders
+      WHERE orders.id = $1;
+    `,
+      [id]
+    );
+    if (order.creatorId) {
+      const {
+        rows: [userOrder],
+      } = await client.query(
+        `
                 SELECT orders.*, users.username AS "creatorName" 
                 FROM orders
                 JOIN users ON orders."creatorId" = users.id
                 WHERE orders.id = $1;
             `,
-      [id]
-    );
+        [id]
+      );
+      order = userOrder;
+    }
     if (!order) {
       throw {
         name: "NoExistingInformation",
@@ -146,11 +159,11 @@ const createOrder = async ({ creatorId, subtotal }) => {
       `
                 INSERT INTO orders("creatorId", subtotal)
                 VALUES($1, $2)
-                RETURNING *
+                RETURNING *;
             `,
       [creatorId, subtotal]
     );
-    return order;
+    return await getOrderById(order.id);
   } catch (error) {
     console.log("Error at createOrder", error);
     throw error;
@@ -186,7 +199,7 @@ const updateOrder = async ({ id, ...fields }) => {
         message: "The order you tried to update does not exist",
       };
     }
-    return order;
+    return await getOrderById(order.id);
   } catch (error) {
     console.log("Error at updateOrder", error);
     throw error;
