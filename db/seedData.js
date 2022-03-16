@@ -6,6 +6,7 @@ const {
   getProductsOnly,
   addProductToOrder,
   createUser,
+  createAdminUser,
   createProduct
   // declare your model imports here
   // for example, User
@@ -267,14 +268,12 @@ async function createInitialOrderProducts() {
   }
 }
 
-// async function populateInitialData() {
-//   try {
-//     // create useful starting data by leveraging your
+// populate user table
 async function createInitialUsers() {
   try {
     console.log("Starting to create users...");
     const usersToCreate = [
-      {
+    {
       username: 'albert',
       password: 'bertie99',
       email: 'albert.bertie99@mail.com',
@@ -304,6 +303,7 @@ async function createInitialUsers() {
   const users = await Promise.all(
     usersToCreate.map((users) => createUser(users))
   )
+
     console.log("Users", users)
     console.log("Finished creating users.");
   } catch(error){
