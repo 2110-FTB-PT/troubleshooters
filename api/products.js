@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router();
-const { getAllProducts, createProduct, getProductById } = require('../db/models/products');
+const { getAllProducts, createProduct, getProductById, updateProduct } = require('../db/models/products');
 const { requireAdminUser } = require('./utils');
 
 router.use((req, res, next) => {
@@ -47,6 +47,20 @@ router.get('/:productId', async (req, res, next) => {
     }
 
     res.send(product);
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+})
+
+// PATCH /api/products/:productId
+router.patch('/:productId', requireAdminUser, async (req, res, next) => {
+  // build our values to update object to pass into updatedProduct
+  const { productId } = req.params;
+  const productValuesToUpdate = { id: productId, ...req.body };
+  try {
+    const updatedProduct = await updateProduct(productValuesToUpdate);
+
+    res.send(updatedProduct);
   } catch ({ name, message }) {
     next({ name, message });
   }
