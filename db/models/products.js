@@ -55,11 +55,11 @@ const getProductById = async (productId) => {
 
     const { rows: reviews } = await client.query(`
       SELECT * FROM reviews
-      WHERE productId = $1;
+      WHERE "productId" = $1;
     `, [productId]);
 
     const { rows: categories } = await client.query(`
-      SELECT categories.*, product_categories.id AS "productCategoryId
+      SELECT categories.*, product_categories.id AS "productCategoryId"
       FROM categories
       JOIN product_categories ON categories.id = product_categories."categoryId"
       WHERE product_categories."productId" = $1; 
