@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router();
-const { getAllProducts, createProduct } = require('../db/models/products');
+const { getAllProducts, createProduct, getProductById } = require('../db/models/products');
 const { requireAdminUser } = require('./utils');
 
 router.use((req, res, next) => {
@@ -30,4 +30,26 @@ router.post('/', requireAdminUser, async (req, res, next) => {
     next({ name, message });
   }
 })
+
+// GET /api/products/:productId
+router.get('/:productId', async (req, res, next) => {
+  const { productId } = req.params;
+  try {
+    const product = await getProductById(productId);
+
+    // next custom error if it returns undefined
+    if (!product) {
+      next({
+        name: "InvalidProductId",
+        message: "That product does not exist"
+      });
+      return;
+    }
+
+    res.send(product);
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+})
+
 module.exports = router;
