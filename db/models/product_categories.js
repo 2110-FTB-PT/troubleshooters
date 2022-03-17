@@ -14,6 +14,27 @@ const addCategoryToProduct = async ({ productId, categoryId}) => {
   }
 }
 
+const deleteProductCategory = async (productCategoryId) => {
+  try {
+    const { rows: [productCategoryId] } = await client.query(`
+      DELETE FROM product_categories
+      WHERE id = $1
+      RETURNING id; 
+    `, [productCategoryId]);
+
+    if (!productCategoryId) {
+      throw {
+        name: "MissingRelation",
+        message: "That category isn't attached to that product"
+      }
+    }
+
+    return productCategoryId;
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
   addCategoryToProduct
 }
