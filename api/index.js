@@ -13,7 +13,7 @@ apiRouter.get('/', (req, res, next) => {
 });
 
 //Authorization
-router.use(async (req, res, next) => {
+apiRouter.use(async (req, res, next) => {
   const prefix = 'Bearer ';
   const auth = req.header('Authorization');
 
