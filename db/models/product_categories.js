@@ -8,6 +8,13 @@ const addCategoryToProduct = async ({ productId, categoryId}) => {
       RETURNING *;
     `, [productId, categoryId]);
 
+    if(!productCategory) {
+      throw {
+        name: "IncorrectInformation",
+        message: "Either the product or category you specified does not exist"
+      }
+    }
+
     return productCategory;
   } catch (error) {
     throw error;
