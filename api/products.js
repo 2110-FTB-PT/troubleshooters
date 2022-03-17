@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router();
-const { getAllProducts, createProduct, getProductById, updateProduct, deleteProduct } = require('../db/models/products');
+const { getAllProducts, createProduct, getProductById, updateProduct, deleteProduct, getProductsByCategory } = require('../db/models/products');
 const { requireAdminUser } = require('./utils');
 
 router.use((req, res, next) => {
@@ -73,6 +73,26 @@ router.delete('/:productId', requireAdminUser, async (req, res, next) => {
     const deletedProductId = await deleteProduct(productId);
 
     res.send(deletedProductId);
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+})
+
+// GET /api/products/categories/:categoryId grabs all products related to a single category
+router.get('/categories/:categoryId', async (req, res, next) => {
+  const { categoryId } = req.params;
+  try {
+    const productsContainingCategory = await getProductsByCategory(categoryId);
+
+    if (productsContainingCategory.length === 0) {
+      next({
+        name: "MissingProducts",
+        message: "Sorry, we don't have any products under that category at this time"
+      })
+      return;
+    }
+
+    res.send(productsContainingCategory);
   } catch ({ name, message }) {
     next({ name, message });
   }
