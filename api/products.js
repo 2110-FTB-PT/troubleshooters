@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
-const { getAllProducts } = require('../db/models/products');
+const { getAllProducts, createProduct } = require('../db/models/products');
+const { requireAdminUser } = require('./utils');
 
 router.use((req, res, next) => {
   console.log("A request is being made to /products");
@@ -19,4 +20,14 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+// POST /api/products
+router.post('/', requireAdminUser, async (req, res, next) => {
+  try {
+    const product = await createProduct(req.body)
+
+    res.send(product)
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+})
 module.exports = router;
