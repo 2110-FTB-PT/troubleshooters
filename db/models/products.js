@@ -114,7 +114,7 @@ const updateProduct = async ({ id, ...fields }) => {
 
   try {
     const { rows: [updatedProduct] } = await client.query(`
-      UPDATE routines
+      UPDATE products
       SET ${setString}
       WHERE id = $${valuesArray.length} 
       RETURNING *;
