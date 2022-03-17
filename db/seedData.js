@@ -17,6 +17,7 @@ async function dropTables() {
     console.log("Dropping All Tables...");
     client.query(`
       DROP TABLE IF EXISTS order_products;
+      DROP TABLE IF EXISTS product_categories;
       DROP TABLE IF EXISTS orders;
       DROP TABLE IF EXISTS reviews;
       DROP TABLE IF EXISTS users;      
@@ -69,6 +70,13 @@ async function buildTables() {
           id SERIAL PRIMARY KEY,
           "creatorId" INTEGER REFERENCES users(id),
           subtotal DECIMAL(38,2) NOT NULL
+        );
+
+        CREATE TABLE product_categories(
+          id SERIAL PRIMARY KEY,
+          "productId" INTEGER REFERENCES products(id),
+          "categoryId" INTEGER REFERENCES categories(id),
+          UNIQUE("productId", "categoryId")
         );
 
         CREATE TABLE order_products(
