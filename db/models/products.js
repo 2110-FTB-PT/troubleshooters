@@ -143,13 +143,13 @@ const deleteProduct = async (productId) => {
       WHERE "productId" = $1; 
     `, [productId]);
 
-    const { rows: [deletedProduct] } = await client.query(`
+    const { rows: [deletedProductId] } = await client.query(`
       DELETE FROM products
       WHERE id = $1
-      RETURNING *; 
+      RETURNING id; 
     `, [productId]);
 
-    return deletedProduct;
+    return deletedProductId;
   } catch (error) {
     throw error;
   }
