@@ -21,6 +21,39 @@ throw error;
 }
 }
 
+const getAllCategories = async () => {
+    try {
+        const { rows: categories } = await client.query(`
+        SELECT * FROM categories;
+        `);
+    
+        return categories;
+    }
+    catch (error) {
+    throw error;
+    }
+    }
+
+const deleteCategory = async (id) => {
+    try {
+        await client.query(`
+        DELETE FROM product_categories
+        WHERE "categoryId" = $1;
+        `, [id])
+        const { rows: [deletedCategoryId] } = await client.query(`
+        DELETE FROM categories
+        WHERE id = $1
+        RETURNING id;
+        `, [id]);
+        
+    return deletedCategoryId;
+    }
+    catch (error) {
+        throw error;
+    }
+}
 exports.modules = {
-    createCategory
+    createCategory,
+    getAllCategories,
+    deleteCategory
 };
