@@ -35,8 +35,6 @@ const deleteProductCategory = async (productCategoryId) => {
   }
 }
 
-
-
 module.exports = {
   addCategoryToProduct,
   deleteProductCategory
