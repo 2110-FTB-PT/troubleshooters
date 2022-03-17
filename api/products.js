@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router();
-const { getAllProducts, createProduct, getProductById, updateProduct } = require('../db/models/products');
+const { getAllProducts, createProduct, getProductById, updateProduct, deleteProduct } = require('../db/models/products');
 const { requireAdminUser } = require('./utils');
 
 router.use((req, res, next) => {
@@ -61,6 +61,18 @@ router.patch('/:productId', requireAdminUser, async (req, res, next) => {
     const updatedProduct = await updateProduct(productValuesToUpdate);
 
     res.send(updatedProduct);
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+})
+
+// DELETE /api/products/:productId
+router.delete('/:productId', requireAdminUser, async (req, res, next) => {
+  const { productId } = req.params;
+  try {
+    const deletedProductId = await deleteProduct(productId);
+
+    res.send(deletedProductId);
   } catch ({ name, message }) {
     next({ name, message });
   }
