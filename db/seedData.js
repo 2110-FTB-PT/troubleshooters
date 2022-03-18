@@ -6,10 +6,12 @@ const {
   getProductsOnly,
   addProductToOrder,
   createUser,
-  createProduct
+  createProduct,
+  getAllCategories
   // declare your model imports here
   // for example, User
 } = require("./");
+const { addCategoryToProduct } = require("./models/product_categories");
 
 // drop tables in correct order
 async function dropTables() {
@@ -275,6 +277,33 @@ async function createInitialOrderProducts() {
   }
 }
 
+async function createInitialProductCategories() {
+  try {
+    console.log('Starting to create product categories i.e. attach categories to products')
+    const [category1, category2, category3, category4, category5] = await getAllCategories();
+    const [product1, product2, product3, product4, product5] = await getProductsOnly();
+    const productCategoriesToCreate = [
+      { productId: product1.id, categoryId: category1.id },
+      { productId: product1.id, categoryId: category2.id },
+      { productId: product2.id, categoryId: category3.id },
+      { productId: product2.id, categoryId: category4.id },
+      { productId: product2.id, categoryId: category5.id },
+      { productId: product3.id, categoryId: category2.id },
+      { productId: product3.id, categoryId: category3.id },
+      { productId: product4.id, categoryId: category4.id },
+      { productId: product4.id, categoryId: category5.id },
+      { productId: product4.id, categoryId: category3.id },
+      { productId: product4.id, categoryId: category2.id },
+      { productId: product5.id, categoryId: category5.id }
+    ]
+    const productCategories = await Promise.all(productCategoriesToCreate.map(addCategoryToProduct));
+    console.log('product categories created/attached', productCategories);
+    console.log('Finished creating product categories!');
+  } catch (error) {
+    throw error;
+  }
+}
+
 // async function populateInitialData() {
 //   try {
 //     // create useful starting data by leveraging your
@@ -368,6 +397,7 @@ async function rebuildDB() {
     await createInitialReviews();
     await createInitialOrders();
     await createInitialOrderProducts();
+    await createInitialProductCategories();
   } catch (error) {
     console.log("Error during rebuildDB");
     throw error;
