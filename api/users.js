@@ -8,7 +8,7 @@ const { requireUser, requireAdminUser } = require('./utils');
 
 
 // users/
-router.get('/', async (req, res, next) => {
+router.get('/', requireAdminUser, async (req, res, next) => {
     const users = await getAllUsers();
     try {
         res.send({
