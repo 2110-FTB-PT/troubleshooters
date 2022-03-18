@@ -7,7 +7,8 @@ const {
   addProductToOrder,
   createUser,
   createProduct,
-  getAllCategories
+  getAllCategories,
+  createCategory
   // declare your model imports here
   // for example, User
 } = require("./");
@@ -386,6 +387,31 @@ async function createInitialReviews(){
   }
 }
 
+async function createInitialCategories(){
+try {
+console.log("creating categories");
+const categoriestoCreate = [
+  {name: 'rock'},
+  {name: 'jazz'},
+  {name: 'metal'},
+  {name: 'country'},
+  {name: 'pop'},
+  {name: 'vinyl'},
+  {name: 'cassettes'},
+  {name: 'alternative'},
+  {name: 'rap'},
+  {name: 'R&B'}
+]
+const categories = await Promise.all(
+  categoriestoCreate.map(createCategory)
+)
+console.log("Categories", categories)
+console.log("Finished creating categories.");
+}
+catch(error) {
+  throw error;
+}
+}
 async function rebuildDB() {
   try {
     console.log("buildingdb");
@@ -394,6 +420,7 @@ async function rebuildDB() {
     await buildTables();
     await createInitialUsers();
     await createInitialProducts();
+    await createInitialCategories();
     await createInitialReviews();
     await createInitialOrders();
     await createInitialOrderProducts();

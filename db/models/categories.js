@@ -52,7 +52,7 @@ const deleteCategory = async (id) => {
         throw error;
     }
 }
-exports.modules = {
+module.exports = {
     createCategory,
     getAllCategories,
     deleteCategory
