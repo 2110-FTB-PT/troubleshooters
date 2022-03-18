@@ -24,6 +24,23 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.get("/:orderId", async (req, res, next) => {
+  const { orderId } = req.params;
+
+  try {
+    const order = await getOrderById(orderId);
+    if (!order) {
+      next({
+        name: "NoOrderExists",
+        message: "There is no order to retrieve.",
+      });
+    }
+    res.send(order);
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
+
 router.post("/", async (req, res) => {
   const { subtotal } = req.body;
   const orderData = {};
