@@ -80,6 +80,7 @@ router.post('/login', async (req, res, next) => {
                 name: 'MissingCredentialsError',
                 message: 'Please enter both username and password'
             });
+            return;
         }
         const user = await getUser({username, password})
         if (user) {
