@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt')
 const { JWT_SECRET } = process.env;
 const { createUser, getUser, getAllUsers, getUserByEmail, getUserByUsername } = require('../db');
 const { requireUser, requireAdminUser } = require('./utils');
