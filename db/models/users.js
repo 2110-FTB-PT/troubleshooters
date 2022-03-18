@@ -124,7 +124,9 @@ const getUserByUsername = async (username) => {
             FROM users
             WHERE username=$1;
         `, [username]);
-        delete user.password;
+        if (user) {
+            delete user.password;
+        }
         return user;
     } catch (error) {
         throw error;
@@ -138,6 +140,9 @@ const getUserByEmail = async (email) => {
             FROM users
             WHERE email=$1;
         `, [email]);
+        if (user) {
+            delete user.password
+        }
         return user;
     } catch (error) {
         throw error;
