@@ -1,14 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt')
 const { JWT_SECRET } = process.env;
 const { createUser, getUser, getAllUsers, getUserByEmail, getUserByUsername } = require('../db');
 const { requireUser, requireAdminUser } = require('./utils');
 
 
 // users/
-router.get('/', async (req, res, next) => {
+router.get('/', requireAdminUser, async (req, res, next) => {
     const users = await getAllUsers();
     try {
         res.send({
@@ -30,6 +29,13 @@ router.get('/myaccount', requireUser, async (req, res, next) => {
 router.post('/register', async (req, res, next) => {
     const { username, password, email } = req.body
     try {
+        if (!username || !password || !email ) {
+            next({
+                name: 'MissingCredentials',
+                message: 'Plese fill all required fields'
+            })
+            return;
+        }
         const _user = await getUserByUsername(username)
         const emailUsed = await getUserByEmail(email)
         if (_user) {
@@ -46,11 +52,6 @@ router.post('/register', async (req, res, next) => {
             next({
                 name: 'PasswordLengthError',
                 message: 'Password must be 8 or more characters long'
-            })
-        } else if (!username || !password || !email ) {
-            next({
-                name: 'MissingCredentials',
-                message: 'Plese fill all required fields'
             })
         } else {
             const user = await createUser({
@@ -80,6 +81,7 @@ router.post('/login', async (req, res, next) => {
                 name: 'MissingCredentialsError',
                 message: 'Please enter both username and password'
             });
+            return;
         }
         const user = await getUser({username, password})
         if (user) {

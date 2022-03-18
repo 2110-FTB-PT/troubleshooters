@@ -20,6 +20,11 @@ router.patch("/:orderProductId", async (req, res, next) => {
         quantity,
       });
       res.send(updatedGuestOrderProduct);
+    } else if (!req.user) {
+      next({
+        name: "IncorrectCredentials",
+        message: "You are not the owner of this order"
+      })
     } else if (order.creatorId === req.user.id) {
       const updatedUserOrderProduct = await updateOrderProduct({
         id: orderProductId,
@@ -46,6 +51,11 @@ router.delete("/:orderProductId", async (req, res, next) => {
         orderProductId
       );
       res.send(destroyedGuestOrderProductId);
+    } else if (!req.user) {
+      next({
+        name: "IncorrectCredentials",
+        message: "You are not the owner of this order"
+      })
     } else if (order.creatorId === req.user.id) {
       const destroyedUserOrderProductId = await destroyOrderProduct(
         orderProductId
