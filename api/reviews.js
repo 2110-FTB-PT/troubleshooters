@@ -25,4 +25,17 @@ router.post('/', requireUser, async (req, res, next) => {
     }
   });
 
+  // patch 
+router.patch('/:productId', requireUser, async (req, res, next) => {
+    const { productId } = req.params;
+    const reviewValuesToUpdate = { id: productId, ...req.body };
+    try {
+      const updateReview = await updateReview(reviewValuesToUpdate);
+  
+      res.send(updateReview);
+    } catch ({ name, message }) {
+      next({ name, message });
+    }
+  })
+
 module.exports = router;
