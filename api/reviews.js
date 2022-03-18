@@ -1,41 +1,74 @@
 const express = require('express');
-const { createReview, getReviewsByUser, getReviewById, getReviewByProductId, updateReview } = require('../db');
+const { createReview, getReviewsByUser, getReviewById, getReviewByProductId, updateReview, destroyReview, destroyReview } = require('../db');
 const router = express.Router();
 const { requireUser } = require('./utils');
 
 // get /api/reviews
 router.get('/:productId', async (req, res, next) => {
     const { productId } = req.params;
-    try{        
+    try {
         const reviews = await getReviewByProductId(productId);
+
         res.send(reviews)
-    }catch({ name, message }){
+    } catch ({ name, message }) {
         next({ name, message })
     }
 });
 
-// post /api/reviews/:productId/reviewId
+// post
 router.post('/', requireUser, async (req, res, next) => {
     try {
-      const review = await createReview(req.body)
-  
-      res.send(review)
-    } catch ({ name, message }) {
-      next({ name, message });
-    }
-  });
+        const review = await createReview(req.body)
 
-  // patch 
-router.patch('/:productId', requireUser, async (req, res, next) => {
-    const { productId } = req.params;
-    const reviewValuesToUpdate = { id: productId, ...req.body };
-    try {
-      const updateReview = await updateReview(reviewValuesToUpdate);
-  
-      res.send(updateReview);
+        res.send(review)
     } catch ({ name, message }) {
-      next({ name, message });
+        next({ name, message });
     }
-  })
+});
+
+// patch 
+router.patch('/:reviewId', requireUser, async (req, res, next) => {
+    const { reviewId } = req.params;
+    const { description } = req.body;
+
+    try {
+        const reviewById = await getReviewById(reviewId);
+
+        if (reviewById.creatorId === req.user.id) {
+            const reviewUpdate = await updateReview({
+                id: reviewId,
+                description
+            })
+            res.send(reviewUpdate);
+        } else {
+            next({
+                name: "UserUnauthorizationError",
+                message: "User is not authorized to update this review."
+            })
+        }
+    } catch ({ name, message }) {
+        next({ name, message });
+    }
+});
+
+// delete
+router.delete('/:reviewId', requireUser, async (req, res, next) => {
+    const { reviewId } = req.params;
+    try {
+        const reviewById = await getReviewById(reviewId);
+        if (reviewById.creatorId === req.user.id) {
+            const destroyReviewById = await destroyReview(reviewId);
+            res.send(destroyReviewById);
+
+        } else {
+            next({
+                name: "UserUnauthorizeToDelete",
+                message: "User is not authorized to delete this review.",
+            })
+        }
+    } catch ({ name, message }) {
+        next({ name, message });
+    }
+})
 
 module.exports = router;
