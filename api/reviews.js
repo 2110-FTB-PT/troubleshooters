@@ -15,18 +15,6 @@ router.get('/:productId', async (req, res, next) => {
     }
 });
 
-// get by user /api/reviews
-router.get('/:username', async (req, res, next) => {
-    const { username } = req.params;
-    try {
-        const reviews = await getReviewsByUser({ creatorId: username });
-
-        res.send(reviews)
-    } catch ({ name, message }) {
-        next({ name, message })
-    }
-});
-
 // post
 router.post('/', requireUser, async (req, res, next) => {
     try {
