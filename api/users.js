@@ -30,6 +30,13 @@ router.get('/myaccount', requireUser, async (req, res, next) => {
 router.post('/register', async (req, res, next) => {
     const { username, password, email } = req.body
     try {
+        if (!username || !password || !email ) {
+            next({
+                name: 'MissingCredentials',
+                message: 'Plese fill all required fields'
+            })
+            return;
+        }
         const _user = await getUserByUsername(username)
         const emailUsed = await getUserByEmail(email)
         if (_user) {
@@ -46,11 +53,6 @@ router.post('/register', async (req, res, next) => {
             next({
                 name: 'PasswordLengthError',
                 message: 'Password must be 8 or more characters long'
-            })
-        } else if (!username || !password || !email ) {
-            next({
-                name: 'MissingCredentials',
-                message: 'Plese fill all required fields'
             })
         } else {
             const user = await createUser({
