@@ -41,12 +41,14 @@ router.get("/:orderId", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", async (req, res, next) => {
   const { subtotal } = req.body;
   const orderData = {};
 
   try {
-    orderData.creatorId = req.user.id;
+    if (req.user) {
+      orderData.creatorId = req.user.id;
+    }
     orderData.subtotal = subtotal;
 
     const order = await createOrder(orderData);
