@@ -13,7 +13,7 @@ apiRouter.get('/', (req, res, next) => {
 });
 
 //Authorization
-router.use(async (req, res, next) => {
+apiRouter.use(async (req, res, next) => {
   const prefix = 'Bearer ';
   const auth = req.header('Authorization');
 
@@ -46,5 +46,6 @@ apiRouter.use('/users', require('./users'));
 apiRouter.use('/orders', require('./orders'));
 apiRouter.use('/reviews', require('./reviews'));
 apiRouter.use('/order_products', require('./order_products'));
+apiRouter.use('/products', require('./products'));
 
 module.exports = apiRouter;

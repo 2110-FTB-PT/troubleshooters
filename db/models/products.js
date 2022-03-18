@@ -55,11 +55,11 @@ const getProductById = async (productId) => {
 
     const { rows: reviews } = await client.query(`
       SELECT * FROM reviews
-      WHERE productId = $1;
+      WHERE "productId" = $1;
     `, [productId]);
 
     const { rows: categories } = await client.query(`
-      SELECT categories.*, product_categories.id AS "productCategoryId
+      SELECT categories.*, product_categories.id AS "productCategoryId"
       FROM categories
       JOIN product_categories ON categories.id = product_categories."categoryId"
       WHERE product_categories."productId" = $1; 
@@ -114,7 +114,7 @@ const updateProduct = async ({ id, ...fields }) => {
 
   try {
     const { rows: [updatedProduct] } = await client.query(`
-      UPDATE routines
+      UPDATE products
       SET ${setString}
       WHERE id = $${valuesArray.length} 
       RETURNING *;
@@ -143,13 +143,13 @@ const deleteProduct = async (productId) => {
       WHERE "productId" = $1; 
     `, [productId]);
 
-    const { rows: [deletedProduct] } = await client.query(`
+    const { rows: [deletedProductId] } = await client.query(`
       DELETE FROM products
       WHERE id = $1
-      RETURNING *; 
+      RETURNING id; 
     `, [productId]);
 
-    return deletedProduct;
+    return deletedProductId;
   } catch (error) {
     throw error;
   }
