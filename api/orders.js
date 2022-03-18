@@ -24,12 +24,31 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.get("/:orderId", async (req, res, next) => {
+  const { orderId } = req.params;
+
+  try {
+    const order = await getOrderById(orderId);
+    if (!order) {
+      next({
+        name: "NoOrderExists",
+        message: "There is no order to retrieve.",
+      });
+    }
+    res.send(order);
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
+
+router.post("/", async (req, res, next) => {
   const { subtotal } = req.body;
   const orderData = {};
 
   try {
-    orderData.creatorId = req.user.id;
+    if (req.user) {
+      orderData.creatorId = req.user.id;
+    }
     orderData.subtotal = subtotal;
 
     const order = await createOrder(orderData);
@@ -60,7 +79,7 @@ router.patch("/:orderId", async (req, res, next) => {
         subtotal,
       });
       res.send(updatedGuestOrder);
-    } else if (orderById.creatorId === req.user.id) {
+    } else if (req.user && orderById.creatorId === req.user.id) {
       const updatedUserOrder = await updateOrder({
         id: orderId,
         subtotal,
@@ -84,7 +103,7 @@ router.delete("/:orderId", async (req, res, next) => {
     if (!orderById.creatorId) {
       const destroyedGuestOrderId = await destroyOrder(orderId);
       res.send(destroyedGuestOrderId);
-    } else if (orderById.creatorId === req.user.id) {
+    } else if (req.user && orderById.creatorId === req.user.id) {
       const destroyedUserOrderId = await destroyOrder(orderId);
       res.send(destroyedUserOrderId);
     } else {
@@ -100,17 +119,22 @@ router.delete("/:orderId", async (req, res, next) => {
 
 router.post("/:orderId/products", async (req, res, next) => {
   const { orderId } = req.params;
-  const { productId, quantity, price } = req.body;
   try {
-    const product = await addProductToOrder({
-      orderId,
-      productId,
-      quantity,
-      price,
-    });
-    res.send(product);
-  } catch (error) {
-    next(error);
+    const orderById = await getOrderById(orderId);
+    if (!orderById.creatorId) {
+      const product = await addProductToOrder({ orderId, ...req.body });
+      res.send(product);
+    } else if (req.user && orderById.creatorId === req.user.id) {
+      const product = await addProductToOrder({ orderId, ...req.body });
+      res.send(product);
+    } else {
+      next({
+        name: "UserUnauthorizeToDelete",
+        message: "User is not authorized to add products to this order.",
+      });
+    }
+  } catch ({ name, message }) {
+    next({ name, message });
   }
 });
 
