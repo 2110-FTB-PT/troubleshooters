@@ -3,7 +3,7 @@ const { createReview, getReviewsByUser, getReviewById, getReviewByProductId, upd
 const router = express.Router();
 const { requireUser } = require('./utils');
 
-// get reviews
+// get /api/reviews
 router.get('/:productId', async (req, res, next) => {
     const { productId } = req.params;
     try{        
@@ -12,6 +12,17 @@ router.get('/:productId', async (req, res, next) => {
     }catch({ name, message }){
         next({ name, message })
     }
-})
+});
+
+// post /api/reviews/:productId/reviewId
+router.post('/', requireUser, async (req, res, next) => {
+    try {
+      const review = await createReview(req.body)
+  
+      res.send(review)
+    } catch ({ name, message }) {
+      next({ name, message });
+    }
+  });
 
 module.exports = router;
