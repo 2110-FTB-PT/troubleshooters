@@ -21,6 +21,7 @@ export const login = async (username, password) => {
     const { data } = await axios.post(`${BASE_URL}/users/login`, {
       username,
       password,
+      email,
     });
     const { token, message } = data;
     return [token, message];
@@ -32,7 +33,7 @@ export const login = async (username, password) => {
 
 export const getUser = async (token) => {
   try {
-    const { data } = await axios.get(`${BASE_URL}/users/me`, {
+    const { data } = await axios.get(`${BASE_URL}/users/myaccount`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -82,7 +83,6 @@ export const updateProduct = async (
       price,
       inventoryQuantity,
       imgURL,
-      productId,
     });
     return data;
   } catch (error) {
