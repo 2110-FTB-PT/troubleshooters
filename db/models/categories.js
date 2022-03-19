@@ -45,7 +45,12 @@ const deleteCategory = async (id) => {
         WHERE id = $1
         RETURNING id;
         `, [id]);
-        
+    if (!deletedCategoryId) {
+        throw { 
+            name: "NoCategory",
+            message: "The category you tried to delete doesn't exist."
+        }
+    }   
     return deletedCategoryId;
     }
     catch (error) {
