@@ -47,5 +47,6 @@ apiRouter.use('/orders', require('./orders'));
 apiRouter.use('/reviews', require('./reviews'));
 apiRouter.use('/order_products', require('./order_products'));
 apiRouter.use('/products', require('./products'));
+apiRouter.use('/product_categories', require('./product_categories'));
 
 module.exports = apiRouter;
