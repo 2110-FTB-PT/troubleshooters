@@ -163,13 +163,12 @@ export const addProductToOrder = async (
   }
 };
 
-export const updateOrderProduct = async (quantity, price, orderProductId) => {
+export const updateOrderProduct = async (quantity, orderProductId) => {
   try {
     const { data } = await axios.patch(
       `${BASE_URL}/order_products/${orderProductId}`,
       {
         quantity,
-        price,
       }
     );
     return data;
