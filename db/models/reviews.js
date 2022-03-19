@@ -77,8 +77,8 @@ const getReviewByProductId = async (productId) => {
     }
 }
 
-const updateReview = async ({ id, ...reviewField }) => {
-    const setString = Object.keys(reviewField).map((key, index) =>
+const updateReview = async ({ id, ...reviewFields }) => {
+    const setString = Object.keys(reviewFields).map((key, index) =>
     `"${key}" = $${index + 1}`).join(', ')
 
     if(setString.length === 0){
@@ -87,7 +87,7 @@ const updateReview = async ({ id, ...reviewField }) => {
             message: "No fields were provided to be updated. You must update at least one field."
         };
     }
-    const valuesArray = [...Object.values(fields), id];
+    const valuesArray = [...Object.values(reviewFields), id];
     try{
         const { rows: [review] } = await client.query(`
             UPDATE reviews
