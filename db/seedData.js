@@ -6,10 +6,13 @@ const {
   getProductsOnly,
   addProductToOrder,
   createUser,
-  createProduct
+  createProduct,
+  getAllCategories,
+  createCategory
   // declare your model imports here
   // for example, User
 } = require("./");
+const { addCategoryToProduct } = require("./models/product_categories");
 
 // drop tables in correct order
 async function dropTables() {
@@ -17,6 +20,7 @@ async function dropTables() {
     console.log("Dropping All Tables...");
     client.query(`
       DROP TABLE IF EXISTS order_products;
+      DROP TABLE IF EXISTS product_categories;
       DROP TABLE IF EXISTS orders;
       DROP TABLE IF EXISTS reviews;
       DROP TABLE IF EXISTS users;      
@@ -69,6 +73,13 @@ async function buildTables() {
           id SERIAL PRIMARY KEY,
           "creatorId" INTEGER REFERENCES users(id),
           subtotal DECIMAL(38,2) NOT NULL
+        );
+
+        CREATE TABLE product_categories(
+          id SERIAL PRIMARY KEY,
+          "productId" INTEGER REFERENCES products(id),
+          "categoryId" INTEGER REFERENCES categories(id),
+          UNIQUE("productId", "categoryId")
         );
 
         CREATE TABLE order_products(
@@ -168,19 +179,19 @@ async function createInitialOrders() {
     const ordersToCreate = [
       {
         creatorId: 2,
-        subtotal: 11.11,
+        subtotal: 25.99,
       },
       {
         creatorId: 1,
-        subtotal: 19.55,
+        subtotal: 27.98,
       },
       {
         creatorId: 3,
-        subtotal: 20.22,
+        subtotal: 28.98,
       },
       {
         creatorId: 2,
-        subtotal: 21.1,
+        subtotal: 36.98,
       },
     ];
     const orders = await Promise.all(
@@ -206,55 +217,55 @@ async function createInitialOrderProducts() {
         orderId: orderOne.id,
         productId: product1.id,
         quantity: 7,
-        price: 11,
+        price: product1.price,
       },
       {
         orderId: orderOne.id,
         productId: product2.id,
         quantity: 3,
-        price: 16,
+        price: product2.price,
       },
       {
         orderId: orderTwo.id,
         productId: product3.id,
         quantity: 6,
-        price: 22,
+        price: product3.price,
       },
       {
         orderId: orderTwo.id,
         productId: product4.id,
         quantity: 10,
-        price: 7,
+        price: product4.price,
       },
       {
         orderId: orderThree.id,
         productId: product5.id,
         quantity: 2,
-        price: 10,
+        price: product5.price,
       },
       {
         orderId: orderThree.id,
         productId: product6.id,
         quantity: 1,
-        price: 100,
+        price: product6.price,
       },
       {
         orderId: orderFour.id,
         productId: product7.id,
         quantity: 10,
-        price: 7,
+        price: product7.price,
       },
       {
         orderId: orderFour.id,
         productId: product1.id,
         quantity: 4,
-        price: 4,
+        price: product1.price,
       },
       {
         orderId: orderFour.id,
         productId: product2.id,
         quantity: 10,
-        price: 15,
+        price: product2.price,
       },
     ];
     const orderProducts = await Promise.all(
@@ -262,6 +273,33 @@ async function createInitialOrderProducts() {
     );
     console.log("order_products created: ", orderProducts);
     console.log("Finished creating order_products!");
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function createInitialProductCategories() {
+  try {
+    console.log('Starting to create product categories i.e. attach categories to products')
+    const [category1, category2, category3, category4, category5] = await getAllCategories();
+    const [product1, product2, product3, product4, product5] = await getProductsOnly();
+    const productCategoriesToCreate = [
+      { productId: product1.id, categoryId: category1.id },
+      { productId: product1.id, categoryId: category2.id },
+      { productId: product2.id, categoryId: category3.id },
+      { productId: product2.id, categoryId: category4.id },
+      { productId: product2.id, categoryId: category5.id },
+      { productId: product3.id, categoryId: category2.id },
+      { productId: product3.id, categoryId: category3.id },
+      { productId: product4.id, categoryId: category4.id },
+      { productId: product4.id, categoryId: category5.id },
+      { productId: product4.id, categoryId: category3.id },
+      { productId: product4.id, categoryId: category2.id },
+      { productId: product5.id, categoryId: category5.id }
+    ]
+    const productCategories = await Promise.all(productCategoriesToCreate.map(addCategoryToProduct));
+    console.log('product categories created/attached', productCategories);
+    console.log('Finished creating product categories!');
   } catch (error) {
     throw error;
   }
@@ -295,6 +333,11 @@ async function createInitialUsers() {
       password: 'Stevie99',
       email: 'steve99@mail.com'
     },
+    {
+      username: 'kevin',
+      password: 'kevin123',
+      email: 'kevin123@mail.com'
+    }
   ]
   const users = await Promise.all(
     usersToCreate.map((users) => createUser(users))
@@ -344,6 +387,31 @@ async function createInitialReviews(){
   }
 }
 
+async function createInitialCategories(){
+try {
+console.log("creating categories");
+const categoriestoCreate = [
+  {name: 'rock'},
+  {name: 'jazz'},
+  {name: 'metal'},
+  {name: 'country'},
+  {name: 'pop'},
+  {name: 'vinyl'},
+  {name: 'cassettes'},
+  {name: 'alternative'},
+  {name: 'rap'},
+  {name: 'R&B'}
+]
+const categories = await Promise.all(
+  categoriestoCreate.map(createCategory)
+)
+console.log("Categories", categories)
+console.log("Finished creating categories.");
+}
+catch(error) {
+  throw error;
+}
+}
 async function rebuildDB() {
   try {
     console.log("buildingdb");
@@ -352,9 +420,11 @@ async function rebuildDB() {
     await buildTables();
     await createInitialUsers();
     await createInitialProducts();
+    await createInitialCategories();
     await createInitialReviews();
     await createInitialOrders();
     await createInitialOrderProducts();
+    await createInitialProductCategories();
   } catch (error) {
     console.log("Error during rebuildDB");
     throw error;
