@@ -15,6 +15,18 @@ router.get('/:productId', async (req, res, next) => {
     }
 });
 
+// get userId /api/reviews
+router.get('/user/:creatorId', async (req, res, next) => {
+    const { creatorId } = req.params;
+    try {
+        const reviews = await getReviewsByUser(creatorId);
+
+        res.send(reviews)
+    } catch ({ name, message }) {
+        next({ name, message })
+    }
+});
+
 // post
 router.post('/', requireUser, async (req, res, next) => {
     try {
@@ -39,11 +51,7 @@ router.patch('/:reviewId', requireUser, async (req, res, next) => {
                 message: "This user is not authorized to update this review"
             })
             return
-        } else if (reviewById.creatorId === req.user.id) {
-            next({
-                name: "UpdateSuccess",
-                message: "The review was updated successfully"
-            })
+        } else {
             const reviewUpdate = await updateReview({
                 id: reviewId,
                 description
@@ -68,13 +76,10 @@ router.delete('/:reviewId', requireUser, async (req, res, next) => {
                 message: "This user is not authorized to delete this review"
             })
             return
-        } else if (reviewById.creatorId === req.user.id) {
+        } else {
             const destroyReviewById = await destroyReview(reviewId);
             res.send(destroyReviewById);
-        } next({
-                name: "DeleteSuccess",
-                message: "The review has been successfully deleted",
-            })       
+        }        
     } catch ({ name, message }) {
         next({ name, message });
     }
