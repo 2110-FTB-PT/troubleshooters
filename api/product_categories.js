@@ -1,5 +1,5 @@
 const express = require('express');
-const { addCategoryToProduct } = require('../db/models/product_categories');
+const { addCategoryToProduct, deleteProductCategory } = require('../db/models/product_categories');
 const router = express.Router();
 
 router.use((req, res, next) => {
@@ -15,6 +15,18 @@ router.post('/:productId/:categoryId', async (req, res, next) => {
     const productCategory = await addCategoryToProduct({ productId, categoryId });
 
     res.send(productCategory)
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+})
+
+// DELETE /api/product_categories/:productCategoryId
+router.delete('/:productCategoryId', async (req, res, next) => {
+  const { productCategoryId } = req.params;
+  try {
+    const deletedProductCategoryId = await deleteProductCategory(productCategoryId);
+
+    res.send(deletedProductCategoryId);
   } catch ({ name, message }) {
     next({ name, message });
   }
