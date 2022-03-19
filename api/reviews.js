@@ -19,7 +19,7 @@ router.get('/:productId', async (req, res, next) => {
 router.get('/user/:creatorId', async (req, res, next) => {
     const { creatorId } = req.params;
     try {
-        const reviews = await getReviewsByUser(creatorId);
+        const reviews = await getReviewsByUser({creatorId});
 
         res.send(reviews)
     } catch ({ name, message }) {
