@@ -1,5 +1,6 @@
 const express = require('express');
 const { addCategoryToProduct, deleteProductCategory } = require('../db/models/product_categories');
+const { requireAdminUser } = require('./utils');
 const router = express.Router();
 
 router.use((req, res, next) => {
@@ -9,7 +10,7 @@ router.use((req, res, next) => {
 })
 
 // POST /api/product_categories/:productId/:categoryId => adds a category to a product
-router.post('/:productId/:categoryId', async (req, res, next) => {
+router.post('/:productId/:categoryId', requireAdminUser, async (req, res, next) => {
   const { productId, categoryId } = req.params;
   try {
     const productCategory = await addCategoryToProduct({ productId, categoryId });
@@ -21,7 +22,7 @@ router.post('/:productId/:categoryId', async (req, res, next) => {
 })
 
 // DELETE /api/product_categories/:productCategoryId
-router.delete('/:productCategoryId', async (req, res, next) => {
+router.delete('/:productCategoryId', requireAdminUser, async (req, res, next) => {
   const { productCategoryId } = req.params;
   try {
     const deletedProductCategoryId = await deleteProductCategory(productCategoryId);
