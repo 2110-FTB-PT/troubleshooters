@@ -2,11 +2,12 @@ import axios from "axios";
 
 const BASE_URL = "https://<<ourURLgoesHere>>.herokuapp.com/api";
 
-export const register = async (username, password) => {
+export const register = async (username, password, email) => {
   try {
     const { data } = await axios.post(`${BASE_URL}/users/register`, {
       username,
       password,
+      email,
     });
     const { token, message } = data;
     return [token, message];
@@ -21,7 +22,6 @@ export const login = async (username, password) => {
     const { data } = await axios.post(`${BASE_URL}/users/login`, {
       username,
       password,
-      email,
     });
     const { token, message } = data;
     return [token, message];
