@@ -29,8 +29,9 @@ router.get('/user/:creatorId', async (req, res, next) => {
 
 // post
 router.post('/', requireUser, async (req, res, next) => {
+    const creatorId = req.user.id
     try {
-        const review = await createReview(req.body)
+        const review = await createReview({ creatorId, ...req.body })
 
         res.send(review)
     } catch ({ name, message }) {
