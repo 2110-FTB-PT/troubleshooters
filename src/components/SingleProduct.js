@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from "react-router";
 import { useState, useEffect } from "react";
+import { capitalizeFirstLetter } from "../api/utils";
 
 const SingleProduct = ({ product, products }) => {
   const navigate = useNavigate();
@@ -9,7 +10,6 @@ const SingleProduct = ({ product, products }) => {
   useEffect(() => {
     if (productId) {
       const [ product ] = products.filter(product => product.id === Number(productId));
-      console.log(product)
       setSingleProduct(product)
     }
   }, [])
@@ -19,6 +19,13 @@ const SingleProduct = ({ product, products }) => {
   }
 
   const { title, artist, price, imgURL, description, inventoryQuantity, categories } = product || singleProduct;
+  // if the categories exist, we reformat them to be capitalized
+  if (categories) {
+    categories.forEach(category => {
+      const capitalizedName = capitalizeFirstLetter(category.name)
+      category.name = capitalizedName;
+    });
+  }
   return (
     <div className='singleProduct' onClick={handleClick}>
       <div>{title}</div>
