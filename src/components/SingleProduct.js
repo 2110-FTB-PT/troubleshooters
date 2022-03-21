@@ -18,7 +18,7 @@ const SingleProduct = ({ product, products }) => {
     navigate(`/products/${product.id}`)
   }
 
-  const { title, artist, price, imgURL, description, inventoryQuantity } = product || singleProduct;
+  const { title, artist, price, imgURL, description, inventoryQuantity, categories } = product || singleProduct;
   return (
     <div className='singleProduct' onClick={handleClick}>
       <div>{title}</div>
@@ -30,6 +30,7 @@ const SingleProduct = ({ product, products }) => {
         <div>Amount in Stock: {inventoryQuantity}</div>
       </>
       }
+      <div>{categories?.map(category => <span key={`${category.id}-${category.name}`}>{category.name} </span>)}</div>
       <div>${price}</div>
     </div>
   )
