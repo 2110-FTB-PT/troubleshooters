@@ -1,10 +1,15 @@
+import { Route, Routes, Link } from 'react-router-dom';
+import HomePage from './HomePage';
+
 const App = () => {
   return (
     <div className="App">
-      <h2>
-        "Where words fail, music speaks" -Hans Christian Andersen
-      </h2>
-      <h1>Welcome to Crate Diggers!</h1>
+      <nav className='navbar'>
+        <Link to='/'>Home</Link>
+      </nav>
+      <Routes>
+        <Route path='/' element={<HomePage />} />
+      </Routes>
     </div>
   );
 };
