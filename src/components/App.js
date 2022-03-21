@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Route, Routes, Link } from "react-router-dom";
-import HomePage from "./HomePage";
-import Orders from "./Orders";
+import { HomePage, Orders, Products, SingleProduct } from "./";
 import { fetchOrders, getUser } from "../api";
 
 const App = () => {
   const [token, setToken] = useState("");
   const [user, setUser] = useState({});
+  const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState({});
 
   const handleUser = async (token) => {
@@ -45,10 +45,19 @@ const App = () => {
     <div className="App">
       <nav className="navbar">
         <Link to="/">Home</Link>
-        {<Link to="/orders">Orders</Link>}
+        <Link to="/products">Products</Link>
+        <Link to="/orders">Orders</Link>
       </nav>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route
+          path="/products"
+          element={<Products products={products} setProducts={setProducts} />}
+        />
+        <Route
+          path="/products/:productId"
+          element={<SingleProduct products={products} />}
+        />
         <Route
           path="/orders"
           element={
@@ -64,5 +73,4 @@ const App = () => {
     </div>
   );
 };
-
 export default App;
