@@ -51,7 +51,7 @@ apiRouter.use('/product_categories', require('./product_categories'));
 apiRouter.use('/categories', require ('./categories.js'))
 
 //Error handling: 404 errors
-server.use((req, res, next) => {
+apiRouter.use((req, res, next) => {
   res.status(404).send({
     message: "Page Not Found"
   });
