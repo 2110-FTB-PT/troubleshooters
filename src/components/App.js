@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Route, Routes, Link } from "react-router-dom";
 import { HomePage, Orders, Products, SingleProduct } from "./";
 import { fetchOrders, getUser } from "../api";
+import { ReviewProvider } from "../context/ReviewContext";
 
 const App = () => {
   const [token, setToken] = useState("");
@@ -42,6 +43,7 @@ const App = () => {
   }, []);
 
   return (
+    <ReviewProvider>
     <div className="App">
       <nav className="navbar">
         <Link to="/">Home</Link>
@@ -71,6 +73,7 @@ const App = () => {
         />
       </Routes>
     </div>
+    </ReviewProvider>
   );
 };
 export default App;
