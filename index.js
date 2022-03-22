@@ -43,13 +43,6 @@ server.use((req, res, next) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-//Error handling: 404 errors
-server.use((req, res, next) => {
-  res.status(404).send({
-    message: "Page Not Found"
-  });
-});
-
 //Error handling: 500 errors unless specific 4XX code is given
 server.use(({ name, message }, req, res, next) => {
   if (res.statusCode < 400 || res.statusCode >= 500) {
