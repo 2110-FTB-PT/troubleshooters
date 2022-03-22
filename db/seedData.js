@@ -355,19 +355,19 @@ async function createInitialOrders() {
     const ordersToCreate = [
       {
         creatorId: 2,
-        subtotal: 25.99,
+        subtotal: 117.97,
       },
       {
         creatorId: 1,
-        subtotal: 27.98,
+        subtotal: 219.84,
       },
       {
         creatorId: 3,
-        subtotal: 28.98,
+        subtotal: 41.97,
       },
       {
         creatorId: 2,
-        subtotal: 36.98,
+        subtotal: 309.80,
       },
     ];
     const orders = await Promise.all(
