@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import SingleProduct from "./SingleProduct";
 import { getAllProducts } from "../api/productsApi";
-import { AiOutlineShoppingCart } from "react-icons/ai";
+import { FaCartPlus } from "react-icons/fa";
 import Card from "../shared/Card";
 
 const Products = ({ products, setProducts }) => {
@@ -19,7 +19,7 @@ const Products = ({ products, setProducts }) => {
         return (
           <Card key={`${product.id}-${product.title}`}>
             <button className="cart">
-              <AiOutlineShoppingCart color='purple' />
+              <FaCartPlus color='purple' />
             </button>
             <SingleProduct product={product} />
           </Card>

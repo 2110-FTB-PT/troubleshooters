@@ -2,6 +2,8 @@ import { createContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { getReviewByProductId } from '../api/ReviewApi';
+
+
 const BASE_URL = "http://localhost:4000/api";
 
 
@@ -10,10 +12,7 @@ const ReviewContext = createContext()
 export const ReviewProvider = ({children}) => {
     const [isLoading, setIsLoading] = useState(true);
     const [ratings, setRatings] = useState([]);
-    const [reviewEdit, setReviewEdit] = useState({
-        item: {},
-        edit: false
-    });
+
 
     useEffect(() => {
         fetchReview()
