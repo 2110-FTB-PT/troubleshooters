@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { BsFillCartCheckFill, BsVinylFill } from 'react-icons/bs'
+import { BsFillBagCheckFill, BsVinylFill } from 'react-icons/bs'
 
 function Header({ text, bgColor, textColor }) {
     const headerStyles = {
@@ -18,7 +18,7 @@ function Header({ text, bgColor, textColor }) {
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/products">Products</Link></li>
                     <li><Link to="/orders">Orders</Link></li>                        
-                    <li><BsFillCartCheckFill color='hotpink' className='checkout'/></li>
+                    <li><BsFillBagCheckFill color='hotpink' className='checkout'/></li>
 
                 </nav>
             </div>
