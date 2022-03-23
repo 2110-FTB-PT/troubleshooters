@@ -49,7 +49,7 @@ nav.navbar li {
   float:left;
 }
 
-nav.navbar li a {
+nav.navbar li a:link {
   display: block;
   color: #000000;
   font-weight:bold;
@@ -57,7 +57,7 @@ nav.navbar li a {
   text-decoration: none;
 }
 
-nav:hover {
+a:hover {
   color: hotpink;
 }
 
@@ -65,9 +65,10 @@ nav:hover {
   background-color: #fff;
   color: #333;
   border-radius: 15px;
-  padding: 40px 50px;
+  padding: 28px 50px;
   margin: 20px 0;
   position: relative;
+  cursor: pointer;
 }
 
 .card.reverse {
@@ -160,19 +161,23 @@ input:focus {
   left: -10px;
 }
 
-.checkout,
+
 .cart,
 .close,
-.edit {
+.edit, 
+.checkout {
   position: absolute;
   top: 10px;
   right: 20px;
-  font-size: 27px;
+  font-size: 30px;
   cursor: pointer;
   background: none;
   border: none;
   display: block;
+}
 
+.checkout:hover {
+  color: orangered;
 }
 
 .edit {

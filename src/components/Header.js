@@ -18,7 +18,7 @@ function Header({ text, bgColor, textColor }) {
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/products">Products</Link></li>
                     <li><Link to="/orders">Orders</Link></li>                        
-                    <BsFillCartCheckFill color='hotpink' className='checkout'/>
+                    <li><BsFillCartCheckFill color='hotpink' className='checkout'/></li>
 
                 </nav>
             </div>
