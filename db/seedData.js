@@ -66,6 +66,7 @@ async function buildTables() {
           id SERIAL PRIMARY KEY,
           "creatorId" INTEGER REFERENCES users(id),
           "productId" INTEGER REFERENCES products(id),
+          rating INTEGER,
           description VARCHAR(255) NOT NULL
         );
 
@@ -600,6 +601,7 @@ async function createInitialReviews(){
         creatorId: 4,
         username: 'jenny',
         productId: 1,
+        rating: 9,
         description: 'This album came in good condition.'
 
       },
@@ -607,6 +609,7 @@ async function createInitialReviews(){
         creatorId: 2,
         username: 'Steve',
         productId: 4,
+        rating: 10,
         description: 'I would def make this my go to shop for vinyls'
 
       },
@@ -614,6 +617,7 @@ async function createInitialReviews(){
         creatorId: 3,
         username: 'Howard',
         productId: 7,
+        rating: 9,
         description: 'My order came in on time.'
 
       },

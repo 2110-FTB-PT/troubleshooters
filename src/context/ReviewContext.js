@@ -1,10 +1,15 @@
 import { createContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { getReviewByProductId } from '../api/ReviewApi';
+const BASE_URL = "http://localhost:4000/api";
+
 
 const ReviewContext = createContext()
 
 export const ReviewProvider = ({children}) => {
     const [isLoading, setIsLoading] = useState(true);
-    const [review, setReview] = useState([]);
+    const [ratings, setRatings] = useState([]);
     const [reviewEdit, setReviewEdit] = useState({
         item: {},
         edit: false
@@ -15,17 +20,22 @@ export const ReviewProvider = ({children}) => {
     }, []);
 
     //fetch review
-    const fetchReview = async () => {
-        const response = await fetch(`/api/reviews`)
-        const data = await response.json()
-        setReview(data)
+    const fetchReview = async (productId) => {
+        axios
+        .get(`BASE_URL/reviews/${productId}`)
+        .then((res) => {
+            setRatings(res.data);
+        })
+        .catch((err) => {
+            console.log(err)
+        })
         setIsLoading(false)
     }
 
 return (
     <ReviewContext.Provider
     value={{
-        review,
+        ratings,
         isLoading
     }}>
         {children}
