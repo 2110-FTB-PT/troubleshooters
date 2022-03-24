@@ -13,8 +13,7 @@ export const ReviewProvider = ({children}) => {
 return (
     <ReviewContext.Provider
     value={{
-        ratings,
-        isLoading
+        
     }}>
         {children}
     </ReviewContext.Provider>
