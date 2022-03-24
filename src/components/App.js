@@ -8,7 +8,7 @@ const App = () => {
   const [token, setToken] = useState("");
   const [user, setUser] = useState({});
   const [products, setProducts] = useState([]);
-  const [orders, setOrders] = useState({});
+  const [orders, setOrders] = useState([]);
 
   const handleUser = async (token) => {
     try {
