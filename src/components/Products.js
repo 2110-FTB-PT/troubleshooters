@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { getAllProducts } from "../api/productsApi";
-import { AnimatePresence } from 'framer-motion'
 import Spinner from "../shared/Spinner";
 import GenreList from "./GenreList";
 
@@ -24,12 +23,10 @@ const Products = ({ products, setProducts }) => {
     <Spinner />
   ) : (
     <div className='allproducts'>
-      <AnimatePresence>
         <GenreList products={products} category="Rock" />
         <GenreList products={products} category="Jazz" />
         <GenreList products={products} category="R&B" />
         <GenreList products={products} category="Pop" />
-      </AnimatePresence>
     </div>
   )
 }
