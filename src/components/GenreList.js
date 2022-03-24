@@ -1,7 +1,7 @@
-import { useState } from "react";
-import SingleProduct from "./SingleProduct";
-import { AiOutlineShoppingCart } from "react-icons/ai";
+import { FaCartPlus } from "react-icons/fa";
 import Card from "../shared/Card";
+import { motion } from 'framer-motion'
+import SingleProduct from "./SingleProduct";
 
 const GenreList = ({ products, category }) => {
   const lowerCaseCategory = category.toLowerCase();
@@ -22,14 +22,20 @@ const GenreList = ({ products, category }) => {
       <div>{category}</div>
       {filteredProducts.map(product => {
         return (
-          <>
-            {/* <Card key={`${product.id}-${product.title}`}>
+          <motion.div
+            key={`${product.id}-${product.title}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            whileHover={{ scale: 1.05 }}
+            >
+            <Card>
               <button className="cart">
-                <AiOutlineShoppingCart color='purple' />
+                <FaCartPlus color='purple' />
               </button>
               <SingleProduct product={product} />
-            </Card> */}
-          </>
+            </Card>
+          </motion.div>
         )
       })}
     </div>
