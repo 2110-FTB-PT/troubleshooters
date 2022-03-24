@@ -1,3 +1,4 @@
+import { SingleProduct } from "./";
 const Orders = ({ orders }) => {
   return (
     <div>
@@ -6,7 +7,7 @@ const Orders = ({ orders }) => {
       {orders.map((order) => {
         return (
           <div key={order.id}>
-            <div>Name : {order.creatorId}</div>
+            <div>Customer Number : {order.creatorId}</div>
             <div>Subtotal: {order.subtotal}</div>
             <h2>Products</h2>
             {order.products.map((product) => {
