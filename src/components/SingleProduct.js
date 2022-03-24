@@ -27,9 +27,9 @@ const SingleProduct = ({ product, products }) => {
     });
   }
 
-  // let review = singleProduct.reviews.forEach(review => {
-  //   review.description
-  // }, [review])
+  let review = singleProduct.reviews.forEach(review => {
+    review.description
+  }, [review])
 
 
   return (
