@@ -2,6 +2,7 @@ import { FaCartPlus } from "react-icons/fa";
 import Card from "../shared/Card";
 import { motion } from 'framer-motion'
 import SingleProduct from "./SingleProduct";
+import './GenreList.css';
 
 const GenreList = ({ products, category }) => {
   const lowerCaseCategory = category.toLowerCase();
@@ -18,8 +19,9 @@ const GenreList = ({ products, category }) => {
   })
 
   return (
+    <>
+    <div>{category}</div>
     <div className="products-by-category">
-      <div>{category}</div>
       {filteredProducts.map(product => {
         return (
           <motion.div
@@ -39,6 +41,7 @@ const GenreList = ({ products, category }) => {
         )
       })}
     </div>
+  </>
   )
 }
 
