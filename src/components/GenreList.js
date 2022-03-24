@@ -2,7 +2,7 @@ import { FaCartPlus } from "react-icons/fa";
 import Card from "../shared/Card";
 import { motion } from 'framer-motion'
 import SingleProduct from "./SingleProduct";
-import './GenreList.css';
+import "./GenreList.css";
 
 const GenreList = ({ products, category }) => {
   const lowerCaseCategory = category.toLowerCase();
