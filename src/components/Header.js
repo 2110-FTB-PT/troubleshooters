@@ -19,9 +19,9 @@ function Header({ text, bgColor, textColor }) {
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/products">Products</Link></li>
                     <li><Link to="/orders">Orders</Link></li>
-                    <div class="search-container">
+                    <div className="search-container">
                         <input type="text" placeholder="Search.." name="search" />
-                        <button type="submit"><FaSearch class="search-btn"></FaSearch></button>
+                        <button type="submit"><FaSearch className="search-btn"></FaSearch></button>
                     </div>
                     <li><BsFillBagCheckFill color='hotpink' className='checkout' /></li>
                     <li><FaUserAlt color='hotpink' className='user' /></li>
