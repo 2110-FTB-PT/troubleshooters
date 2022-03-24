@@ -26,11 +26,15 @@ const SingleProduct = ({ product, products }) => {
       category.name = capitalizedName;
     });
   }
+//////////////////////////
+//console.log(singleProduct)
+// singleProduct.reviews.forEach(review => console.log(review.description))
 
-  let review = singleProduct.reviews.forEach(review => {
-    review.description
-  }, [review])
-
+//  singleProduct.reviews.forEach(review => {
+//     const {description} = review
+//     return({description})
+//   })
+///////////////////////////
 
   return (
     <div className='singleProduct' onClick={handleClick}>
@@ -45,7 +49,13 @@ const SingleProduct = ({ product, products }) => {
       }
       <div>{categories?.map(category => <span key={`${category.id}-${category.name}`}>{category.name} </span>)}</div>
       <div>${price}</div>
-      {singleProduct.reviews.map(review => <SingleReview review={review}/>)}
+///////////////////////////
+      {/* {singleProduct.reviews.map(review => {
+        return(
+      <SingleReview reviews={review}/>
+      )
+      })} */}
+////////////////////////////
     </div>
   )
 }
