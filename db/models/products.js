@@ -54,8 +54,10 @@ const getProductById = async (productId) => {
     }
 
     const { rows: reviews } = await client.query(`
-      SELECT * FROM reviews
-      WHERE "productId" = $1;
+      SELECT reviews.*, users.username AS "creatorName"
+      FROM reviews
+      JOIN users ON reviews."creatorId" = users.id
+      WHERE reviews."productId" = $1;
     `, [productId]);
 
     const { rows: categories } = await client.query(`
