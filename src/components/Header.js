@@ -19,6 +19,7 @@ function Header({ text, bgColor, textColor }) {
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/products">Products</Link></li>
                     <li><Link to="/orders">Orders</Link></li>
+                    <li><Link to="/login">Login</Link></li>
                     <div className="search-container">
                         <input type="text" placeholder="Search.." name="search" />
                         <button type="submit"><FaSearch className="search-btn"></FaSearch></button>

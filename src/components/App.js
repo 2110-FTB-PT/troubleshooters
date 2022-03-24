@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { HomePage, Orders, Products, SingleProduct } from "./";
 import { fetchOrders, getUser } from "../api";
 import Header from "./Header";
+import Login from "./Login";
 
 const App = () => {
   const [token, setToken] = useState("");
@@ -68,6 +69,7 @@ const App = () => {
             />
           }
         />
+        <Route path="/login" element={<Login setToken={setToken}/>} />
       </Routes>
     </div>
     </Router>
