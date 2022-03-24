@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import SingleProduct from "./SingleProduct";
 import { getAllProducts } from "../api/productsApi";
-import { motion, AnimatePresence } from 'framer-motion'
-import { FaCartPlus } from "react-icons/fa";
-import Card from "../shared/Card";
+import { AnimatePresence } from 'framer-motion'
 import Spinner from "../shared/Spinner";
+import GenreList from "./GenreList";
 
 const Products = ({ products, setProducts }) => {
   const [isLoading, setIsLoading] = useState(true)
@@ -27,25 +25,10 @@ const Products = ({ products, setProducts }) => {
   ) : (
     <div className='allproducts'>
       <AnimatePresence>
-        {products.map(product => {
-
-          return (
-            <motion.div
-              key={`${product.id}-${product.title}`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              whileHover={{ scale: 1.05 }}
-              >
-              <Card>
-                <button className="cart">
-                  <FaCartPlus color='purple' />
-                </button>
-                <SingleProduct product={product} />
-              </Card>
-            </motion.div>
-          )
-        })}
+        <GenreList products={products} category="Rock" />
+        <GenreList products={products} category="Jazz" />
+        <GenreList products={products} category="R&B" />
+        <GenreList products={products} category="Pop" />
       </AnimatePresence>
     </div>
   )
