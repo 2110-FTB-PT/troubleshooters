@@ -24,8 +24,8 @@ const MyOrders = ({ token, user, orders, setOrders }) => {
       {orders.map((order) => {
         return (
           <div key={order.id}>
-            <div>Customer Number : {orders.creatorId}</div>
-            <div>Subtotal: {orders.subtotal} </div>
+            <div>Order Number : {order.id}</div>
+            <div>Subtotal: {order.subtotal} </div>
             {user?.id === order.creatorId && (
               <button onClick={() => navigate(`/orders/${order.id}`)}>
                 {" "}
