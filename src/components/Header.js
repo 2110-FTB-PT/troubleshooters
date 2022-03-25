@@ -2,8 +2,10 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { BsFillBagCheckFill, BsVinylFill } from 'react-icons/bs'
 import { FaUserAlt, FaSearch } from 'react-icons/fa'
+import { useNavigate } from 'react-router-dom'
 
 function Header({ text, bgColor, textColor }) {
+    const navigate = useNavigate();
     const headerStyles = {
         backgroundColor: bgColor,
         color: textColor,
@@ -25,7 +27,7 @@ function Header({ text, bgColor, textColor }) {
                         <button type="submit"><FaSearch className="search-btn"></FaSearch></button>
                     </div>
                     <li><BsFillBagCheckFill color='hotpink' className='checkout' /></li>
-                    <li><FaUserAlt color='hotpink' className='user' /></li>
+                    <li><FaUserAlt onClick={() => navigate('/myprofile')}color='hotpink' className='user' /></li>
                 </nav>
             </div>
         </header>

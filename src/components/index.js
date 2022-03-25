@@ -6,3 +6,4 @@ export { default as SingleProduct } from './SingleProduct';
 export { default as AddProductToOrderForm } from './AddProductToOrderForm';
 export { default as OrderForm } from "./OrderForm";
 export { default as AddOrder } from "./AddOrder";
+export { default as MyProfile } from "./MyProfile";
