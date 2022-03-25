@@ -1,6 +1,6 @@
+import { useNavigate } from "react-router-dom";
 import { AddOrder } from "./";
 import { deleteOrder } from "../api";
-import { useNavigate } from "react-router-dom";
 
 const MyOrders = ({ token, user, orders, setOrders }) => {
   const navigate = useNavigate();
