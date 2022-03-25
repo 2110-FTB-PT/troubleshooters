@@ -8,9 +8,7 @@ const MyProfile = () => {
     <>
       <h2>Welcome, -username-</h2>
       <Card handleClick={() => navigate("/myreviews")}>
-        <div>
-          <h2 >My Reviews</h2>
-        </div>
+        <h2>My Reviews</h2>
       </Card>
       <Card handleClick={() => navigate("/myorders")}>
         <h2>My Orders</h2>
