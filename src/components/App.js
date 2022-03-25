@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { HomePage, Orders, Products, SingleProduct } from "./";
+import { HomePage, Orders, Products, SingleProduct, MyProfile } from "./";
 import { fetchOrders, getUser } from "../api";
 import Header from "./Header";
-import MyProfile from "./MyProfile";
 
 const App = () => {
   const [token, setToken] = useState("");
