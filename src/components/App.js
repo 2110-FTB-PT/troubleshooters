@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { HomePage, Orders, Products, SingleProduct } from "./";
 import { fetchOrders, getUser } from "../api";
 import Header from "./Header";
+import MyProfile from "./MyProfile";
 
 const App = () => {
   const [token, setToken] = useState("");
@@ -68,6 +69,7 @@ const App = () => {
             />
           }
         />
+        <Route path="/myprofile" element={<MyProfile />}/>
       </Routes>
     </div>
     </Router>
