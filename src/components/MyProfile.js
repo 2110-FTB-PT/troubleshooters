@@ -16,6 +16,9 @@ const MyProfile = () => {
       <Card handleClick={() => navigate("/myprofile/update")}>
         <h2>Update Account</h2>
       </Card>
+      <Card handleClick={() => navigate("/addproduct")}>
+        <h2>Add Product</h2>
+      </Card>
     </>
   )
 }
