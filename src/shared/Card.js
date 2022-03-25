@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-function Card({ children, reverse }) {
+function Card({ children, reverse, handleClick }) {
 
     return(
         <div
@@ -9,6 +9,7 @@ function Card({ children, reverse }) {
             backgroundColor: reverse ? 'rgba(0,0,0,0.4)' : '#fff',
             color: reverse ? '#fff' : '#000',
         }}
+        onClick={handleClick && handleClick}
         >
             {children}
         </div>)
