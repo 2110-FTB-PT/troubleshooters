@@ -16,6 +16,7 @@ const App = () => {
   const [user, setUser] = useState({});
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleUser = async (token) => {
     try {
@@ -48,10 +49,11 @@ const App = () => {
       setToken(localStorage.getItem("token"));
     }
   }, []);
+  console.log(searchTerm)
 
   return (
     <Router>
-      <Header />
+      <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <div className="App">
         <Routes>
           <Route path="/" element={<HomePage />} />
