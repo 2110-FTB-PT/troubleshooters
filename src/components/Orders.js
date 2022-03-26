@@ -1,4 +1,3 @@
-import { SingleProduct } from "./";
 const Orders = ({ orders }) => {
   return (
     <div>
