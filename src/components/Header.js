@@ -4,7 +4,7 @@ import { BsFillBagCheckFill, BsVinylFill } from "react-icons/bs";
 import { FaUserAlt, FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-function Header({ text, bgColor, textColor }) {
+function Header({ text, bgColor, textColor, searchTerm, setSearchTerm }) {
   const navigate = useNavigate();
   const headerStyles = {
     backgroundColor: bgColor,
@@ -31,7 +31,7 @@ function Header({ text, bgColor, textColor }) {
             <Link to="/myorders/:creatorId">My Orders</Link>
           </li>
           <div className="search-container">
-            <input type="text" placeholder="Search.." name="search" />
+            <input type="text" placeholder="Search.." name="search" value={searchTerm} onChange={event => setSearchTerm(event.target.value)} />
             <button type="submit">
               <FaSearch className="search-btn"></FaSearch>
             </button>
