@@ -14,7 +14,7 @@ const GenreList = ({ products, category }) => {
 
   useEffect(() => {
     setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth)
-  });
+  }, []);
 
   // filters the products to be only products that contain the specified category
   const filteredProducts = products.filter(product => {
@@ -26,7 +26,6 @@ const GenreList = ({ products, category }) => {
     })
     return containsCategory;
   })
-
 
   return (
     <>
@@ -40,7 +39,6 @@ const GenreList = ({ products, category }) => {
           className="inner-carousel">
             {filteredProducts.map(product => {
               return (
-
                 <motion.div
                   key={`${product.id}-${product.title}-${category}`}
                   initial={{ opacity: 0 }}

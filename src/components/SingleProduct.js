@@ -15,10 +15,6 @@ const SingleProduct = ({ product, products }) => {
     }
   }, [])
 
-  const handleClick = () => {
-    navigate(`/products/${product.id}`)
-  }
-
   const { title, artist, price, imgURL, description, inventoryQuantity, categories } = product || singleProduct;
   // if the categories exist, we reformat them to be capitalized
   if (categories) {
