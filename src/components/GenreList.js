@@ -3,14 +3,18 @@ import { FaCartPlus } from "react-icons/fa";
 import Card from "../shared/Card";
 import { motion, AnimatePresence } from 'framer-motion'
 import SingleProduct from "./SingleProduct";
-import "./GenreList.css";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const GenreList = ({ products, category }) => {
   const [width, setWidth] = useState(0);
   const carousel = useRef();
   const lowerCaseCategory = category.toLowerCase();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth)
+  });
 
   // filters the products to be only products that contain the specified category
   const filteredProducts = products.filter(product => {
@@ -32,7 +36,7 @@ const GenreList = ({ products, category }) => {
           <motion.div ref={carousel} className='carousel'>
           <motion.div
           drag="x"
-          dragConstraints={{ right: 0 }}
+          dragConstraints={{ right: 0, left: -width }}
           className="inner-carousel">
             {filteredProducts.map(product => {
               return (
