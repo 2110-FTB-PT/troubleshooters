@@ -1,9 +1,8 @@
 import axios from 'axios';
-const BASE_URL = 'http://localhost:4000/api'
 
 export const getAllProducts = async () => {
   try {
-    const { data } = await axios.get(`${BASE_URL}/products`);
+    const { data } = await axios.get(`/api/products`);
     return data;
   } catch (error) {
     console.error("Error at fetchProducts", error);
@@ -12,7 +11,7 @@ export const getAllProducts = async () => {
 
 export const addProduct = async (productToAdd, token) => {
   try {
-    const { data } = await axios.post(`${BASE_URL}/products`, productToAdd, {
+    const { data } = await axios.post(`/api/products`, productToAdd, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -25,7 +24,7 @@ export const addProduct = async (productToAdd, token) => {
 
 export const updateProduct = async (title, artist, description, price, inventoryQuantity, imgURL, productId) => {
   try {
-    const { data } = await axios.patch(`${BASE_URL}/products/${productId}`, {
+    const { data } = await axios.patch(`/api/products/${productId}`, {
       title,
       artist,
       description,
