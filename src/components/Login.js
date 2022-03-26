@@ -5,12 +5,20 @@ const Login =  ({setToken}) => {
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
     const handleLogin = async (e)=> {
        e.preventDefault();
-       const [token, message] = await login(username,password);
-       setToken(token); 
-       navigate('/')
+       try {
+        const [token, message] = await login(username,password);
+        console.log(message)
+        setToken(token); 
+        navigate('/')
+       } catch (error) {
+           console.error(error)
+           setMessage(error.response.data.message)
+       }
     }
+    console.log(message)
     return (
         <form onSubmit= {handleLogin}>
             <h1>Login</h1>
