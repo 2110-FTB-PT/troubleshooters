@@ -87,7 +87,7 @@ const App = () => {
             }
           />
           <Route path="/myprofile" element={<MyProfile />} />
-          <Route path="/addproduct" element={<AddProduct />} />
+          <Route path="/addproduct" element={<AddProduct token={token} products={products} setProducts={setProducts} />} />
         </Routes>
       </div>
     </Router>
