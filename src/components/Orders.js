@@ -1,4 +1,4 @@
-const Orders = ({ user, orders }) => {
+const Orders = ({ orders }) => {
   return (
     <div>
       <h2>Orders</h2>
@@ -6,7 +6,7 @@ const Orders = ({ user, orders }) => {
       {orders.map((order) => {
         return (
           <div key={order.id}>
-            <div>Name : {user.username}</div>
+            <div>Customer Number : {order.creatorId}</div>
             <div>Subtotal: {order.subtotal}</div>
             <h2>Products</h2>
             {order.products.map((product) => {
@@ -14,7 +14,6 @@ const Orders = ({ user, orders }) => {
                 <div key={product.id}>
                   <div>Artist: {product.artist}</div>
                   <div>Title: {product.title}</div>
-                  <div>Description: {product.description}</div>
                   <div>Price: {product.price}</div>
                   <div>Quantity: {product.quantity}</div>
                   <br></br>

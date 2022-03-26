@@ -66,6 +66,7 @@ async function buildTables() {
           id SERIAL PRIMARY KEY,
           "creatorId" INTEGER REFERENCES users(id),
           "productId" INTEGER REFERENCES products(id),
+          rating INTEGER,
           description VARCHAR(255) NOT NULL
         );
 
@@ -218,7 +219,7 @@ async function createInitialProducts() {
         imgURL: 'Ready_To_Die.jpg'
       },
       {
-        title: 'THe Chronic',
+        title: 'The Chronic',
         artist: 'Dr. Dre',
         description: `The Chronic is the debut studio album by American hip hop producer and rapper Dr. Dre. It was released on December 15, 1992, by his own record label Death Row Records and distributed by Interscope Records. Recording sessions for the album took place in June 1992 at Death Row Studios in Los Angeles and at Bernie Grundman Mastering in Hollywood. The album is named after a slang term for high-grade cannabis, and its cover is an homage to Zig-Zag rolling papers. It was Dr. Dre's first solo album after he had departed from hip hop group N.W.A and its label Ruthless Records over a financial dispute.`,
         price: 15.99,
@@ -355,19 +356,19 @@ async function createInitialOrders() {
     const ordersToCreate = [
       {
         creatorId: 2,
-        subtotal: 25.99,
+        subtotal: 117.97,
       },
       {
         creatorId: 1,
-        subtotal: 27.98,
+        subtotal: 219.84,
       },
       {
         creatorId: 3,
-        subtotal: 28.98,
+        subtotal: 41.97,
       },
       {
         creatorId: 2,
-        subtotal: 36.98,
+        subtotal: 309.80,
       },
     ];
     const orders = await Promise.all(
@@ -461,17 +462,29 @@ async function createInitialProductCategories() {
     const products = await getProductsOnly();
     const productCategoriesToCreate = [
       { productId: products[0].id, categoryId: categories[0].id },
-      { productId: products[0].id, categoryId: categories[1].id },
-      { productId: products[1].id, categoryId: categories[2].id },
-      { productId: products[1].id, categoryId: categories[3].id },
-      { productId: products[1].id, categoryId: categories[4].id },
+      { productId: products[0].id, categoryId: categories[2].id },
+      { productId: products[0].id, categoryId: categories[7].id },
+      { productId: products[0].id, categoryId: categories[11].id },
+      { productId: products[1].id, categoryId: categories[9].id },
+      { productId: products[1].id, categoryId: categories[12].id },
+      { productId: products[1].id, categoryId: categories[7].id },
       { productId: products[2].id, categoryId: categories[1].id },
-      { productId: products[2].id, categoryId: categories[2].id },
-      { productId: products[3].id, categoryId: categories[3].id },
-      { productId: products[3].id, categoryId: categories[4].id },
-      { productId: products[3].id, categoryId: categories[2].id },
-      { productId: products[3].id, categoryId: categories[1].id },
+      { productId: products[2].id, categoryId: categories[4].id },
+      { productId: products[3].id, categoryId: categories[10].id },
+      { productId: products[3].id, categoryId: categories[9].id },
+      { productId: products[3].id, categoryId: categories[14].id },
+      { productId: products[4].id, categoryId: categories[0].id },
       { productId: products[4].id, categoryId: categories[4].id },
+      { productId: products[5].id, categoryId: categories[0].id },
+      { productId: products[5].id, categoryId: categories[4].id },
+      { productId: products[5].id, categoryId: categories[7].id },
+      { productId: products[5].id, categoryId: categories[15].id },
+      { productId: products[6].id, categoryId: categories[9].id },
+      { productId: products[6].id, categoryId: categories[4].id },
+      { productId: products[6].id, categoryId: categories[14].id },
+      { productId: products[6].id, categoryId: categories[10].id },
+      { productId: products[6].id, categoryId: categories[1].id },
+      { productId: products[6].id, categoryId: categories[11].id },
       { productId: products[7].id, categoryId: categories[0].id },
       { productId: products[7].id, categoryId: categories[7].id },
       { productId: products[8].id, categoryId: categories[4].id },
@@ -496,7 +509,36 @@ async function createInitialProductCategories() {
       { productId: products[16].id, categoryId: categories[0].id },
       { productId: products[17].id, categoryId: categories[9].id },
       { productId: products[17].id, categoryId: categories[14].id },
-      { productId: products[18].id, categoryId: categories[14].id }
+      { productId: products[18].id, categoryId: categories[9].id },
+      { productId: products[18].id, categoryId: categories[11].id },
+      { productId: products[18].id, categoryId: categories[14].id },
+      { productId: products[19].id, categoryId: categories[16].id },
+      { productId: products[19].id, categoryId: categories[0].id },
+      { productId: products[20].id, categoryId: categories[0].id },
+      { productId: products[20].id, categoryId: categories[10].id },
+      { productId: products[20].id, categoryId: categories[11].id },
+      { productId: products[20].id, categoryId: categories[4].id },
+      { productId: products[20].id, categoryId: categories[15].id },
+      { productId: products[21].id, categoryId: categories[0].id },
+      { productId: products[21].id, categoryId: categories[16].id },
+      { productId: products[21].id, categoryId: categories[4].id },
+      { productId: products[22].id, categoryId: categories[1].id },
+      { productId: products[23].id, categoryId: categories[11].id },
+      { productId: products[23].id, categoryId: categories[14].id },
+      { productId: products[23].id, categoryId: categories[9].id },
+      { productId: products[23].id, categoryId: categories[4].id },
+      { productId: products[24].id, categoryId: categories[1].id },
+      { productId: products[25].id, categoryId: categories[0].id },
+      { productId: products[25].id, categoryId: categories[4].id },
+      { productId: products[25].id, categoryId: categories[16].id },
+      { productId: products[26].id, categoryId: categories[0].id },
+      { productId: products[26].id, categoryId: categories[14].id },
+      { productId: products[26].id, categoryId: categories[1].id },
+      { productId: products[26].id, categoryId: categories[4].id },
+      { productId: products[26].id, categoryId: categories[16].id },
+      { productId: products[27].id, categoryId: categories[17].id },
+      { productId: products[27].id, categoryId: categories[0].id },
+      { productId: products[28].id, categoryId: categories[3].id }
     ]
     const productCategories = await Promise.all(productCategoriesToCreate.map(addCategoryToProduct));
     console.log('product categories created/attached', productCategories);
@@ -559,6 +601,7 @@ async function createInitialReviews(){
         creatorId: 4,
         username: 'jenny',
         productId: 1,
+        rating: 9,
         description: 'This album came in good condition.'
 
       },
@@ -566,6 +609,7 @@ async function createInitialReviews(){
         creatorId: 2,
         username: 'Steve',
         productId: 4,
+        rating: 10,
         description: 'I would def make this my go to shop for vinyls'
 
       },
@@ -573,6 +617,7 @@ async function createInitialReviews(){
         creatorId: 3,
         username: 'Howard',
         productId: 7,
+        rating: 9,
         description: 'My order came in on time.'
 
       },

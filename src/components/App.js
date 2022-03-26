@@ -1,13 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { Route, Routes, Link } from "react-router-dom";
-import { HomePage, Orders, Products, SingleProduct } from "./";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  HomePage,
+  Orders,
+  Products,
+  SingleProduct,
+  MyProfile,
+  MyOrders,
+  Header,
+  AddProduct,
+  Login,
+} from "./";
 import { fetchOrders, getUser } from "../api";
 
 const App = () => {
   const [token, setToken] = useState("");
   const [user, setUser] = useState({});
   const [products, setProducts] = useState([]);
-  const [orders, setOrders] = useState({});
+  const [orders, setOrders] = useState([]);
 
   const handleUser = async (token) => {
     try {
@@ -42,35 +52,47 @@ const App = () => {
   }, []);
 
   return (
-    <div className="App">
-      <nav className="navbar">
-        <Link to="/">Home</Link>
-        <Link to="/products">Products</Link>
-        <Link to="/orders">Orders</Link>
-      </nav>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route
-          path="/products"
-          element={<Products products={products} setProducts={setProducts} />}
-        />
-        <Route
-          path="/products/:productId"
-          element={<SingleProduct products={products} />}
-        />
-        <Route
-          path="/orders"
-          element={
-            <Orders
-              token={token}
-              user={user}
-              orders={orders}
-              setOrders={setOrders}
-            />
-          }
-        />
-      </Routes>
-    </div>
+    <Router>
+      <Header />
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route
+            path="/products"
+            element={<Products products={products} setProducts={setProducts} />}
+          />
+          <Route
+            path="/products/:productId"
+            element={<SingleProduct products={products} />}
+          />
+          <Route
+            path="/orders"
+            element={
+              <Orders
+                token={token}
+                user={user}
+                orders={orders}
+                setOrders={setOrders}
+              />
+            }
+          />
+          <Route
+            path="/myorders/:creatorId"
+            element={
+              <MyOrders
+                token={token}
+                user={user}
+                orders={orders}
+                setOrders={setOrders}
+              />
+            }
+          />
+          <Route path="/login" element={<Login setToken={setToken}/>} />
+          <Route path="/myprofile" element={<MyProfile />} />
+          <Route path="/addproduct" element={<AddProduct token={token} products={products} setProducts={setProducts} />} />
+        </Routes>
+      </div>
+    </Router>
   );
 };
 export default App;
