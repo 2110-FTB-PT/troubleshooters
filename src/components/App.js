@@ -8,6 +8,7 @@ import {
   MyProfile,
   MyOrders,
   Header,
+  Login,
 } from "./";
 import { fetchOrders, getUser } from "../api";
 
@@ -85,6 +86,7 @@ const App = () => {
               />
             }
           />
+          <Route path="/login" element={<Login setToken={setToken}/>} />
           <Route path="/myprofile" element={<MyProfile />} />
         </Routes>
       </div>
