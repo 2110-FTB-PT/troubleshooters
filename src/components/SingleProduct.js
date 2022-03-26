@@ -15,10 +15,6 @@ const SingleProduct = ({ product, products }) => {
     }
   }, [])
 
-  const handleClick = () => {
-    navigate(`/products/${product.id}`)
-  }
-
   const { title, artist, price, imgURL, description, inventoryQuantity, categories } = product || singleProduct;
   // if the categories exist, we reformat them to be capitalized
   if (categories) {
@@ -29,10 +25,11 @@ const SingleProduct = ({ product, products }) => {
   }
 
   return (
-    <div className='singleProduct' onClick={handleClick}>
-      <div>{title}</div>
-      <div>{artist}</div>
+    <div className='singleProduct'>
+      
       {imgURL && <img src={require(`../assets/${imgURL}`)} />}
+      <h3>{title}</h3>
+      <div>{artist}</div>
       {productId &&
         <>
           <div>{description}</div>

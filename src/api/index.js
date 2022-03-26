@@ -1,10 +1,8 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:4000/api";
-
 export const register = async (username, password, email) => {
   try {
-    const { data } = await axios.post(`${BASE_URL}/users/register`, {
+    const { data } = await axios.post("/api/users/register", {
       username,
       password,
       email,
@@ -19,7 +17,7 @@ export const register = async (username, password, email) => {
 
 export const login = async (username, password) => {
   try {
-    const { data } = await axios.post(`${BASE_URL}/users/login`, {
+    const { data } = await axios.post(`/api/users/login`, {
       username,
       password,
     });
@@ -33,7 +31,7 @@ export const login = async (username, password) => {
 
 export const getUser = async (token) => {
   try {
-    const { data } = await axios.get(`${BASE_URL}/users/myaccount`, {
+    const { data } = await axios.get(`/api/users/myaccount`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -46,7 +44,7 @@ export const getUser = async (token) => {
 
 export const fetchOrders = async () => {
   try {
-    const { data } = await axios.get(`${BASE_URL}/orders`);
+    const { data } = await axios.get(`/api/orders`);
     return data;
   } catch (error) {
     console.error("Error at fetchOrders", error);
@@ -55,7 +53,7 @@ export const fetchOrders = async () => {
 
 export const addOrder = async (orderToAdd, token) => {
   try {
-    const { data } = await axios.post(`${BASE_URL}/orders`, orderToAdd, {
+    const { data } = await axios.post(`/api/orders`, orderToAdd, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -68,7 +66,7 @@ export const addOrder = async (orderToAdd, token) => {
 
 export const updateOrder = async (subtotal, orderId) => {
   try {
-    const { data } = await axios.patch(`${BASE_URL}/orders/${orderId}`, {
+    const { data } = await axios.patch(`/api/orders/${orderId}`, {
       subtotal,
     });
     return data;

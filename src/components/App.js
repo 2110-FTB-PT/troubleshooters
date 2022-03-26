@@ -9,6 +9,7 @@ import {
   MyOrders,
   Header,
   AddProduct,
+  Login,
 } from "./";
 import { fetchOrders, getUser } from "../api";
 
@@ -86,6 +87,7 @@ const App = () => {
               />
             }
           />
+          <Route path="/login" element={<Login setToken={setToken}/>} />
           <Route path="/myprofile" element={<MyProfile />} />
           <Route path="/addproduct" element={<AddProduct token={token} products={products} setProducts={setProducts} />} />
         </Routes>
