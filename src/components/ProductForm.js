@@ -1,12 +1,11 @@
 import { useState } from "react";
 import InputFields from "../shared/InputFields";
 
-const ProductForm = () => {
-  const [productFormData, setProductFormData] = useState({title: '', artist: '', description: '', price: '0', inventoryQuantity: 0, imgURL: ''})
+const ProductForm = ({ state, setState, handleSubmit }) => {
 
   return (
-    <form>
-      <InputFields state={productFormData} setState={setProductFormData} />
+    <form onSubmit={handleSubmit}>
+      <InputFields state={state} setState={setState} />
       <button>Confirm Product</button>
     </form>
   )
