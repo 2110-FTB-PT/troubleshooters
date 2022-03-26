@@ -30,6 +30,9 @@ function Header({ text, bgColor, textColor, searchTerm, setSearchTerm }) {
           <li>
             <Link to="/myorders/:creatorId">My Orders</Link>
           </li>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
           <div className="search-container">
             <input type="text" placeholder="Search.." name="search" value={searchTerm} onChange={event => setSearchTerm(event.target.value)} />
             <button type="submit">
