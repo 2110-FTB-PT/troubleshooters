@@ -10,7 +10,6 @@ const Login =  ({setToken}) => {
        e.preventDefault();
        try {
         const [token, message] = await login(username,password);
-        console.log(message)
         setToken(token); 
         navigate('/')
        } catch (error) {
@@ -18,15 +17,13 @@ const Login =  ({setToken}) => {
            setMessage(error.response.data.message)
        }
     }
-    console.log(message)
     return (
         <form onSubmit= {handleLogin}>
             <h1>Login</h1>
             <input placeholder="username" value={username} onChange={(event) => {setUsername(event.target.value)}}/>
             <input placeholder="password" type="password" value={password} onChange={(event) => {setPassword(event.target.value)}}/>
             <button>Login</button>
-        </form>
-        
+        </form> 
     );
 }
 
