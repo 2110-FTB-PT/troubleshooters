@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { HomePage, Orders, Products, SingleProduct, MyProfile, AddProduct } from "./";
+import {
+  HomePage,
+  Orders,
+  Products,
+  SingleProduct,
+  MyProfile,
+  MyOrders,
+  Header,
+  AddProduct,
+} from "./";
 import { fetchOrders, getUser } from "../api";
-import Header from "./Header";
 
 const App = () => {
   const [token, setToken] = useState("");
@@ -44,34 +52,44 @@ const App = () => {
 
   return (
     <Router>
-    <Header />
-    <div className="App">
-
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route
-          path="/products"
-          element={<Products products={products} setProducts={setProducts} />}
-        />
-        <Route
-          path="/products/:productId"
-          element={<SingleProduct products={products} />}
-        />
-        <Route
-          path="/orders"
-          element={
-            <Orders
-              token={token}
-              user={user}
-              orders={orders}
-              setOrders={setOrders}
-            />
-          }
-        />
-        <Route path="/myprofile" element={<MyProfile />}/>
-        <Route path="/addproduct" element={<AddProduct />} />
-      </Routes>
-    </div>
+      <Header />
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route
+            path="/products"
+            element={<Products products={products} setProducts={setProducts} />}
+          />
+          <Route
+            path="/products/:productId"
+            element={<SingleProduct products={products} />}
+          />
+          <Route
+            path="/orders"
+            element={
+              <Orders
+                token={token}
+                user={user}
+                orders={orders}
+                setOrders={setOrders}
+              />
+            }
+          />
+          <Route
+            path="/myorders/:creatorId"
+            element={
+              <MyOrders
+                token={token}
+                user={user}
+                orders={orders}
+                setOrders={setOrders}
+              />
+            }
+          />
+          <Route path="/myprofile" element={<MyProfile />} />
+          <Route path="/addproduct" element={<AddProduct />} />
+        </Routes>
+      </div>
     </Router>
   );
 };
