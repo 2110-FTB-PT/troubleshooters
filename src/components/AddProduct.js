@@ -1,4 +1,4 @@
-import ProductForm from "./ProductForm";
+import { ProductForm } from "./";
 import { useState } from "react";
 import { addProduct } from "../api/productsApi";
 
