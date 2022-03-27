@@ -3,6 +3,7 @@ import { FaCartPlus } from "react-icons/fa";
 import Card from "../shared/Card";
 import { motion, AnimatePresence } from 'framer-motion'
 import SingleProduct from "./SingleProduct";
+import SingleReview from "./SingleReview";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -11,6 +12,8 @@ const GenreList = ({ products, category }) => {
   const carousel = useRef();
   const lowerCaseCategory = category.toLowerCase();
   const navigate = useNavigate();
+  const [singleProduct, setSingleProduct] = useState({});
+
 
   useEffect(() => {
     setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth)
@@ -29,34 +32,36 @@ const GenreList = ({ products, category }) => {
 
   return (
     <>
-      <div>{category}</div>
+      <div className="category">{category}</div>
       <div className="products-by-category">
         <AnimatePresence>
           <motion.div ref={carousel} className='carousel'>
-          <motion.div
-          drag="x"
-          dragConstraints={{ right: 0, left: -width }}
-          className="inner-carousel">
-            {filteredProducts.map(product => {
-              return (
-                <motion.div
-                  key={`${product.id}-${product.title}-${category}`}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.99 }}
-                  onTap={() => navigate(`/products/${product.id}`)}
-                >
-                  <Card>
-                    <button className="cart">
-                      <FaCartPlus color='purple' />
-                    </button>
-                    <SingleProduct product={product} />
-                  </Card>
-                </motion.div>
-              )
-            })}
+            <motion.div
+              drag="x"
+              dragConstraints={{ right: 0, left: -width }}
+              className="inner-carousel">
+              {filteredProducts.map(product => {
+                return (
+                  <motion.div
+                    key={`${product.id}-${product.title}-${category}`}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.99 }}
+                    onTap={() => navigate(`/products/${product.id}`)}
+                  >
+                    <Card>
+                      <div className="num-display">10</div>
+                      <button className="cart">
+                        <FaCartPlus color='purple' />
+                      </button>
+                      <div className="record"/>
+                      <SingleProduct product={product} />
+                    </Card>
+                  </motion.div>
+                )
+              })}
             </motion.div>
           </motion.div>
         </AnimatePresence >

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans&family=DM+Serif+Display&family=Karla&family=Poppins:wght@400;600;700&display=swap');
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -17,7 +18,7 @@ ul {
 }
 
 .App {
-  max-width: 800px;
+  max-width: 900px;
   margin: auto;
   padding: 0 20px;
 }
@@ -31,7 +32,7 @@ header {
   position: static;
 }
 
-header:hover{
+header:hover {
   color: hotpink;
 }
 
@@ -41,16 +42,18 @@ header:hover{
   padding: 0;
   overflow: hidden;
   background-color: #EEEEEE;
+  box-shadow: 0 0 22px #ccc;
+  overflow: hidden;
 }
 
 nav.navbar li {
-  float:left;
+  float: left;
 }
 
 nav.navbar li a:link {
   display: block;
   color: #000000;
-  font-weight:bold;
+  font-weight: bold;
   padding: 8px 16px;
   text-decoration: none;
 }
@@ -69,7 +72,8 @@ a:hover {
   cursor: grab;
   width: 100%;
   height: 100%;
-  
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+
 }
 
 .card.reverse {
@@ -158,12 +162,13 @@ input:focus {
 
 .num-display {
   position: absolute;
-  top: -10px;
-  left: -10px;
+  top: 0px;
+  left: 0px;
+  box-shadow: 0 -5px 3px -3px black, 0 5px 3px -3px black;
 }
 
 .close,
-.edit, 
+.edit,
 .checkout,
 .user {
   position: absolute;
@@ -175,22 +180,22 @@ input:focus {
   font-size: 30px;
 }
 
-.cart{
-position: absolute;
-bottom: 4%;
-right: 25px;
-cursor: pointer;
-background: none;
-border: none;
-font-size: 40px;
-stroke-width: 30px;
-border-width: 3px;
-border-image: initial;
-border-radius: 25% 25% 25% 25%; 
-padding: 2% 3% 1% 2%;
+.cart {
+  position: absolute;
+  bottom: 4%;
+  right: 25px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 40px;
+  stroke-width: 30px;
+  border-width: 3px;
+  border-image: initial;
+  border-radius: 25% 25% 25% 25%;
+  padding: 2% 3% 1% 2%;
 }
 
-.user{
+.user {
   right: 65px;
 }
 
@@ -269,10 +274,10 @@ padding: 2% 3% 1% 2%;
   overflow: hidden;
 }
 
-.inner-carousel{
-  display:flex;
+.inner-carousel {
+  display: flex;
   margin-bottom: 25px;
-  }
+}
 
 img {
   display: block;
@@ -283,11 +288,95 @@ img {
   width: 220px;
   height: 220px;
   pointer-events: none;
+  box-shadow: 0.5rem 0.5rem black, -0.5rem -0.5rem #ccc;
 }
 
-.singleProduct{
-  font-family: 'DM Sans', sans-serif;
+.title {
+  font-family: 'DM Serif Display', serif;
+  line-height: 1.5;
+  line-height: calc(1.1em + 2);;
+  font-size: calc(13px + 1vw);  
+  margin: 12px 10px 7px;
 }
+
+.artist {
+  font-family: 'DM Serif Display', serif;
+  line-height: calc(1.1em + 2);
+  font-size: calc(13px + 0.5vw);  
+  margin: 12px 10px;
+}
+
+.description {
+  font-family: 'DM Sans', sans-serif;
+  width: fit-content;
+  block-size: fit-content;
+  line-height: calc(1.1em + 2);;
+  font-size: calc(16px + 1vw);
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.description::first-letter {
+  font-family: 'DM Serif Display', serif;
+  color: white;
+  background-color: rgb(7, 13, 15);
+  border-radius: 2px;
+  box-shadow: 3px 3px 0 hotpink;
+  font-size: 250%;
+  padding: 6px 3px;
+  margin-right: 6px;
+  float: left;
+
+}
+
+.logistics {
+  font-family: 'Karla', sans-serif;
+  text-align: left;
+  font-size: calc(12px + .5vw);
+  margin-right: 25%;
+  margin-left: 4%;
+}
+
+.category {
+  font-family: 'DM Serif Display', serif;
+  font-size: calc(20px + .5vw);
+  letter-spacing: 3px;
+  padding-left: 2.5%;
+  text-transform: uppercase;
+  color: #fff;
+  border-width:medium; 
+  border-style:solid;
+}
+
+.category:hover{
+  color: hotpink;
+}
+
+/* .record{
+  width: 13rem;
+  height: 8rem;
+  position: absolute;
+  margin: 235px 7px;
+  background-color: black;
+  border-radius: 12rem 12rem 0 0;
+  -webkit-transform:rotate(-180deg);
+  opacity: 0;
+} */
+/* 
+@keyframes example {
+  0%   {opacity: 1;}
+  25%  {opacity: 25;}
+  50%  {opacity: 50;}
+  75%  {opacity: 75;}
+  100% {opacity: 100;}
+} */
+/* 
+.record:hover{
+  opacity: 1;
+animation-name: example;
+  animation-duration: 4s;
+  animation-delay: 0s;
+} */
 
 @media (min-width: 365px) and (max-width: 900px) {
   .rating li {

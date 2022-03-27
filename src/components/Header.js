@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { BsFillBagCheckFill, BsVinylFill } from "react-icons/bs";
-import { FaUserAlt, FaSearch } from "react-icons/fa";
+import { FaUserAlt, FaSearch, FaBars } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 function Header({ text, bgColor, textColor }) {
@@ -10,6 +10,7 @@ function Header({ text, bgColor, textColor }) {
     backgroundColor: bgColor,
     color: textColor,
   };
+
   return (
     <header style={headerStyles}>
       <div className="container">
@@ -19,19 +20,19 @@ function Header({ text, bgColor, textColor }) {
         </h1>
         <nav className="navbar">
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/" href="#home">Home</Link>
           </li>
           <li>
-            <Link to="/products">Products</Link>
+            <Link to="/products" href="#products">Products</Link>
           </li>
           <li>
-            <Link to="/orders">Orders</Link>
+            <Link to="/orders" href="#orders">Orders</Link>
           </li>
           <li>
-            <Link to="/myorders/:creatorId">My Orders</Link>
+            <Link to="/myorders/:creatorId" href="#myorders">My Orders</Link>
           </li>
           <li>
-            <Link to="/login">Login</Link>
+            <Link to="/login" href="#login">Login</Link>
           </li>
           <div className="search-container">
             <input type="text" placeholder="Search.." name="search" />

@@ -9,7 +9,6 @@ const AddReviewToSingleProduct = ({ id, reviews, addReview }) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            console.log('>>>>>>>>>>>', creatorId.name)
             AddReviewToSingleProduct(creatorId.name, description, rating);
             await addReview();
         } catch (error) {
