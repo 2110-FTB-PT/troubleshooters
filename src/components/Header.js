@@ -4,7 +4,7 @@ import { BsFillBagCheckFill, BsVinylFill } from "react-icons/bs";
 import { FaUserAlt, FaSearch, FaBars } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-function Header({ text, bgColor, textColor }) {
+function Header({ token, text, bgColor, textColor }) {
   const navigate = useNavigate();
   const headerStyles = {
     backgroundColor: bgColor,
@@ -25,12 +25,16 @@ function Header({ text, bgColor, textColor }) {
           <li>
             <Link to="/products" href="#products">Products</Link>
           </li>
+<<<<<<< HEAD
           <li>
             <Link to="/orders" href="#orders">Orders</Link>
           </li>
           <li>
             <Link to="/myorders/:creatorId" href="#myorders">My Orders</Link>
           </li>
+=======
+          <li>{token && <Link to="/myorders">My Orders</Link>}</li>
+>>>>>>> origin
           <li>
             <Link to="/login" href="#login">Login</Link>
           </li>

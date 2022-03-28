@@ -335,17 +335,19 @@ img {
   font-size: calc(12px + .5vw);
   margin-right: 25%;
   margin-left: 4%;
+  bottom: 10px;
 }
 
 .category {
-  font-family: 'DM Serif Display', serif;
-  font-size: calc(20px + .5vw);
+  font-family: 'Poppins', sans-serif;
+  font-size: calc(22px + .5vw);
   letter-spacing: 3px;
-  padding-left: 2.5%;
+  padding-left: 43%;
   text-transform: uppercase;
   color: #fff;
   border-width:medium; 
   border-style:solid;
+  border-radius: 10rem 10rem 0rem 0rem;
 }
 
 .category:hover{
