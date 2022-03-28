@@ -1,16 +1,20 @@
 import { useState } from "react";
-import { fetchReview } from "../api/ReviewApi";
+import { fetchReview, addReview } from "../api/ReviewApi";
+import Card from "../shared/Card";
 
-const AddReviewToSingleProduct = ({ id, reviews, addReview }) => {
+const AddReviewToSingleProduct = ({ singleProduct, setSingleProduct, singleProduct: {id: productId} }) => {
     const [rating, setRating] = useState(10);
     const [review, setReview] = useState('');
+    const [description, setDescription] = useState('');
     const [message, setMessage] = useState('');
-
+    
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            AddReviewToSingleProduct(creatorId.name, description, rating);
-            await addReview();
+            const addedReview = await addReview(token, productId, rating, description);
+            const newReviews = singleProduct.reviews
+            newReviews.push(addedReview)
+            setSingleProduct({...singleProduct, reviews: newReviews})
         } catch (error) {
             throw (error)
         }
@@ -24,9 +28,8 @@ const AddReviewToSingleProduct = ({ id, reviews, addReview }) => {
         } else {
             setMessage(null)
         }
-        setText(value)
+        setDescription(value)
     }
-
 
     return (
         <Card>
@@ -38,12 +41,15 @@ const AddReviewToSingleProduct = ({ id, reviews, addReview }) => {
                         onChange={handleTextChange}
                         type="text"
                         placeholder="Write a review"
-                        value={text}
+                        value={description}
                     />
                 </div>
                 {message && <div className="message">{message}</div>}
+                <button>submit</button>
             </form>
         </Card>
 
     )
 }
+
+export default AddReviewToSingleProduct

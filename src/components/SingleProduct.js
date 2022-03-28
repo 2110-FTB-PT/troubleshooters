@@ -2,7 +2,8 @@ import { useNavigate, useParams } from "react-router";
 import { useState, useEffect } from "react";
 import { capitalizeFirstLetter } from "../api/utils";
 import SingleReview from "./SingleReview";
-import Card from "../shared/Card";
+import AddReviewToSingleProduct from "./AddReviewToSingleProduct";
+import RatingDisplay from "./RatingDisplay";
 
 const SingleProduct = ({ product, products }) => {
   const navigate = useNavigate();
@@ -27,8 +28,10 @@ const SingleProduct = ({ product, products }) => {
 
   return (
     <div className='singleProduct'>
-      
+      <div className="album-image">
+      <RatingDisplay product={product}/>
       {imgURL && <img src={require(`../assets/${imgURL}`)} />}
+      </div>
       <h3 className="title">{title}</h3>
       <div className="artist">{artist}</div>
       {productId &&
@@ -44,6 +47,7 @@ const SingleProduct = ({ product, products }) => {
           <SingleReview key={`${review.id}-${review.name}`} review={review} />
         )
       })}
+      {productId && <AddReviewToSingleProduct singleProduct={singleProduct} setSingleProduct={setSingleProduct} />}
     </div>
   )
 }

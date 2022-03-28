@@ -98,9 +98,9 @@ a:hover {
 .num-display {
   position: relative;
   background: #f4f4f4;
-  width: 50px;
-  height: 50px;
-  padding: 10px;
+  width: 55px;
+  height: 55px;
+  padding: 11px 6px;
   text-align: center;
   border-radius: 50%;
   font-size: 19px;
@@ -187,12 +187,13 @@ input:focus {
   cursor: pointer;
   background: none;
   border: none;
-  font-size: 40px;
+  font-size: 45px;
   stroke-width: 30px;
   border-width: 3px;
   border-image: initial;
   border-radius: 25% 25% 25% 25%;
   padding: 2% 3% 1% 2%;
+  display:block;
 }
 
 .user {
@@ -280,15 +281,28 @@ input:focus {
 }
 
 img {
-  display: block;
+  display: inline-block;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 7%;
-  margin-bottom: 7%;
+  margin-top: 5%;
   width: 220px;
   height: 220px;
   pointer-events: none;
   box-shadow: 0.5rem 0.5rem black, -0.5rem -0.5rem #ccc;
+  
+}
+
+.album-image{
+  position: relative;
+  width: 260px;
+  height: 250px;
+  text-align: center;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  align-items: center;
 }
 
 #spinner {
@@ -340,6 +354,7 @@ img {
   margin-right: 25%;
   margin-left: 4%;
   bottom: 10px;
+  display: block;
 }
 
 .category {

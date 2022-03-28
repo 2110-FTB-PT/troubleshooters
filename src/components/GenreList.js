@@ -3,9 +3,9 @@ import { FaCartPlus } from "react-icons/fa";
 import Card from "../shared/Card";
 import { motion, AnimatePresence } from 'framer-motion'
 import SingleProduct from "./SingleProduct";
-import SingleReview from "./SingleReview";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+// import RatingDisplay from "./RatingDisplay";
 
 const GenreList = ({ products, category }) => {
   const [width, setWidth] = useState(0);
@@ -52,7 +52,7 @@ const GenreList = ({ products, category }) => {
                     onTap={() => navigate(`/products/${product.id}`)}
                   >
                     <Card>
-                      <div className="num-display">10</div>
+                      {/* <RatingDisplay product={product}/> */}
                       <button className="cart">
                         <FaCartPlus color='purple' />
                       </button>
