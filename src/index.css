@@ -291,6 +291,10 @@ img {
   box-shadow: 0.5rem 0.5rem black, -0.5rem -0.5rem #ccc;
 }
 
+#spinner {
+  box-shadow: none;
+}
+
 .title {
   font-family: 'DM Serif Display', serif;
   line-height: 1.5;

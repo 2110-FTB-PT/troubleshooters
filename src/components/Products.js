@@ -23,7 +23,7 @@ const Products = ({ products, setProducts }) => {
     <Spinner />
   ) : (
     <div className='allproducts'>
-        <GenreList products={products} category="Rock" />
+        <GenreList products={products} category="XXSRock" />
         <GenreList products={products} category="Jazz" />
         <GenreList products={products} category="R&B" />
         <GenreList products={products} category="Pop" />
