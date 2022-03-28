@@ -51,7 +51,6 @@ const App = () => {
       setToken(localStorage.getItem("token"));
     }
   }, []);
-  console.log(searchTerm)
 
   return (
     <Router>
