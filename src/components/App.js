@@ -60,7 +60,7 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route
             path="/products"
-            element={<Products products={products} setProducts={setProducts} />}
+            element={<Products products={products} setProducts={setProducts} searchTerm={searchTerm} />}
           />
           <Route
             path="/products/:productId"
