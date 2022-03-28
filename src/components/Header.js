@@ -25,16 +25,13 @@ function Header({ token, text, bgColor, textColor }) {
           <li>
             <Link to="/products" href="#products">Products</Link>
           </li>
-<<<<<<< HEAD
           <li>
             <Link to="/orders" href="#orders">Orders</Link>
           </li>
           <li>
             <Link to="/myorders/:creatorId" href="#myorders">My Orders</Link>
           </li>
-=======
           <li>{token && <Link to="/myorders">My Orders</Link>}</li>
->>>>>>> origin
           <li>
             <Link to="/login" href="#login">Login</Link>
           </li>
