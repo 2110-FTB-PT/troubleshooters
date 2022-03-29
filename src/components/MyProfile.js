@@ -5,7 +5,6 @@ import { useUserContext } from "../context/UserContext";
 const MyProfile = () => {
   const navigate = useNavigate();
   const { user } = useUserContext();
-  console.log(user)
 
   return (
     <>

@@ -6,7 +6,6 @@ import { useUserContext } from "../context/UserContext";
 const MyOrders = ({ orders, setOrders }) => {
   const navigate = useNavigate();
   const { token, user } = useUserContext();
-  console.log(token, user)
 
   const handleDelete = async (id) => {
     try {
