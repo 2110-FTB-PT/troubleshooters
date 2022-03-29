@@ -1,13 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { fetchReview, addReview } from "../api/ReviewApi";
 import Card from "../shared/Card";
 import RatingSelect from "./RatingSelect";
+import Button from "../shared/Button";
 
 const ReviewForm = ({ singleProduct, setSingleProduct, singleProduct: {id: productId} }) => {
     const [rating, setRating] = useState(10);
     const [review, setReview] = useState('');
+    const [btnDisabled, setBtnDisabled] = useState(true)
     const [description, setDescription] = useState('');
     const [message, setMessage] = useState('');
+
+    // useEffect(() => {
+    //     if(reviewEdit.edit === true){
+    //         setBtnDisabled(false)
+    //         setDescription(reviewEdit.id.description)
+    //         setRating(reviewEdit.id.rating)
+    //     }
+    // }, [reviewEdit])
     
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -31,7 +41,7 @@ const ReviewForm = ({ singleProduct, setSingleProduct, singleProduct: {id: produ
         }
         setDescription(value)
     }
-
+console.log(rating)
     return (
         <Card>
             <form onSubmit={handleSubmit}>
@@ -46,7 +56,7 @@ const ReviewForm = ({ singleProduct, setSingleProduct, singleProduct: {id: produ
                     />
                 </div>
                 {message && <div className="message">{message}</div>}
-                <button>submit</button>
+                <Button type="submit" isDisabled={btnDisabled}>submit</Button>
             </form>
         </Card>
 

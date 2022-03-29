@@ -4,7 +4,7 @@ import { capitalizeFirstLetter } from "../api/utils";
 import SingleReview from "./SingleReview";
 import ReviewForm from "./ReviewForm";
 import RatingDisplay from "./RatingDisplay";
-import ReviewItem from "./ReviewItem";
+import Card from "../shared/Card";
 
 const SingleProduct = ({ product, products }) => {
   const navigate = useNavigate();
@@ -45,10 +45,12 @@ const SingleProduct = ({ product, products }) => {
       <div className="logistics">${price}</div>
 
       {productId && <ReviewForm singleProduct={singleProduct} setSingleProduct={setSingleProduct} />}
-      <ReviewItem/>
+      
       {singleProduct.reviews?.map(review => {
         return (
-          <SingleReview key={`${review.id}-${review.name}`} review={review} />
+          <Card key={`${review.id}-${review.name}`}>
+          <SingleReview  review={review} />
+        </Card>
         )
       })}
       

@@ -1,8 +1,10 @@
+import RatingDisplay from "./RatingDisplay"
+
 const SingleReview = ({review: {creatorName:name, description, rating}}) => {
     return (
         <>
+        <RatingDisplay rating={rating}/>
         <div>{name}</div>
-        <div>{rating}</div>
         <div>{description}</div>
         </>
     )

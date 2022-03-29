@@ -1,5 +1,5 @@
-const RatingDisplay = ({product, singleProduct}) => {
-    let averageReview
+const RatingDisplay = ({product, singleProduct, rating}) => {
+    let averageReview = rating
  
     if((product && product.reviews?.length === 0) || (singleProduct && singleProduct.reviews?.length === 0)){
         averageReview = "NEW"
@@ -8,7 +8,7 @@ const RatingDisplay = ({product, singleProduct}) => {
             return accumulator + review.rating
         }, 0) / product.reviews.length
         averageReview = averageReview?.toFixed(1).replace(/[.,]0$/, '')
-    } else {
+    } else if (singleProduct && Object.keys(singleProduct).length > 0) {
         averageReview = singleProduct && singleProduct.reviews?.reduce((accumulator, review) => {
             return accumulator + review.rating
         }, 0) / singleProduct.reviews?.length
