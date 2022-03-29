@@ -1,8 +1,10 @@
 import { ProductForm } from "./";
 import { useState } from "react";
 import { addProduct } from "../api/productsApi";
+import { useUserContext } from "../context/UserContext";
 
-const AddProduct = ({ token, products, setProducts }) => {
+const AddProduct = ({ products, setProducts }) => {
+  const { token } = useUserContext();
   const [productFormData, setProductFormData] = useState({title: '', artist: '', description: '', price: '0', inventoryQuantity: 0, imgURL: ''})
 
   const handleAdd = async (event) => {
