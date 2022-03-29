@@ -56,7 +56,9 @@ console.log(rating)
                     />
                 </div>
                 {message && <div className="message">{message}</div>}
+                <div className="sub-button">
                 <Button type="submit" isDisabled={btnDisabled}>submit</Button>
+                </div>
             </form>
         </Card>
 
