@@ -345,7 +345,6 @@ img {
   padding: 6px 3px;
   margin-right: 6px;
   float: left;
-
 }
 
 .logistics {
@@ -374,31 +373,6 @@ img {
   color: hotpink;
 }
 
-/* .record{
-  width: 13rem;
-  height: 8rem;
-  position: absolute;
-  margin: 235px 7px;
-  background-color: black;
-  border-radius: 12rem 12rem 0 0;
-  -webkit-transform:rotate(-180deg);
-  opacity: 0;
-} */
-/* 
-@keyframes example {
-  0%   {opacity: 1;}
-  25%  {opacity: 25;}
-  50%  {opacity: 50;}
-  75%  {opacity: 75;}
-  100% {opacity: 100;}
-} */
-/* 
-.record:hover{
-  opacity: 1;
-animation-name: example;
-  animation-duration: 4s;
-  animation-delay: 0s;
-} */
 
 @media (min-width: 365px) and (max-width: 900px) {
   .rating li {
