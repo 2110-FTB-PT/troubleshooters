@@ -44,6 +44,7 @@ header:hover {
   background-color: #EEEEEE;
   box-shadow: 0 0 22px #ccc;
   overflow: hidden;
+  /* display: inline-block; */
 }
 
 nav.navbar li {
@@ -350,9 +351,9 @@ img {
 .logistics {
   font-family: 'Karla', sans-serif;
   text-align: left;
-  font-size: calc(12px + .5vw);
+  font-size: calc(13px + .9vw);
   margin-right: 25%;
-  margin-left: 4%;
+  margin-left:1.5%;
   bottom: 10px;
   display: block;
 }

@@ -1,19 +1,22 @@
-const RatingDisplay = ({product}) => {
+const RatingDisplay = ({product, singleProduct}) => {
     let averageReview
-    //reviews undefined
-    const reviews = [];
-    if(product && reviews && product.reviews?.length === 0 ){
+ 
+    if((product && product.reviews?.length === 0) || (singleProduct && singleProduct.reviews?.length === 0)){
         averageReview = "NEW"
-    } else {
-        averageReview = product && reviews && product.reviews.reduce((accumulator, review) => {
+    } else if (product ){
+        averageReview = product && product.reviews.reduce((accumulator, review) => {
             return accumulator + review.rating
         }, 0) / product.reviews.length
         averageReview = averageReview?.toFixed(1).replace(/[.,]0$/, '')
-    };
-    
+    } else {
+        averageReview = singleProduct && singleProduct.reviews?.reduce((accumulator, review) => {
+            return accumulator + review.rating
+        }, 0) / singleProduct.reviews?.length
+        averageReview = averageReview?.toFixed(1).replace(/[.,]0$/, '')
+    }
+
     return(
         <div className="num-display">
-                      
         {averageReview}
         </div>
     )

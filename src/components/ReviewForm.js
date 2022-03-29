@@ -1,75 +1,56 @@
-import { useContext, useState, useEffect } from 'react'
-import Card from '../shared/Card'
-import ReviewContext from '../context/ReviewContext'
+import { useState } from "react";
+import { fetchReview, addReview } from "../api/ReviewApi";
+import Card from "../shared/Card";
+import RatingSelect from "./RatingSelect";
 
-function ReviewForm() {
-    const [text, setText] = useState('')
-    const [rating, setRating] = useState(10)
-    const [message, setMessage] = useState('')
+const ReviewForm = ({ singleProduct, setSingleProduct, singleProduct: {id: productId} }) => {
+    const [rating, setRating] = useState(10);
+    const [review, setReview] = useState('');
+    const [description, setDescription] = useState('');
+    const [message, setMessage] = useState('');
+    
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        try {
+            const addedReview = await addReview(token, productId, rating, description);
+            const newReviews = singleProduct.reviews
+            newReviews.push(addedReview)
+            setSingleProduct({...singleProduct, reviews: newReviews})
+        } catch (error) {
+            throw (error)
+        }
+    };
 
-    // const {reviewEdit, updateReview} = useContext(ReviewContext)
-
-    // useEffect(() => {
-    //  if(reviewEdit.edit === true) {
-    //      setText(reviewEdit.item.text)
-    //      setRating(reviewEdit.item.rating)
-    //  }
-    // }, [reviewEdit])
-
-    const handleTextChange = ({ target: { value } }) => {
+    const handleTextChange = ({target: {value}}) => {
         if (value === '') {
-            setBtnDisabled(true)
             setMessage(null)
         } else if (value.trim().length < 10) {
-            setMessage('Text must be at least 10 characters')
-            setBtnDisabled(true)
+            setMessage('Text must be ate least 10 characters')
         } else {
             setMessage(null)
-            setBtnDisabled(false)
         }
-        setText(value)
+        setDescription(value)
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        if (text.trim().length > 10) {
-            const newReview = {
-                text,
-                rating,
-            }
-
-            //new
-            if (reviewEdit.edit === true) {
-                updateReview(reviewEdit.item.id, newReview)
-            // } else{
-            // addReview(newReview)
-            // }
-            //NOTE: reset to default state after submission
-            setRating(10) // set rating back to 10 
-            setText('') // set text to empty
-        }
-    }
-
-      // NOTE: pass selected to RatingSelect so we don't need local duplicate state
     return (
         <Card>
             <form onSubmit={handleSubmit}>
-                <h2>How would you rate this product?</h2>
-                <RatingSelect select={setRating} selected={rating} />
+                <h2>Add a review to this product</h2>
+                <RatingSelect select={setRating} selected={rating}/>
                 <div className="input-group">
                     <input
                         onChange={handleTextChange}
                         type="text"
-                        placeholder='Write a review'
-                        value={text}
+                        placeholder="Write a review"
+                        value={description}
                     />
-                    {/* <Button type="submit" isDisabled={btnDisabled}>Send</Button> */}
                 </div>
-                {message && <div className='message'>{message}</div>}
+                {message && <div className="message">{message}</div>}
+                <button>submit</button>
             </form>
         </Card>
+
     )
-}
 }
 
 export default ReviewForm

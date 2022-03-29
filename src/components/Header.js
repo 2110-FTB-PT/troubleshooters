@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { BsFillBagCheckFill, BsVinylFill } from "react-icons/bs";
-import { FaUserAlt, FaSearch, FaBars } from "react-icons/fa";
+import { FaUserAlt, FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 function Header({ token, text, bgColor, textColor }) {
@@ -18,7 +18,7 @@ function Header({ token, text, bgColor, textColor }) {
           {text}
           <BsVinylFill />
         </h1>
-        <nav className="navbar">
+        <nav className="navbar" id="container">
           <li>
             <Link to="/" href="#home">Home</Link>
           </li>
