@@ -11,23 +11,13 @@ import {
   AddProduct,
   Login,
 } from "./";
-import { fetchOrders, getUser } from "../api";
+import { fetchOrders } from "../api";
 
 const App = () => {
-  const [token, setToken] = useState("");
-  const [user, setUser] = useState({});
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const handleUser = async (token) => {
-    try {
-      const fetchedUsers = await getUser(token);
-      setUser(fetchedUsers);
-    } catch (error) {
-      console.error(error);
-    }
-  };
   const handleOrders = async () => {
     try {
       const fetchedOrders = await fetchOrders();
@@ -38,18 +28,6 @@ const App = () => {
   };
   useEffect(() => {
     handleOrders();
-  }, []);
-
-  useEffect(() => {
-    if (token) {
-      handleUser(token);
-    }
-  }, [token]);
-
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      setToken(localStorage.getItem("token"));
-    }
   }, []);
 
   return (
@@ -70,8 +48,6 @@ const App = () => {
             path="/orders"
             element={
               <Orders
-                token={token}
-                user={user}
                 orders={orders}
                 setOrders={setOrders}
               />
@@ -81,16 +57,14 @@ const App = () => {
             path="/myorders"
             element={
               <MyOrders
-                token={token}
-                user={user}
                 orders={orders}
                 setOrders={setOrders}
               />
             }
           />
-          <Route path="/login" element={<Login setToken={setToken} />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/myprofile" element={<MyProfile />} />
-          <Route path="/addproduct" element={<AddProduct token={token} products={products} setProducts={setProducts} />} />
+          <Route path="/addproduct" element={<AddProduct  products={products} setProducts={setProducts} />} />
         </Routes>
       </div>
     </Router>
