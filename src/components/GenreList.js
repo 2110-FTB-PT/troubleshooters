@@ -17,10 +17,24 @@ const GenreList = ({ products, setProducts, category, handleAdd }) => {
   const navigate = useNavigate();
   const { token } = useUserContext();
 
+  // Delete Product - Admin Only
   const handleDelete = async (productId) => {
-    const {id: deletedProductId } = await deleteProduct(productId, token)
-    const productsWithoutDeletedProduct = products.filter(product => product.id !== deletedProductId);
-    setProducts(productsWithoutDeletedProduct);
+    try {
+      const {id: deletedProductId } = await deleteProduct(productId, token);
+      const productsWithoutDeletedProduct = products.filter(product => product.id !== deletedProductId);
+      setProducts(productsWithoutDeletedProduct);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  // Edit Product - Admin Only
+  const handleEdit = async () => {
+    try {
+
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   useEffect(() => {
@@ -39,8 +53,7 @@ const GenreList = ({ products, setProducts, category, handleAdd }) => {
       return containsCategory;
     });
     setFilteredProducts(productsByGenre)
-
-  }, [products])
+  }, [products]);
 
 
   return (
