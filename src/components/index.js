@@ -11,3 +11,4 @@ export { default as MyOrders } from "./MyOrders";
 export { default as Header } from "./Header";
 export { default as Login } from "./Login";
 export { default as ProductForm } from "./ProductForm";
+export { default as EditProduct } from "./EditProduct";
