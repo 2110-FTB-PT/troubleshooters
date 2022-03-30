@@ -53,6 +53,8 @@ const SingleProduct = ({ product, products }) => {
         </Card>
         )
       })}
+      <button>Edit</button>
+      <button>Delete</button>
       
     </div>
   )
