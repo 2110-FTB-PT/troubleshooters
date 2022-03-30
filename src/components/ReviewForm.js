@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { fetchReview, addReview } from "../api/ReviewApi";
+import { useState } from "react";
+import { addReview } from "../api/ReviewApi";
 import Card from "../shared/Card";
 import RatingSelect from "./RatingSelect";
 import Button from "../shared/Button";
@@ -11,14 +11,6 @@ const ReviewForm = ({ singleProduct, setSingleProduct, singleProduct: {id: produ
     const [description, setDescription] = useState('');
     const [message, setMessage] = useState('');
 
-    // useEffect(() => {
-    //     if(reviewEdit.edit === true){
-    //         setBtnDisabled(false)
-    //         setDescription(reviewEdit.id.description)
-    //         setRating(reviewEdit.id.rating)
-    //     }
-    // }, [reviewEdit])
-    
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
@@ -41,12 +33,12 @@ const ReviewForm = ({ singleProduct, setSingleProduct, singleProduct: {id: produ
         }
         setDescription(value)
     }
-console.log(rating)
+
     return (
         <Card>
             <form onSubmit={handleSubmit}>
                 <h2>Add a review to this product</h2>
-                <RatingSelect select={setRating} selected={rating}/>
+                <RatingSelect select={setRating} selected={rating} className="rate-select"/>
                 <div className="input-group">
                     <input
                         onChange={handleTextChange}

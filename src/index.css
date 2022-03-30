@@ -9,7 +9,7 @@
 body {
   font-family: 'Poppins', sans-serif;
   /* background-color: #202142; */
-  background-color: #141414;
+  background-color: #0f0f0f;
   color: #fff;
   line-height: 1.6;
 }
@@ -22,6 +22,45 @@ ul {
   max-width: 900px;
   margin: auto;
   padding: 0 20px;
+}
+
+#mySidenav {
+  position: relative;
+  top: 15%;
+  left: 25%;  
+  color:black;
+  font-size: calc(25px + .8vw);
+  z-index: 99;
+  cursor: pointer;
+
+}
+
+#myLinks {
+  position: absolute;
+  display: flex;
+  flex-grow: 2;
+  flex-direction: column;
+  row-gap:calc(20% + 19px);
+  background-color: transparent;
+  margin-left: 12%;
+  font-size: calc(12px + 2vw);
+  z-index: 2;  
+
+}
+
+#myMenu {
+  content: "";
+  position: absolute;
+  background-color: hsla(0, 0%, 7%, 0.972);
+  top: 0;
+  left: 0;
+  right: 60%;
+  bottom: 0%;
+  filter: blur(10%);
+  margin: -20px;
+  z-index: 1;
+
+
 }
 
 header {
@@ -38,14 +77,15 @@ header:hover {
 }
 
 .navbar {
-  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   margin: 0;
   padding: 0;
   overflow: hidden;
   background-color: #EEEEEE;
   box-shadow: 0 0 22px #ccc;
   overflow: hidden;
-  /* display: inline-block; */
 }
 
 nav.navbar li {
@@ -382,6 +422,49 @@ img {
   color: hotpink;
 }
 
+.rev-name {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: right;
+  font-family: 'DM Serif Display', serif;
+  color: hotpink;
+  font-size: calc(15px + 1vw);
+
+}
+
+.rev-description {
+  font-family: 'Poppins', sans-serif;
+  text-indent: 48px;
+  display: flex;
+  flex-wrap: nowrap;
+  font-size: calc(16px + 1vw);
+}
+
+.nav-search[type=text] {
+  width: 100px;
+  margin-left:50%;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 19px;
+  background-color: white;
+  background-position: 10px 10px; 
+  background-repeat: no-repeat;
+  padding: 10px 10px 10px 10px;
+  transition: width 0.4s ease-in-out;
+  float: right;
+}
+
+.nav-search[type=text]:focus{
+  width: calc(300px + .05vw);;
+  border-radius: 10px;
+}
+
+.logo{
+  position:static;
+  position: -webkit-sticky;
+  top: 0;
+}
 
 @media (min-width: 365px) and (max-width: 900px) {
   .rating li {
