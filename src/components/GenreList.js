@@ -6,9 +6,8 @@ import SingleProduct from "./SingleProduct";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import AddProductToOrderForm from "./AddProductToOrderForm";
-import { addOrder } from "../api";
 
-const GenreList = ({ products, category, handleAdd, token }) => {
+const GenreList = ({ products, category, handleAdd }) => {
   const [width, setWidth] = useState(0);
   const carousel = useRef();
   const lowerCaseCategory = category.toLowerCase();

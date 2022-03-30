@@ -5,7 +5,7 @@ import GenreList from "./GenreList";
 import SingleProduct from "./SingleProduct";
 import Card from "../shared/Card";
 
-const Products = ({ products, setProducts, token, handleAdd, searchTerm }) => {
+const Products = ({ products, setProducts, handleAdd, searchTerm }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchProducts = async () => {
@@ -47,25 +47,21 @@ const Products = ({ products, setProducts, token, handleAdd, searchTerm }) => {
     <div className="allproducts">
       <GenreList
         handleAdd={handleAdd}
-        token={token}
         products={products}
         category="Rock"
       />
       <GenreList
         handleAdd={handleAdd}
-        token={token}
         products={products}
         category="Jazz"
       />
       <GenreList
         handleAdd={handleAdd}
-        token={token}
         products={products}
         category="R&B"
       />
       <GenreList
         handleAdd={handleAdd}
-        token={token}
         products={products}
         category="Pop"
       />

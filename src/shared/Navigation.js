@@ -13,9 +13,6 @@ function Navigation({ token }) {
             <ul id="myLinks" onClick={(() => setShowMenu(false))}>
                 <Link to="/">Home</Link>
                 <Link to="/products">Products</Link>
-                <Link to="/orders">Orders</Link>
-                <Link to="/myorders/:creatorId">My Orders</Link>
-                {token && <Link to="/myorders">My Orders</Link>}
                 <Link to="/login">Login</Link>
             </ul>
 
