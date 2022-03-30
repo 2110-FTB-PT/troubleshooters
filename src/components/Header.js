@@ -4,7 +4,7 @@ import { BsFillBagCheckFill, BsVinylFill } from "react-icons/bs";
 import { FaUserAlt, FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-function Header({ token, text, bgColor, textColor }) {
+function Header({ token, text, bgColor, textColor, cart }) {
   const navigate = useNavigate();
   const headerStyles = {
     backgroundColor: bgColor,
@@ -35,7 +35,11 @@ function Header({ token, text, bgColor, textColor }) {
             </button>
           </div>
           <li>
-            <BsFillBagCheckFill color="hotpink" className="checkout" />
+            <BsFillBagCheckFill
+              color="hotpink"
+              className="checkout"
+              onClick={() => navigate("/cart")}
+            />
           </li>
           <li>
             <FaUserAlt
@@ -43,6 +47,9 @@ function Header({ token, text, bgColor, textColor }) {
               color="hotpink"
               className="user"
             />
+          </li>
+          <li className="checkout-number">
+            {cart && cart.products?.length}
           </li>
         </nav>
       </div>
