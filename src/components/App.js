@@ -19,6 +19,8 @@ import {
   addProductToOrder,
   updateOrderProduct,
 } from "../api";
+import AboutIconLink from "../shared/AboutIcon";
+import AboutPage from "./AboutPage";
 
 const App = () => {
   const [token, setToken] = useState("");
@@ -26,6 +28,7 @@ const App = () => {
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
   const [cart, setCart] = useState({});
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleUser = async (token) => {
     try {
@@ -64,7 +67,11 @@ const App = () => {
         const [productToUpdate] = orderData.products.filter(
           (item) => product.id === item.productId
         );
-        await updateOrderProduct(productToUpdate.quantity, productToUpdate.id, token);
+        await updateOrderProduct(
+          productToUpdate.quantity,
+          productToUpdate.id,
+          token
+        );
         setCart(orderData);
       } else {
         const productData = await addProductToOrder(
@@ -108,7 +115,11 @@ const App = () => {
 
   return (
     <Router>
-      <Header cart={cart} />
+      <Header
+        cart={cart}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+      />
       <div className="App">
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -122,6 +133,7 @@ const App = () => {
                 setCart={setCart}
                 token={token}
                 handleAdd={handleAdd}
+                searchTerm={searchTerm}
               />
             }
           />
@@ -169,7 +181,9 @@ const App = () => {
               />
             }
           />
+          <Route path="/about" element={<AboutPage />} />
         </Routes>
+        <AboutIconLink />
       </div>
     </Router>
   );

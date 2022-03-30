@@ -1,56 +1,45 @@
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import { BsFillBagCheckFill, BsVinylFill } from "react-icons/bs";
-import { FaUserAlt, FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { BsFillBagCheckFill, BsVinylFill } from "react-icons/bs";
+import { FaUserAlt } from "react-icons/fa";
+import Navigation from "../shared/Navigation";
 
-function Header({ token, text, bgColor, textColor, cart }) {
+function Header({
+  token,
+  text,
+  bgColor,
+  textColor,
+  searchTerm,
+  setSearchTerm,
+}) {
   const navigate = useNavigate();
   const headerStyles = {
     backgroundColor: bgColor,
     color: textColor,
   };
+
   return (
     <header style={headerStyles}>
       <div className="container">
-        <h1>
+        <h1 className="logo">
           {text}
           <BsVinylFill />
         </h1>
         <nav className="navbar">
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/products">Products</Link>
-          </li>
-          <li>{token && <Link to="/myorders">My Orders</Link>}</li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
+          <Navigation />
           <div className="search-container">
-            <input type="text" placeholder="Search.." name="search" />
-            <button type="submit">
-              <FaSearch className="search-btn"></FaSearch>
-            </button>
+            <input type="text" placeholder="Search.." className="nav-search" />
           </div>
-          <li>
-            <BsFillBagCheckFill
-              color="hotpink"
-              className="checkout"
-              onClick={() => navigate("/cart")}
-            />
-          </li>
-          <li>
-            <FaUserAlt
-              onClick={() => navigate("/myprofile")}
-              color="hotpink"
-              className="user"
-            />
-          </li>
-          <li className="checkout-number">
-            {cart && cart.products?.length}
-          </li>
+          <BsFillBagCheckFill
+            color="hotpink"
+            className="checkout"
+            onClick={() => navigate("/cart")}
+          />
+          <FaUserAlt
+            onClick={() => navigate("/myprofile")}
+            color="hotpink"
+            className="user"
+          />
         </nav>
       </div>
     </header>

@@ -1,9 +1,12 @@
+import RatingDisplay from "./RatingDisplay"
+
 const SingleReview = ({review: {creatorName:name, description, rating}}) => {
+
     return (
         <>
-        <div>{name}</div>
-        <div>{rating}</div>
-        <div>{description}</div>
+        <RatingDisplay rating={rating}/>
+        <div className="rev-name">{name}</div>
+        <div className="rev-description">{description}</div>
         </>
     )
 }

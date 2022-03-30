@@ -17,7 +17,6 @@ const GenreList = ({ products, category, handleAdd, token }) => {
   useEffect(() => {
     setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
   }, []);
-
   // filters the products to be only products that contain the specified category
   const filteredProducts = products.filter((product) => {
     let containsCategory = false;
@@ -31,7 +30,7 @@ const GenreList = ({ products, category, handleAdd, token }) => {
 
   return (
     <>
-      <div>{category}</div>
+      <div className="category">{category}</div>
       <div className="products-by-category">
         <AnimatePresence>
           <motion.div ref={carousel} className="carousel">
@@ -47,8 +46,8 @@ const GenreList = ({ products, category, handleAdd, token }) => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.98 }}
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.99 }}
                     onTap={(event) => {
                       let cart = event.target.localName;
                       if (
