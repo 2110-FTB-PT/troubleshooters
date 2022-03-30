@@ -11,13 +11,14 @@ import { deleteProduct } from "../api/productsApi";
 
 const GenreList = ({ products, setProducts, category, handleAdd }) => {
   const [width, setWidth] = useState(0);
+  const [filteredProducts, setFilteredProducts] = useState([])
   const carousel = useRef();
   const lowerCaseCategory = category.toLowerCase();
   const navigate = useNavigate();
   const { token } = useUserContext();
 
   const handleDelete = async (productId) => {
-    const deletedProductId = await deleteProduct(productId, token)
+    const {id: deletedProductId } = await deleteProduct(productId, token)
     const productsWithoutDeletedProduct = products.filter(product => product.id !== deletedProductId);
     setProducts(productsWithoutDeletedProduct);
   }
@@ -25,16 +26,21 @@ const GenreList = ({ products, setProducts, category, handleAdd }) => {
   useEffect(() => {
     setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
   }, []);
-  // filters the products to be only products that contain the specified category
-  const filteredProducts = products.filter((product) => {
-    let containsCategory = false;
-    product.categories.forEach((category) => {
-      if (category.name.toLowerCase() === lowerCaseCategory) {
-        containsCategory = true;
-      }
+
+  useEffect(() => {
+    // filters the products to be only products that contain the specified category
+    const productsByGenre = products.filter((product) => {
+      let containsCategory = false;
+      product.categories.forEach((category) => {
+        if (category.name.toLowerCase() === lowerCaseCategory) {
+          containsCategory = true;
+        }
+      });
+      return containsCategory;
     });
-    return containsCategory;
-  });
+    setFilteredProducts(productsByGenre)
+
+  }, [products])
 
 
   return (
