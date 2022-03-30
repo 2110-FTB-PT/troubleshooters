@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans&family=DM+Serif+Display&family=Karla&family=Poppins:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans&family=DM+Serif+Display&family=Karla&family=Poppins:wght@400;600;700&display=swap');
 
 * {
   box-sizing: border-box;
@@ -30,12 +30,12 @@ ul {
   left: 25%;  
   color:black;
   font-size: calc(25px + .8vw);
-  z-index: 99;
   cursor: pointer;
 
 }
 
 #myLinks {
+  font-family: 'Bebas Neue', cursive;
   position: absolute;
   display: flex;
   flex-grow: 2;
@@ -43,9 +43,9 @@ ul {
   row-gap:calc(20% + 19px);
   background-color: transparent;
   margin-left: 12%;
-  font-size: calc(12px + 2vw);
+  font-size: calc(19px + 2vw);
+  text-decoration: none;
   z-index: 2;  
-
 }
 
 #myMenu {
@@ -59,8 +59,11 @@ ul {
   filter: blur(10%);
   margin: -20px;
   z-index: 1;
+  transition: width 0.4s ease-in-out;
+}
 
-
+#myMenu:focus{
+  width: calc(300px + .05vw);;
 }
 
 header {
@@ -101,6 +104,10 @@ nav.navbar li a:link {
 }
 
 a:hover {
+  color: hotpink;
+}
+
+a:focus {
   color: hotpink;
 }
 
@@ -363,22 +370,21 @@ img {
   font-family: 'DM Serif Display', serif;
   line-height: 1.5;
   line-height: calc(1.1em + 2);;
-  font-size: calc(13px + 1vw);  
-  margin: 12px 10px 7px;
+  font-size: calc(13px + 2vw);  
+  margin: 10px 10px 7px;
 }
 
 .artist {
   font-family: 'DM Serif Display', serif;
   line-height: calc(1.1em + 2);
-  font-size: calc(13px + 0.5vw);  
-  margin: 12px 10px;
+  font-size: calc(13px + 1vw);  
+  margin: 10px 10px;
 }
 
 .description {
   font-family: 'DM Sans', sans-serif;
   width: fit-content;
   block-size: fit-content;
-  line-height: calc(1.1em + 2);;
   font-size: calc(16px + 1vw);
   margin-top: 5%;
   margin-bottom: 5%;
@@ -462,7 +468,6 @@ img {
 
 .logo{
   position:static;
-  position: -webkit-sticky;
   top: 0;
 }
 
