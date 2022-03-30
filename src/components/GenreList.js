@@ -6,12 +6,21 @@ import SingleProduct from "./SingleProduct";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import AddProductToOrderForm from "./AddProductToOrderForm";
+import { useUserContext } from "../context/UserContext";
+import { deleteProduct } from "../api/productsApi";
 
-const GenreList = ({ products, category, handleAdd }) => {
+const GenreList = ({ products, setProducts, category, handleAdd }) => {
   const [width, setWidth] = useState(0);
   const carousel = useRef();
   const lowerCaseCategory = category.toLowerCase();
   const navigate = useNavigate();
+  const { token } = useUserContext();
+
+  const handleDelete = async (productId) => {
+    const deletedProductId = await deleteProduct(productId, token)
+    const productsWithoutDeletedProduct = products.filter(product => product.id !== deletedProductId);
+    setProducts(productsWithoutDeletedProduct);
+  }
 
   useEffect(() => {
     setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
@@ -26,6 +35,7 @@ const GenreList = ({ products, category, handleAdd }) => {
     });
     return containsCategory;
   });
+
 
   return (
     <>
@@ -49,11 +59,16 @@ const GenreList = ({ products, category, handleAdd }) => {
                     whileTap={{ scale: 0.99 }}
                     onTap={(event) => {
                       let cart = event.target.localName;
-                      if (
+                      if (event.target.outerText === "Edit") {
+                        console.log('hi')
+                      } else if (event.target.outerText === "Delete") {
+                        handleDelete(product.id)
+                      } else if (
                         cart === "button" ||
                         cart === "svg" ||
                         cart === "path"
                       ) {
+                        console.log(event)
                         handleAdd(event, product);
                       } else {
                         navigate(`/products/${product.id}`);
