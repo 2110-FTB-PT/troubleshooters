@@ -8,7 +8,7 @@ import Card from "../shared/Card";
 
 const SingleProduct = ({ product, products }) => {
   const navigate = useNavigate();
-  const { productId } = useParams();
+  const { productId, editProductId } = useParams();
   const [singleProduct, setSingleProduct] = useState({});
 
   useEffect(() => {
@@ -30,12 +30,12 @@ const SingleProduct = ({ product, products }) => {
   return (
     <div className='singleProduct'>
       <div className="album-image">
-      <RatingDisplay product={product} singleProduct={singleProduct}/>
+      {product.reviews && <RatingDisplay product={product} singleProduct={singleProduct}/>}
       {imgURL && <img src={require(`../assets/${imgURL}`)} />}
       </div>
       <h3 className="title">{title}</h3>
       <div className="artist">{artist}</div>
-      {productId &&
+      {(productId || editProductId) &&
         <>
           <p className="description">{description}</p>
           <div className="logistics">Amount in Stock: {inventoryQuantity}</div>
