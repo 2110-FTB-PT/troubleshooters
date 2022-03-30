@@ -153,7 +153,7 @@ const App = () => {
             }
           />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/products/edit/:productId" element={<EditProduct products={products} setProducts={setProducts} />} />
+          <Route path="/products/edit/:editProductId" element={<EditProduct products={products} setProducts={setProducts} />} />
         </Routes>
         <AboutIconLink />
       </div>
