@@ -11,6 +11,8 @@ import {
   AddProduct,
   Login,
 } from "./";
+import AboutIconLink from "../shared/AboutIcon";
+import AboutPage from "./AboutPage";
 import { fetchOrders, getUser } from "../api";
 
 const App = () => {
@@ -91,7 +93,9 @@ const App = () => {
           <Route path="/login" element={<Login setToken={setToken} />} />
           <Route path="/myprofile" element={<MyProfile />} />
           <Route path="/addproduct" element={<AddProduct token={token} products={products} setProducts={setProducts} />} />
+          <Route path='/about' element={<AboutPage />} />
         </Routes>
+        <AboutIconLink/>
       </div>
     </Router>
   );
