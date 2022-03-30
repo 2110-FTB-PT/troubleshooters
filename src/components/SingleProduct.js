@@ -2,6 +2,9 @@ import { useNavigate, useParams } from "react-router";
 import { useState, useEffect } from "react";
 import { capitalizeFirstLetter } from "../api/utils";
 import SingleReview from "./SingleReview";
+import ReviewForm from "./ReviewForm";
+import RatingDisplay from "./RatingDisplay";
+import Card from "../shared/Card";
 
 const SingleProduct = ({ product, products }) => {
   const navigate = useNavigate();
@@ -26,23 +29,31 @@ const SingleProduct = ({ product, products }) => {
 
   return (
     <div className='singleProduct'>
-      
+      <div className="album-image">
+      <RatingDisplay product={product} singleProduct={singleProduct}/>
       {imgURL && <img src={require(`../assets/${imgURL}`)} />}
-      <h3>{title}</h3>
-      <div>{artist}</div>
+      </div>
+      <h3 className="title">{title}</h3>
+      <div className="artist">{artist}</div>
       {productId &&
         <>
-          <div>{description}</div>
-          <div>Amount in Stock: {inventoryQuantity}</div>
+          <p className="description">{description}</p>
+          <div className="logistics">Amount in Stock: {inventoryQuantity}</div>
         </>
       }
-      <div>{categories?.map(category => <span key={`${category.id}-${category.name}`}>{category.name} </span>)}</div>
-      <div>${price}</div>
+      <div className="logistics">{categories?.map(category => <span key={`${category.id}-${category.name}`}>{category.name} </span>)}</div>
+      <div className="logistics">${price}</div>
+
+      {productId && <ReviewForm singleProduct={singleProduct} setSingleProduct={setSingleProduct} />}
+      
       {singleProduct.reviews?.map(review => {
         return (
-          <SingleReview key={`${review.id}-${review.name}`} review={review} />
+          <Card key={`${review.id}-${review.name}`}>
+          <SingleReview  review={review} />
+        </Card>
         )
       })}
+      
     </div>
   )
 }

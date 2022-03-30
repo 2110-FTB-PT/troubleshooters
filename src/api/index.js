@@ -50,6 +50,14 @@ export const fetchOrders = async () => {
     console.error("Error at fetchOrders", error);
   }
 };
+export const fetchSingleOrder = async (orderId) => {
+  try {
+    const { data } = await axios.get(`/api/orders/${orderId}`);
+    return data;
+  } catch (error) {
+    console.error("Error at fetchSingleOrder", error);
+  }
+};
 
 export const addOrder = async (orderToAdd, token) => {
   try {
@@ -77,7 +85,7 @@ export const updateOrder = async (subtotal, orderId) => {
 
 export const deleteOrder = async (token, orderId) => {
   try {
-    const { data } = await axios.delete(`${BASE_URL}/orders/${orderId}`, {
+    const { data } = await axios.delete(`/api/orders/${orderId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -97,7 +105,7 @@ export const addProductToOrder = async (
 ) => {
   try {
     const { data } = await axios.post(
-      `${BASE_URL}/orders/${orderId}/products`,
+      `/api/orders/${orderId}/products`,
       {
         productId,
         quantity,
@@ -115,12 +123,17 @@ export const addProductToOrder = async (
   }
 };
 
-export const updateOrderProduct = async (quantity, orderProductId) => {
+export const updateOrderProduct = async (quantity, orderProductId, token) => {
   try {
     const { data } = await axios.patch(
-      `${BASE_URL}/order_products/${orderProductId}`,
+      `/api/order_products/${orderProductId}`,
       {
         quantity,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
     );
     return data;
@@ -132,7 +145,7 @@ export const updateOrderProduct = async (quantity, orderProductId) => {
 export const deleteOrderProduct = async (token, orderProductId) => {
   try {
     const { data } = await axios.delete(
-      `${BASE_URL}/order_products/${orderProductId}`,
+      `/api/order_products/${orderProductId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

@@ -1,16 +1,27 @@
 import axios from "axios";
-const BASE_URL = 'http://localhost:4000/api'
-
 
 //fetch review
-const fetchReview = async (productId) => {
-  axios
-    .get(`BASE_URL/reviews/${productId}`)
-    .then((res) => {
-      setRatings(res.data);
+export const fetchReview = async (productId) => {
+  try {
+    const { data } = await axios.get(`api/reviews/${productId}`)
+
+    return data
+  } catch (err) {
+    console.error(err)
+  }
+};
+
+export const addReview = async (token, productId, rating, description) => {
+  try {
+    const { data } = await axios.post(`/api/reviews`, {
+      productId, rating, description
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     })
-    .catch((err) => {
-      console.log(err)
-    })
-  setIsLoading(false)
-}
+    return data
+  } catch (error) {
+    console.error(error)
+  }
+};
