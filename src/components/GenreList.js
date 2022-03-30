@@ -28,15 +28,6 @@ const GenreList = ({ products, setProducts, category, handleAdd }) => {
     }
   }
 
-  // Edit Product - Admin Only
-  const handleEdit = async () => {
-    try {
-
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
   useEffect(() => {
     setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
   }, []);
@@ -79,15 +70,14 @@ const GenreList = ({ products, setProducts, category, handleAdd }) => {
                     onTap={(event) => {
                       let cart = event.target.localName;
                       if (event.target.outerText === "Edit") {
-                        console.log('hi')
+                        navigate(`/products/edit/${product.id}`);
                       } else if (event.target.outerText === "Delete") {
-                        handleDelete(product.id)
+                        handleDelete(product.id);
                       } else if (
                         cart === "button" ||
                         cart === "svg" ||
                         cart === "path"
                       ) {
-                        console.log(event)
                         handleAdd(event, product);
                       } else {
                         navigate(`/products/${product.id}`);
