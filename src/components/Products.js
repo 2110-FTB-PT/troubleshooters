@@ -48,21 +48,25 @@ const Products = ({ products, setProducts, handleAdd, searchTerm }) => {
       <GenreList
         handleAdd={handleAdd}
         products={products}
+        setProducts={setProducts}
         category="Rock"
       />
       <GenreList
         handleAdd={handleAdd}
         products={products}
+        setProducts={setProducts}
         category="Jazz"
       />
       <GenreList
         handleAdd={handleAdd}
         products={products}
+        setProducts={setProducts}
         category="R&B"
       />
       <GenreList
         handleAdd={handleAdd}
         products={products}
+        setProducts={setProducts}
         category="Pop"
       />
     </div>
