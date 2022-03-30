@@ -19,7 +19,7 @@ const MyOrders = ({ token, user, orders, setOrders }) => {
 
   return (
     <>
-      {token && <AddOrder token={token} order={order} setOrder={setOrder} />}
+      {token && <Cart token={token} order={order} setOrder={setOrder} />}
       <h2>My Orders</h2>
       {orders.map((order) => {
         return (

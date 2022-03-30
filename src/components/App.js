@@ -10,16 +10,24 @@ import {
   Header,
   AddProduct,
   Login,
+  Cart,
 } from "./";
+import {
+  fetchOrders,
+  getUser,
+  addOrder,
+  addProductToOrder,
+  updateOrderProduct,
+} from "../api";
 import AboutIconLink from "../shared/AboutIcon";
 import AboutPage from "./AboutPage";
-import { fetchOrders, getUser } from "../api";
 
 const App = () => {
   const [token, setToken] = useState("");
   const [user, setUser] = useState({});
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [cart, setCart] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleUser = async (token) => {
@@ -38,6 +46,57 @@ const App = () => {
       console.error("Error at fetchedOrders", error);
     }
   };
+  const handleAdd = async (event, product) => {
+    let orderData = {};
+    try {
+      if (Object.keys(cart).length === 0) {
+        orderData = await addOrder({ subtotal: 0 }, token);
+        setCart(orderData);
+        console.log(orderData);
+      } else {
+        orderData = cart;
+      }
+      let isInCart = false;
+      orderData.products.forEach((item) => {
+        if (product.id === item.productId) {
+          isInCart = true;
+          item.quantity += 1;
+        }
+      });
+      if (isInCart) {
+        const [productToUpdate] = orderData.products.filter(
+          (item) => product.id === item.productId
+        );
+        await updateOrderProduct(
+          productToUpdate.quantity,
+          productToUpdate.id,
+          token
+        );
+        setCart(orderData);
+      } else {
+        const productData = await addProductToOrder(
+          orderData.id,
+          product.id,
+          1,
+          product.price,
+          token
+        );
+        if (!productData) {
+          return;
+        }
+        console.log(cart);
+        // this OR statement accounts for the cart being undefined on first click
+        let cartProductsArray = cart.products || [];
+        cartProductsArray.push(productData);
+        const setter = Object.keys(cart).length === 0 ? orderData : cart;
+        setCart({ ...setter, products: cartProductsArray });
+        console.log(productData);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     handleOrders();
   }, []);
@@ -56,13 +115,27 @@ const App = () => {
 
   return (
     <Router>
-      <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <Header
+        cart={cart}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+      />
       <div className="App">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route
             path="/products"
-            element={<Products products={products} setProducts={setProducts} searchTerm={searchTerm} />}
+            element={
+              <Products
+                products={products}
+                setProducts={setProducts}
+                cart={cart}
+                setCart={setCart}
+                token={token}
+                handleAdd={handleAdd}
+                searchTerm={searchTerm}
+              />
+            }
           />
           <Route
             path="/products/:productId"
@@ -90,12 +163,27 @@ const App = () => {
               />
             }
           />
+          <Route
+            path="/cart"
+            element={
+              <Cart cart={cart} setCart={setCart} setOrders={setOrders} />
+            }
+          />
           <Route path="/login" element={<Login setToken={setToken} />} />
           <Route path="/myprofile" element={<MyProfile />} />
-          <Route path="/addproduct" element={<AddProduct token={token} products={products} setProducts={setProducts} />} />
-          <Route path='/about' element={<AboutPage />} />
+          <Route
+            path="/addproduct"
+            element={
+              <AddProduct
+                token={token}
+                products={products}
+                setProducts={setProducts}
+              />
+            }
+          />
+          <Route path="/about" element={<AboutPage />} />
         </Routes>
-        <AboutIconLink/>
+        <AboutIconLink />
       </div>
     </Router>
   );

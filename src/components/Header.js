@@ -4,13 +4,19 @@ import { BsFillBagCheckFill, BsVinylFill } from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
 import Navigation from "../shared/Navigation";
 
-function Header({ token, text, bgColor, textColor, searchTerm, setSearchTerm }) {
+function Header({
+  token,
+  text,
+  bgColor,
+  textColor,
+  searchTerm,
+  setSearchTerm,
+}) {
   const navigate = useNavigate();
   const headerStyles = {
     backgroundColor: bgColor,
     color: textColor,
   };
-
 
   return (
     <header style={headerStyles}>
@@ -19,12 +25,16 @@ function Header({ token, text, bgColor, textColor, searchTerm, setSearchTerm }) 
           {text}
           <BsVinylFill />
         </h1>
-        <nav className="navbar" >
+        <nav className="navbar">
           <Navigation />
           <div className="search-container">
             <input type="text" placeholder="Search.." className="nav-search" />
           </div>
-          <BsFillBagCheckFill color="hotpink" className="checkout" />
+          <BsFillBagCheckFill
+            color="hotpink"
+            className="checkout"
+            onClick={() => navigate("/cart")}
+          />
           <FaUserAlt
             onClick={() => navigate("/myprofile")}
             color="hotpink"
