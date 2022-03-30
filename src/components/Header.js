@@ -4,12 +4,13 @@ import { BsFillBagCheckFill, BsVinylFill } from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
 import Navigation from "../shared/Navigation";
 
-function Header({ text, bgColor, textColor }) {
+function Header({ token, text, bgColor, textColor }) {
   const navigate = useNavigate();
   const headerStyles = {
     backgroundColor: bgColor,
     color: textColor,
   };
+
 
   return (
     <header style={headerStyles}>
