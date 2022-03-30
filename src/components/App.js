@@ -23,21 +23,11 @@ import AboutIconLink from "../shared/AboutIcon";
 import AboutPage from "./AboutPage";
 
 const App = () => {
-  const [token, setToken] = useState("");
-  const [user, setUser] = useState({});
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
   const [cart, setCart] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
 
-  const handleUser = async (token) => {
-    try {
-      const fetchedUsers = await getUser(token);
-      setUser(fetchedUsers);
-    } catch (error) {
-      console.error(error);
-    }
-  };
   const handleOrders = async () => {
     try {
       const fetchedOrders = await fetchOrders();
@@ -52,7 +42,6 @@ const App = () => {
       if (Object.keys(cart).length === 0) {
         orderData = await addOrder({ subtotal: 0 }, token);
         setCart(orderData);
-        console.log(orderData);
       } else {
         orderData = cart;
       }
@@ -84,13 +73,11 @@ const App = () => {
         if (!productData) {
           return;
         }
-        console.log(cart);
         // this OR statement accounts for the cart being undefined on first click
         let cartProductsArray = cart.products || [];
         cartProductsArray.push(productData);
         const setter = Object.keys(cart).length === 0 ? orderData : cart;
         setCart({ ...setter, products: cartProductsArray });
-        console.log(productData);
       }
     } catch (error) {
       console.error(error);
@@ -99,18 +86,6 @@ const App = () => {
 
   useEffect(() => {
     handleOrders();
-  }, []);
-
-  useEffect(() => {
-    if (token) {
-      handleUser(token);
-    }
-  }, [token]);
-
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      setToken(localStorage.getItem("token"));
-    }
   }, []);
 
   return (
@@ -145,8 +120,6 @@ const App = () => {
             path="/orders"
             element={
               <Orders
-                token={token}
-                user={user}
                 orders={orders}
                 setOrders={setOrders}
               />
@@ -156,8 +129,6 @@ const App = () => {
             path="/myorders"
             element={
               <MyOrders
-                token={token}
-                user={user}
                 orders={orders}
                 setOrders={setOrders}
               />

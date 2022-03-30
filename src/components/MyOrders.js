@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { AddOrder } from "./";
 import { deleteOrder } from "../api";
+import { useUserContext } from "../context/UserContext";
 
-const MyOrders = ({ token, user, orders, setOrders }) => {
+const MyOrders = ({ orders, setOrders }) => {
   const navigate = useNavigate();
+  const { token, user } = useUserContext();
 
   const handleDelete = async (id) => {
     try {

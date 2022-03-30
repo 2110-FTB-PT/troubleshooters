@@ -1,8 +1,10 @@
 import Card from "../shared/Card";
 import { useNavigate } from "react-router";
+import { useUserContext } from "../context/UserContext";
 
 const MyProfile = () => {
   const navigate = useNavigate();
+  const { user } = useUserContext();
 
   return (
     <>
@@ -16,9 +18,11 @@ const MyProfile = () => {
       <Card handleClick={() => navigate("/myprofile/update")}>
         <h2>Update Account</h2>
       </Card>
+      { user?.isAdmin &&
       <Card handleClick={() => navigate("/addproduct")}>
         <h2>Add Product</h2>
       </Card>
+      }
     </>
   )
 }

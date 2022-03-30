@@ -9,7 +9,7 @@ function AboutPage() {
             <br></br>
             <h2>Thank You For Checking Out The Troubleshooters!</h2>
             <br></br>
-            <p>Plese take the time to look at our github!</p>
+            <p>Please take the time to look at our github!</p>
             <br></br>
             <SiGithub href="https://github.com/2110-FTB-PT/troubleshooters"/>
             https://github.com/2110-FTB-PT/troubleshooters
