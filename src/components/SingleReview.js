@@ -1,11 +1,6 @@
 import RatingDisplay from "./RatingDisplay"
 
-const SingleReview = ({product, review: {creatorName:name, description, rating}}) => {
-
-    console.log('>>>>>>>>>', product && product.reviews?.length)
-    // if (!rating || rating.length === 0){
-    //     return <p>No Products to Display</p>
-    // }
+const SingleReview = ({review: {creatorName:name, description, rating}}) => {
 
     return (
         <>

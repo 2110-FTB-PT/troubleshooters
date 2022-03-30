@@ -2,20 +2,18 @@ import axios from "axios";
 
 //fetch review
 export const fetchReview = async (productId) => {
-  axios
-    .get(`api/reviews/${productId}`)
-    .then((res) => {
-      setRatings(res.data);
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  setIsLoading(false)
+  try {
+    const { data } = await axios.get(`api/reviews/${productId}`)
+
+    return data
+  } catch (err) {
+    console.error(err)
+  }
 };
 
 export const addReview = async (token, productId, rating, description) => {
   try {
-    const {data} = await axios.post(`/api/reviews`, {
+    const { data } = await axios.post(`/api/reviews`, {
       productId, rating, description
     }, {
       headers: {

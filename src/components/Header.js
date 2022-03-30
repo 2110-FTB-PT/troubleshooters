@@ -1,20 +1,15 @@
 import PropTypes from "prop-types";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { BsFillBagCheckFill, BsVinylFill } from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
-import { useState } from "react";
 import Navigation from "../shared/Navigation";
 
-
-function Header({ token, text, bgColor, textColor }) {
-  const [showMenud, setShowMenu] = useState(false)
+function Header({ text, bgColor, textColor }) {
   const navigate = useNavigate();
   const headerStyles = {
     backgroundColor: bgColor,
     color: textColor,
   };
-  const navStyle = {
-  }
 
   return (
     <header style={headerStyles}>

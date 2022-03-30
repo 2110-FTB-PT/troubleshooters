@@ -5,20 +5,16 @@ import { motion, AnimatePresence } from 'framer-motion'
 import SingleProduct from "./SingleProduct";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-// import RatingDisplay from "./RatingDisplay";
 
 const GenreList = ({ products, category }) => {
   const [width, setWidth] = useState(0);
   const carousel = useRef();
   const lowerCaseCategory = category.toLowerCase();
   const navigate = useNavigate();
-  const [singleProduct, setSingleProduct] = useState({});
-
 
   useEffect(() => {
     setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth)
   }, []);
-
   // filters the products to be only products that contain the specified category
   const filteredProducts = products.filter(product => {
     let containsCategory = false
@@ -52,7 +48,6 @@ const GenreList = ({ products, category }) => {
                     onTap={() => navigate(`/products/${product.id}`)}
                   >
                     <Card>
-                      {/* <RatingDisplay product={product}/> */}
                       <button className="cart">
                         <FaCartPlus color='purple' />
                       </button>
