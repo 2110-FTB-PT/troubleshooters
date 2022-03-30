@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { useUserContext } from "../context/UserContext";
 import {
   HomePage,
   Orders,
@@ -14,7 +15,6 @@ import {
 } from "./";
 import {
   fetchOrders,
-  getUser,
   addOrder,
   addProductToOrder,
   updateOrderProduct,
@@ -27,6 +27,7 @@ const App = () => {
   const [orders, setOrders] = useState([]);
   const [cart, setCart] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
+  const { token } = useUserContext();
 
   const handleOrders = async () => {
     try {
@@ -106,7 +107,6 @@ const App = () => {
                 setProducts={setProducts}
                 cart={cart}
                 setCart={setCart}
-                token={token}
                 handleAdd={handleAdd}
                 searchTerm={searchTerm}
               />
@@ -140,13 +140,12 @@ const App = () => {
               <Cart cart={cart} setCart={setCart} setOrders={setOrders} />
             }
           />
-          <Route path="/login" element={<Login setToken={setToken} />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/myprofile" element={<MyProfile />} />
           <Route
             path="/addproduct"
             element={
               <AddProduct
-                token={token}
                 products={products}
                 setProducts={setProducts}
               />
