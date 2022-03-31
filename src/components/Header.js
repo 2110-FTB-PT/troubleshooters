@@ -3,16 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { BsFillBagCheckFill, BsVinylFill } from "react-icons/bs";
 import { FaUserAlt } from "react-icons/fa";
 import Navigation from "../shared/Navigation";
+import { useUserContext } from "../context/UserContext";
 
-function Header({
-  token,
-  text,
-  bgColor,
-  textColor,
-  searchTerm,
-  setSearchTerm,
-}) {
+const Header = ({ text, bgColor, textColor, searchTerm, setSearchTerm, }) => {
   const navigate = useNavigate();
+  const { user } = useUserContext();
   const headerStyles = {
     backgroundColor: bgColor,
     color: textColor,
@@ -36,7 +31,9 @@ function Header({
             onClick={() => navigate("/cart")}
           />
           <FaUserAlt
-            onClick={() => navigate("/myprofile")}
+            onClick={() => {
+              user.id ? navigate('/myprofile') : navigate('/login');
+            }}
             color="hotpink"
             className="user"
           />
