@@ -38,7 +38,7 @@ const Products = ({ products, setProducts, handleAdd, searchTerm }) => {
   ) : searchTerm ? (
     filteredProducts.map((product) => {
       return (
-        <Card>
+        <Card key={`${product.id}-${product.title}-${product.artist}`}>
           <SingleProduct product={product} />
         </Card>
       );
