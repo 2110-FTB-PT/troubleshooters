@@ -11,9 +11,10 @@ const createReview = async ({ creatorId, productId, rating, description }) => {
         const { rows: [review]} = await client.query(`
             INSERT INTO reviews ("creatorId", "productId", rating, description)
             VALUES ($1, $2, $3, $4)
-            RETURNING *;
+            RETURNING id;
         `, [creatorId, productId, rating, description]);
-        return review
+
+        return await getReviewById(review.id);
     }catch(error){
     throw error;
     }
@@ -42,9 +43,10 @@ const getReviewsByUser = async ({ creatorId }) => {
 const getReviewById = async (id) => {
     try{
         const { rows: [review] } = await client.query(`
-            SELECT *
+            SELECT reviews.*, users.username AS "creatorName"
             FROM reviews
-            WHERE id=$1;
+            JOIN users ON reviews."creatorId" = users.id
+            WHERE reviews.id = $1;
         `, [id]);
         if (!review){
             throw{
