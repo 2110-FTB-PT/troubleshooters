@@ -23,7 +23,7 @@ const Products = ({ products, setProducts, handleAdd, searchTerm }) => {
 
   const filteredProducts = products.filter((product) => {
     const stringCategories = product.categories
-      .map((category) => category.name)
+      ?.map((category) => category.name)
       .join(" ");
     return (
       product.artist.toLowerCase().includes(searchTerm.toLowerCase()) ||
