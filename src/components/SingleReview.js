@@ -1,5 +1,4 @@
 import RatingDisplay from "./RatingDisplay"
-import Button from "../shared/Button"
 
 const SingleReview = ({review: {creatorName:name, description, rating}}) => {
 
@@ -8,7 +7,6 @@ const SingleReview = ({review: {creatorName:name, description, rating}}) => {
         <RatingDisplay rating={rating}/>
         <div className="rev-name">{name}</div>
         <div className="rev-description">{description}</div>
-        <Button></Button>
         </>
     )
 }
