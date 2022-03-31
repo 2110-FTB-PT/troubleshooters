@@ -5,11 +5,13 @@ import SingleReview from "./SingleReview";
 import ReviewForm from "./ReviewForm";
 import RatingDisplay from "./RatingDisplay";
 import Card from "../shared/Card";
+import { useUserContext } from "../context/UserContext";
 
 const SingleProduct = ({ product, products }) => {
   const navigate = useNavigate();
   const { productId, editProductId } = useParams();
   const [singleProduct, setSingleProduct] = useState({});
+  const { user } = useUserContext();
 
   useEffect(() => {
     if (productId) {
@@ -53,9 +55,12 @@ const SingleProduct = ({ product, products }) => {
         </Card>
         )
       })}
-      <button>Edit</button>
-      <button>Delete</button>
-      
+      { !productId && !editProductId && user?.isAdmin && 
+      <>
+        <button>Edit</button>
+        <button>Delete</button>
+      </>
+      }
     </div>
   )
 }
