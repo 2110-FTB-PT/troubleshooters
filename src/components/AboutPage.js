@@ -11,8 +11,8 @@ function AboutPage() {
             <br></br>
             <p>Please take the time to look at our github!</p>
             <br></br>
-            <SiGithub href="https://github.com/2110-FTB-PT/troubleshooters"/>
-            https://github.com/2110-FTB-PT/troubleshooters
+            <SiGithub style={{display: "table-cell"}} href="https://github.com/2110-FTB-PT/troubleshooters" target="_blank" className="gitButton"/>
+            <br></br>
             <h4>CRATEDIGGERS</h4>
             <h6>Version: 1.0.0</h6>
             <h6>©2022</h6>
