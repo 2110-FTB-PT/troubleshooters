@@ -29,7 +29,7 @@ const App = () => {
   const [orders, setOrders] = useState([]);
   const [cart, setCart] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
-  const { token } = useUserContext();
+  const { token, user } = useUserContext();
 
   const handleOrders = async () => {
     try {
@@ -145,6 +145,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/myprofile" element={<MyProfile />} />
+          { user?.isAdmin &&
           <Route
             path="/addproduct"
             element={
@@ -154,6 +155,7 @@ const App = () => {
               />
             }
           />
+          }
           <Route path="/about" element={<AboutPage />} />
           <Route path="/products/edit/:editProductId" element={<EditProduct products={products} setProducts={setProducts} />} />
         </Routes>
