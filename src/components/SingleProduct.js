@@ -30,7 +30,7 @@ const SingleProduct = ({ product, products }) => {
   return (
     <div className='singleProduct'>
       <div className="album-image">
-      {product.reviews && <RatingDisplay product={product} singleProduct={singleProduct}/>}
+      {!editProductId && <RatingDisplay product={product} singleProduct={singleProduct}/>}
       {imgURL && <img src={require(`../assets/${imgURL}`)} />}
       </div>
       <h3 className="title">{title}</h3>
