@@ -23,7 +23,7 @@ const Products = ({ products, setProducts, handleAdd, searchTerm }) => {
 
   const filteredProducts = products.filter((product) => {
     const stringCategories = product.categories
-      .map((category) => category.name)
+      ?.map((category) => category.name)
       .join(" ");
     return (
       product.artist.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -38,7 +38,7 @@ const Products = ({ products, setProducts, handleAdd, searchTerm }) => {
   ) : searchTerm ? (
     filteredProducts.map((product) => {
       return (
-        <Card>
+        <Card key={`${product.id}-${product.title}-${product.artist}`}>
           <SingleProduct product={product} />
         </Card>
       );
@@ -48,21 +48,25 @@ const Products = ({ products, setProducts, handleAdd, searchTerm }) => {
       <GenreList
         handleAdd={handleAdd}
         products={products}
+        setProducts={setProducts}
         category="Rock"
       />
       <GenreList
         handleAdd={handleAdd}
         products={products}
+        setProducts={setProducts}
         category="Jazz"
       />
       <GenreList
         handleAdd={handleAdd}
         products={products}
+        setProducts={setProducts}
         category="R&B"
       />
       <GenreList
         handleAdd={handleAdd}
         products={products}
+        setProducts={setProducts}
         category="Pop"
       />
     </div>

@@ -10,5 +10,6 @@ export { default as AddProduct } from "./AddProduct";
 export { default as MyOrders } from "./MyOrders";
 export { default as Header } from "./Header";
 export { default as Login } from "./Login";
-export { default as Register } from "./Register";
 export { default as ProductForm } from "./ProductForm";
+export { default as EditProduct } from "./EditProduct";
+export { default as Register } from "./Register";

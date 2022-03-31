@@ -28,7 +28,7 @@ function Header({
         <nav className="navbar">
           <Navigation />
           <div className="search-container">
-            <input type="text" placeholder="Search.." className="nav-search" />
+            <input type="text" placeholder="Search.." className="nav-search" value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} />
           </div>
           <BsFillBagCheckFill
             color="hotpink"

@@ -22,7 +22,7 @@ export const addProduct = async (productToAdd, token) => {
   }
 };
 
-export const updateProduct = async (title, artist, description, price, inventoryQuantity, imgURL, productId) => {
+export const updateProduct = async ({ title, artist, description, price, inventoryQuantity, imgURL, id: productId }, token) => {
   try {
     const { data } = await axios.patch(`/api/products/${productId}`, {
       title,
@@ -31,9 +31,29 @@ export const updateProduct = async (title, artist, description, price, inventory
       price,
       inventoryQuantity,
       imgURL,
-    });
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    }
+    );
     return data;
   } catch (error) {
     console.error("Error at updateProduct", error);
   }
 };
+
+export const deleteProduct = async (productId, token) => {
+  try {
+    const { data } = await axios.delete(`api/products/${productId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    return data;
+  } catch (error) {
+    console.error(error)
+  }
+}

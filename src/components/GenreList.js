@@ -6,26 +6,48 @@ import SingleProduct from "./SingleProduct";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import AddProductToOrderForm from "./AddProductToOrderForm";
+import { useUserContext } from "../context/UserContext";
+import { deleteProduct } from "../api/productsApi";
 
-const GenreList = ({ products, category, handleAdd }) => {
+const GenreList = ({ products, setProducts, category, handleAdd }) => {
   const [width, setWidth] = useState(0);
+  const [filteredProducts, setFilteredProducts] = useState([])
   const carousel = useRef();
   const lowerCaseCategory = category.toLowerCase();
   const navigate = useNavigate();
+  const { token } = useUserContext();
+
+  // Delete Product - Admin Only
+  const handleDelete = async (productId) => {
+    try {
+      const {id: deletedProductId } = await deleteProduct(productId, token);
+      const productsWithoutDeletedProduct = products.filter(product => product.id !== deletedProductId);
+      setProducts(productsWithoutDeletedProduct);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    // filters the products to be only products that contain the specified category
+    const productsByGenre = products.filter((product) => {
+      let containsCategory = false;
+      product.categories.forEach((category) => {
+        if (category.name.toLowerCase() === lowerCaseCategory) {
+          containsCategory = true;
+        }
+      });
+      return containsCategory;
+    });
+    setFilteredProducts(productsByGenre)
+  }, [products]);
 
   useEffect(() => {
     setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
-  }, []);
-  // filters the products to be only products that contain the specified category
-  const filteredProducts = products.filter((product) => {
-    let containsCategory = false;
-    product.categories.forEach((category) => {
-      if (category.name.toLowerCase() === lowerCaseCategory) {
-        containsCategory = true;
-      }
-    });
-    return containsCategory;
-  });
+  }, [filteredProducts]);
+
+
+
 
   return (
     <>
@@ -49,7 +71,11 @@ const GenreList = ({ products, category, handleAdd }) => {
                     whileTap={{ scale: 0.99 }}
                     onTap={(event) => {
                       let cart = event.target.localName;
-                      if (
+                      if (event.target.outerText === "Edit") {
+                        navigate(`/products/edit/${product.id}`);
+                      } else if (event.target.outerText === "Delete") {
+                        handleDelete(product.id);
+                      } else if (
                         cart === "button" ||
                         cart === "svg" ||
                         cart === "path"

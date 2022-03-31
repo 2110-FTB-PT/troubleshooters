@@ -5,11 +5,14 @@ import SingleReview from "./SingleReview";
 import ReviewForm from "./ReviewForm";
 import RatingDisplay from "./RatingDisplay";
 import Card from "../shared/Card";
+import { useUserContext } from "../context/UserContext";
+import Button from "../shared/Button";
 
 const SingleProduct = ({ product, products }) => {
   const navigate = useNavigate();
-  const { productId } = useParams();
+  const { productId, editProductId } = useParams();
   const [singleProduct, setSingleProduct] = useState({});
+  const { user } = useUserContext();
 
   useEffect(() => {
     if (productId) {
@@ -30,12 +33,12 @@ const SingleProduct = ({ product, products }) => {
   return (
     <div className='singleProduct'>
       <div className="album-image">
-      <RatingDisplay product={product} singleProduct={singleProduct}/>
+      {!editProductId && <RatingDisplay product={product} singleProduct={singleProduct}/>}
       {imgURL && <img src={require(`../assets/${imgURL}`)} />}
       </div>
       <h3 className="title">{title}</h3>
       <div className="artist">{artist}</div>
-      {productId &&
+      {(productId || editProductId) &&
         <>
           <p className="description">{description}</p>
           <div className="logistics">Amount in Stock: {inventoryQuantity}</div>
@@ -53,7 +56,12 @@ const SingleProduct = ({ product, products }) => {
         </Card>
         )
       })}
-      
+      { !productId && !editProductId && user?.isAdmin && 
+      <>
+        <Button>Edit</Button>
+        <Button>Delete</Button>
+      </>
+      }
     </div>
   )
 }

@@ -13,6 +13,7 @@ import {
   Login,
   Register,
   Cart,
+  EditProduct
 } from "./";
 import {
   fetchOrders,
@@ -154,6 +155,7 @@ const App = () => {
             }
           />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/products/edit/:editProductId" element={<EditProduct products={products} setProducts={setProducts} />} />
         </Routes>
         <AboutIconLink />
       </div>
