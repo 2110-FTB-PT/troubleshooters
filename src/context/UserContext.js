@@ -22,6 +22,7 @@ const UserProvider = ({ children }) => {
 
   useEffect(() => {
     if (token) {
+      localStorage.setItem('token', token);
       handleUser(token);
     }
   }, [token]);
@@ -36,7 +37,8 @@ const UserProvider = ({ children }) => {
     <UserContext.Provider value={{
         token,
         setToken,
-        user
+        user,
+        setUser
       }}>
       {children}
     </UserContext.Provider>
