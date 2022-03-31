@@ -11,6 +11,7 @@ import {
   Header,
   AddProduct,
   Login,
+  Register,
   Cart,
 } from "./";
 import {
@@ -141,6 +142,7 @@ const App = () => {
             }
           />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/myprofile" element={<MyProfile />} />
           <Route
             path="/addproduct"
