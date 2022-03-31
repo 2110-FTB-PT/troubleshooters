@@ -22,6 +22,7 @@ import {
   addProductToOrder,
   updateOrderProduct,
 } from "../api";
+import { getAllProducts } from "../api/productsApi";
 import AboutIconLink from "../shared/AboutIcon";
 import AboutPage from "./AboutPage";
 
@@ -31,6 +32,10 @@ const App = () => {
   const [cart, setCart] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
   const { token, user } = useUserContext();
+
+  const fetchProducts = async () => {
+    setProducts(await getAllProducts());
+  };
 
   const handleOrders = async () => {
     try {
@@ -91,6 +96,8 @@ const App = () => {
 
   useEffect(() => {
     handleOrders();
+    fetchProducts();
+    console.log('render')
   }, []);
 
   return (
