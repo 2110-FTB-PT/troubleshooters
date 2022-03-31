@@ -13,7 +13,8 @@ import {
   Login,
   Register,
   Cart,
-  EditProduct
+  EditProduct,
+  Users
 } from "./";
 import {
   fetchOrders,
@@ -146,15 +147,19 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/myprofile" element={<MyProfile />} />
           { user?.isAdmin &&
-          <Route
-            path="/addproduct"
-            element={
-              <AddProduct
-                products={products}
-                setProducts={setProducts}
-              />
-            }
-          />
+          <>
+            <Route
+              path="/addproduct"
+              element={
+                <AddProduct
+                  products={products}
+                  setProducts={setProducts}
+                />
+              }
+            />
+            <Route path="/admin/users" element={<Users />}/>
+            <Route path="/admin/orders" element={<Orders />}/>
+          </>
           }
           <Route path="/about" element={<AboutPage />} />
           <Route path="/products/edit/:editProductId" element={<EditProduct products={products} setProducts={setProducts} />} />
