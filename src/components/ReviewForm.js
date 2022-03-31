@@ -3,10 +3,13 @@ import { addReview } from "../api/ReviewApi";
 import Card from "../shared/Card";
 import RatingSelect from "./RatingSelect";
 import Button from "../shared/Button";
+import { useUserContext } from "../context/UserContext";
+
 
 const ReviewForm = ({ singleProduct, setSingleProduct, singleProduct: {id: productId} }) => {
     const [rating, setRating] = useState(10);
     const [review, setReview] = useState('');
+    const {token} = useUserContext();
     const [btnDisabled, setBtnDisabled] = useState(true)
     const [description, setDescription] = useState('');
     const [message, setMessage] = useState('');
@@ -23,13 +26,17 @@ const ReviewForm = ({ singleProduct, setSingleProduct, singleProduct: {id: produ
         }
     };
 
+    
+
     const handleTextChange = ({target: {value}}) => {
         if (value === '') {
             setMessage(null)
         } else if (value.trim().length < 10) {
             setMessage('Text must be ate least 10 characters')
+            setBtnDisabled(true)
         } else {
             setMessage(null)
+            setBtnDisabled(false)
         }
         setDescription(value)
     }
