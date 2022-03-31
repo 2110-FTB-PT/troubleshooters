@@ -25,3 +25,17 @@ export const addReview = async (token, productId, rating, description) => {
     console.error(error)
   }
 };
+
+export const deleteReview = async (token, productId, rating, description) => {
+  try {
+    const { data } = await axios.delete(`/api/reviews/${productId}`, {
+      rating,
+      description,
+      token
+    })
+    return data
+  }catch(error){
+    console.error(error)
+  }
+};
+
