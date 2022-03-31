@@ -6,6 +6,7 @@ import ReviewForm from "./ReviewForm";
 import RatingDisplay from "./RatingDisplay";
 import Card from "../shared/Card";
 import { useUserContext } from "../context/UserContext";
+import Button from "../shared/Button";
 
 const SingleProduct = ({ product, products }) => {
   const navigate = useNavigate();
@@ -57,8 +58,8 @@ const SingleProduct = ({ product, products }) => {
       })}
       { !productId && !editProductId && user?.isAdmin && 
       <>
-        <button>Edit</button>
-        <button>Delete</button>
+        <Button>Edit</Button>
+        <Button>Delete</Button>
       </>
       }
     </div>
