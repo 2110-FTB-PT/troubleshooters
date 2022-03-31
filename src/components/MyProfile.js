@@ -4,8 +4,14 @@ import { useUserContext } from "../context/UserContext";
 
 const MyProfile = () => {
   const navigate = useNavigate();
-  const { user } = useUserContext();
-
+  const { user, setUser, setToken } = useUserContext();
+  
+  const handleLogout = () => {
+    setUser({})
+    setToken('')
+    localStorage.removeItem('token')
+    navigate('/products')
+  }
   return (
     <>
       <h2>Welcome, -username-</h2>
@@ -23,6 +29,9 @@ const MyProfile = () => {
         <h2>Add Product</h2>
       </Card>
       }
+      <Card handleClick={handleLogout}>
+        <h2>Logout</h2>
+      </Card>
     </>
   )
 }

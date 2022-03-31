@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { login } from '../api';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useUserContext } from "../context/UserContext";
 
 const Login =  () => { 
@@ -14,6 +14,7 @@ const Login =  () => {
        e.preventDefault();
        try {
         const [token, message] = await login(username,password);
+        setMessage[message];
         setToken(token); 
         navigate('/')
        } catch (error) {
@@ -24,9 +25,11 @@ const Login =  () => {
     return (
         <form onSubmit= {handleLogin}>
             <h1>Login</h1>
+            {message && <div>{message}</div>}
             <input placeholder="username" value={username} onChange={(event) => {setUsername(event.target.value)}}/>
             <input placeholder="password" type="password" value={password} onChange={(event) => {setPassword(event.target.value)}}/>
             <button>Login</button>
+            <div><Link to={'/register'}>Don't have an account? Sign up.</Link></div>
         </form> 
     );
 }
