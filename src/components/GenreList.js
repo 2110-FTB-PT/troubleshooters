@@ -29,10 +29,6 @@ const GenreList = ({ products, setProducts, category, handleAdd }) => {
   }
 
   useEffect(() => {
-    setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
-  }, []);
-
-  useEffect(() => {
     // filters the products to be only products that contain the specified category
     const productsByGenre = products.filter((product) => {
       let containsCategory = false;
@@ -45,6 +41,12 @@ const GenreList = ({ products, setProducts, category, handleAdd }) => {
     });
     setFilteredProducts(productsByGenre)
   }, [products]);
+
+  useEffect(() => {
+    setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+  }, [filteredProducts]);
+
+
 
 
   return (
