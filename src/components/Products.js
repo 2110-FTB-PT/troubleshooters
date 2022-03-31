@@ -36,6 +36,7 @@ const Products = ({ products, setProducts, handleAdd, searchTerm }) => {
   return isLoading ? (
     <Spinner />
   ) : searchTerm ? (
+    
     filteredProducts.map((product) => {
       return (
         <Card key={`${product.id}-${product.title}-${product.artist}`}>

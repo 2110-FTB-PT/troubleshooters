@@ -58,11 +58,6 @@ ul {
   filter: blur(10%);
   margin: -20px;
   z-index: 1;
-  transition: width 0.4s ease-in-out;
-}
-
-#myMenu:focus {
-  width: calc(300px + 0.05vw);
 }
 
 header {
@@ -492,3 +487,55 @@ img {
     width: 80%;
   }
 }
+
+.gitButton{
+  font-size: 100px;
+}
+
+.home,
+.about{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#splash{
+  box-shadow: none;
+  display: block;
+  width:100%;
+  height: auto;
+  filter: blur(2.3px);
+  opacity: 40%;
+}
+
+.container2 {
+  position: relative;
+  width: 100%;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 1;
+}
+
+.text2 {
+  font-family: "Bebas Neue", cursive;
+  color: rgb(255, 255, 255);
+  font-size: calc(19px + 43%);
+  outline: rgb(0, 0, 0);  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
