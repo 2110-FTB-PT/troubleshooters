@@ -35,10 +35,10 @@ const MyProfile = () => {
         <Card handleClick={() => navigate("/addproduct")}>
           <h2>Add Product</h2>
         </Card>
-        <Card>
+        <Card handleClick={() => navigate("/admin/users")}>
           <h2>View All Accounts</h2>
         </Card>
-        <Card>
+        <Card handleClick={() => navigate("/admin/orders")}>
           <h2>View All Orders</h2>
         </Card>
       </>
