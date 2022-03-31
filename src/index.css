@@ -43,8 +43,9 @@ ul {
   background-color: transparent;
   margin-left: 12%;
   font-size: calc(19px + 2vw);
-  text-decoration: none;
   z-index: 2;
+  text-decoration: none;
+
 }
 
 #myMenu {
@@ -79,7 +80,6 @@ header:hover {
   justify-content: space-between;
   margin: 0;
   padding: 0;
-  overflow: hidden;
   background-color: #eeeeee;
   box-shadow: 0 0 22px #ccc;
   overflow: hidden;
@@ -172,7 +172,7 @@ a:focus {
   opacity: 0;
 }
 
-[type="radio"]:checked ~ label {
+[type="radio"]:checked~label {
   background: #ff6a95;
   color: #fff;
 }
@@ -221,6 +221,7 @@ input:focus {
   border: none;
   font-size: 30px;
 }
+
 .checkout-number {
   position: absolute;
   top: 4px;
@@ -420,12 +421,17 @@ img {
   text-transform: uppercase;
   color: #fff;
   border-width: medium;
-  border-style: solid;
+  border-style: none;
   border-radius: 10rem 10rem 0rem 0rem;
-}
-
-.category:hover {
+  background-color: whitesmoke;
+  background: -webkit-linear-gradient(rgb(255, 255, 255), rgb(222, 222, 222));
   color: hotpink;
+  text-shadow:
+    -2px 0px 0 rgb(255, 255, 255),
+    -2px 0px 0 #000,
+    1px 1px 0 rgb(255, 0, 0),
+    0px 0px 0 rgb(249, 249, 249),
+    1px 1px 0 rgb(255, 255, 255);
 }
 
 .rev-name {
@@ -488,54 +494,30 @@ img {
   }
 }
 
-.gitButton{
+.gitButton {
   font-size: 100px;
 }
 
-.home,
-.about{
+.about {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-#splash{
-  box-shadow: none;
-  display: block;
-  width:100%;
-  height: auto;
-  filter: blur(2.3px);
-  opacity: 40%;
-}
+.home {
 
-.container2 {
-  position: relative;
-  width: 100%;
-}
-
-.overlay {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  width: 100%;
-  opacity: 1;
-}
-
-.text2 {
-  font-family: "Bebas Neue", cursive;
-  color: rgb(255, 255, 255);
-  font-size: calc(19px + 43%);
-  outline: rgb(0, 0, 0);  
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  display: inline-block;
   text-align: center;
-}
+  font-size: 45px;
+  line-height: 1.2;
+  padding: 50px 55px;
+  font-family: "Poppins", sans-serif;
+  text-transform: uppercase;
+  background: radial-gradient(circle farthest-corner at center center,
+      white,
+      #111) no-repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 
+}
