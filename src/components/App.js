@@ -40,6 +40,7 @@ const App = () => {
       console.error("Error at fetchedOrders", error);
     }
   };
+
   const handleAdd = async (event, product) => {
     let orderData = {};
     try {
@@ -120,15 +121,6 @@ const App = () => {
             element={<SingleProduct products={products} />}
           />
           <Route
-            path="/orders"
-            element={
-              <Orders
-                orders={orders}
-                setOrders={setOrders}
-              />
-            }
-          />
-          <Route
             path="/myorders"
             element={
               <MyOrders
@@ -158,7 +150,7 @@ const App = () => {
               }
             />
             <Route path="/admin/users" element={<Users />}/>
-            <Route path="/admin/orders" element={<Orders />}/>
+            <Route path="/admin/orders" element={<Orders orders={orders} />}/>
           </>
           }
           <Route path="/about" element={<AboutPage />} />
