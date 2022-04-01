@@ -1,11 +1,16 @@
+import dig from '../assets/WebAssets/dig.jpg'
+
 const HomePage = () => {
   return (
     <div className="home">
-      <header>
+            <div className="transbox">
+
       <div className="welcome">
         Welcome Crate Diggers!
       </div>
-    </header>
+</div>
+        <img src={dig} className="dig"/>
+
     </div>
   );
 };

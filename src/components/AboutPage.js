@@ -13,7 +13,6 @@ function AboutPage() {
                 <a className="gitButton" style={{ display: "table-cell" }} href="https://github.com/2110-FTB-PT/troubleshooters" target="_blank">
                     <SiGithub/>
                 </a>
-                <br></br>
                 <h4>CRATEDIGGERS</h4>
                 <h6>Version: 1.0.0</h6>
                 <h6>©2022</h6>

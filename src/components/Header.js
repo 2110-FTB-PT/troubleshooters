@@ -20,7 +20,7 @@ function Header({
 
   return (
     <header style={headerStyles}>
-      <div className="container">
+      <div className="nav-container">
         <h1 className="logo">
           {text}
           <BsVinylFill />

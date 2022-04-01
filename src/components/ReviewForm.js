@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { addReview } from "../api/ReviewApi";
+import { addReview, deleteReview, editReview } from "../api/ReviewApi";
 import Card from "../shared/Card";
 import RatingSelect from "./RatingSelect";
 import Button from "../shared/Button";
 import { useUserContext } from "../context/UserContext";
+import { useEffect } from "react/cjs/react.production.min";
 
 
 const ReviewForm = ({ singleProduct, setSingleProduct, singleProduct: {id: productId} }) => {
@@ -13,6 +14,19 @@ const ReviewForm = ({ singleProduct, setSingleProduct, singleProduct: {id: produ
     const [btnDisabled, setBtnDisabled] = useState(true)
     const [description, setDescription] = useState('');
     const [message, setMessage] = useState('');
+//////////////////////////////////////////
+    const [reviewEdit, setReviewEdit] = useState({
+        item: {},
+        edit: false
+    });
+
+useEffect(() => {
+    
+})
+
+
+
+//////////////////////////////////////////
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -26,8 +40,6 @@ const ReviewForm = ({ singleProduct, setSingleProduct, singleProduct: {id: produ
         }
     };
 
-    
-
     const handleTextChange = ({target: {value}}) => {
         if (value === '') {
             setMessage(null)
@@ -39,7 +51,9 @@ const ReviewForm = ({ singleProduct, setSingleProduct, singleProduct: {id: produ
             setBtnDisabled(false)
         }
         setDescription(value)
-    }
+    };
+
+
 
     return (
         <Card>
