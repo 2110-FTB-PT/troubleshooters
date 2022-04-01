@@ -31,8 +31,12 @@ export const deleteReview = async (token, productId) => {
     if (window.confirm('Are you sure you want to delete?')) {
     const response = await axios.delete(`/api/reviews/${productId}`, 
     { 
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
       data: {
-        reviews: id}
+        reviews: id
+      }
       }
     )}
   }catch(error){
@@ -40,9 +44,19 @@ export const deleteReview = async (token, productId) => {
   }
 };
 
-export const editReview = async (token, productId, rating, description) => {
+export const editReview = async ({productId, rating, description}, token) => {
   try{
-
+    const { data } = await axios.patch(`api/reviews/${productId}`, {
+      rating,
+      description
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    }
+    )
+    return data;
   }catch(error){
     console.error(error)
   }

@@ -319,6 +319,7 @@ input:focus {
 .about-link {
   display: flex;
   justify-content: flex-end;
+  top: 100%;
 }
 
 .about-link a {
@@ -491,12 +492,14 @@ margin-left: 2px;
 
 .dig {
   position: fixed; 
-  top: 0; 
+  top: 5%; 
   left: 0; 
-	
+	-webkit-mask:linear-gradient(rgb(0, 0, 0),transparent);
+          mask:linear-gradient(rgb(0, 0, 0),transparent);
   /* Preserve aspet ratio */
   min-width: 100%;
   min-height: 100%;
+  z-index: -1;
 }
 
 @media (min-width: 365px) and (max-width: 900px) {
@@ -545,23 +548,27 @@ margin-left: 2px;
   font-family: "DM Serif Display", serif;
   text-transform: uppercase;
   background: radial-gradient(circle farthest-corner at center center,
-      white,
+      rgb(0, 0, 0),
       #111) no-repeat;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   z-index: 99;
-  position: absolute;
 }
 
 .home{
   position: relative;
-  
+  content: '';  
+  vertical-align: middle;
+
 }
 
 .transbox {
   background-color: #ffffff;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   opacity: 0.6;
-  padding: 50px 55px;
+  padding: 10px 5px;
   position: relative;
+  border-radius: 20px;
 }
+
+
