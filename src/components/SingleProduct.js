@@ -41,12 +41,15 @@ const SingleProduct = ({ product, products }) => {
   return (
     <div className='singleProduct'>
       <div className="album-image">
+      {/* this conditional render avoids rendering RatingDisplay when we are adding or editing a product */}
       {(product?.reviews || singleProduct?.reviews) && <RatingDisplay product={product} singleProduct={singleProduct}/>}
-      {imgURL && <img src={require(`../assets/${imgURL}`)} />}
+      {/* imgURL will only fire off once the jpg/png part is applied to avoid errors */}
+      {imgURL && (imgURL.includes('jpg') || imgURL.includes('png') || imgURL.includes('PNG')) && <img src={require(`../assets/${imgURL}`)} />}
       </div>
       <h3 className="title">{title}</h3>
       <div className="artist">{artist}</div>
-      {(productId || editProductId) &&
+      {/* only renders in single product view or during an add/edit product */}
+      {(productId || editProductId || !product.reviews) &&
         <>
           <p className="description">{description}</p>
           <div className="logistics">Amount in Stock: {inventoryQuantity}</div>
@@ -54,7 +57,7 @@ const SingleProduct = ({ product, products }) => {
       }
       <div className="logistics">{categories?.map(category => <span key={`${category.id}-${category.name}`}>{category.name} </span>)}</div>
       <div className="logistics">${price}</div>
-
+      {/* only renders in single product view */}
       {productId && <ReviewForm singleProduct={singleProduct} setSingleProduct={setSingleProduct} />}
       
       {singleProduct.reviews?.map(review => {
@@ -64,7 +67,8 @@ const SingleProduct = ({ product, products }) => {
         </Card>
         )
       })}
-      { !productId && !editProductId && user?.isAdmin && 
+      {/* ONLY renders as admin, prevents render in single product view and during add/edit product */}
+      { !productId && !editProductId && product.reviews && user?.isAdmin &&
       <>
         <Button>Edit</Button>
         <Button>Delete</Button>
