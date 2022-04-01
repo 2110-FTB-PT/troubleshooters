@@ -4,7 +4,7 @@ import Button from "../shared/Button";
 const OrderView = ({ cart, setCart }) => {
   const handleCheckout = async () => {
     try {
-      const data = await stripeCheckout(cart.products);
+      await stripeCheckout(cart.products);
     } catch (error) {
       console.error(error);
     }

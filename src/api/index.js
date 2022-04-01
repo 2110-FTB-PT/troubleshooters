@@ -164,7 +164,6 @@ export const stripeCheckout = async (items) => {
       items,
     });
     window.location = data.url;
-    return data;
   } catch (error) {
     console.error("Error at stripeCheckout", error);
   }
