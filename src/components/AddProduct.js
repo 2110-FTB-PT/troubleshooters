@@ -2,10 +2,12 @@ import { ProductForm } from "./";
 import { useState } from "react";
 import { addProduct } from "../api/productsApi";
 import { useUserContext } from "../context/UserContext";
+import Card from "../shared/Card";
+import SingleProduct from "./SingleProduct";
 
 const AddProduct = ({ products, setProducts }) => {
   const { token } = useUserContext();
-  const [productFormData, setProductFormData] = useState({title: '', artist: '', description: '', price: '0', inventoryQuantity: 0, imgURL: ''})
+  const [productFormData, setProductFormData] = useState({title: '', artist: '', description: '', price: '', inventoryQuantity: 0, imgURL: ''})
 
   const handleAdd = async (event) => {
     event.preventDefault();
@@ -22,7 +24,12 @@ const AddProduct = ({ products, setProducts }) => {
   return (
     <>
       <h2>Add Product</h2>
-      <ProductForm state={productFormData} setState={setProductFormData} handleSubmit={handleAdd}/>
+      <Card>
+        <SingleProduct product={productFormData} />
+      </Card>
+      <Card>
+        <ProductForm state={productFormData} setState={setProductFormData} handleSubmit={handleAdd}/>
+      </Card>
     </>
   )
 }
