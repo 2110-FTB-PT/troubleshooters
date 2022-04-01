@@ -5,7 +5,7 @@ import { FaUserAlt } from "react-icons/fa";
 import Navigation from "../shared/Navigation";
 import { useUserContext } from "../context/UserContext";
 
-const Header = ({ text, bgColor, textColor, searchTerm, setSearchTerm, }) => {
+const Header = ({ text, bgColor, textColor, searchTerm, setSearchTerm, cart }) => {
   const navigate = useNavigate();
   const { user } = useUserContext();
   const headerStyles = {
@@ -37,6 +37,7 @@ const Header = ({ text, bgColor, textColor, searchTerm, setSearchTerm, }) => {
             color="hotpink"
             className="user"
           />
+          <div className="checkout-number">{cart.products?.length}</div>
         </nav>
       </div>
     </header>
