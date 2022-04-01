@@ -1,3 +1,5 @@
+import Card from "../shared/Card";
+
 const Orders = ({ orders }) => {
   return (
     <div>
@@ -5,23 +7,27 @@ const Orders = ({ orders }) => {
       <hr />
       {orders.map((order) => {
         return (
-          <div key={order.id}>
-            <div>Customer Number : {order.creatorId}</div>
-            <div>Subtotal: {order.subtotal}</div>
-            <h2>Products</h2>
-            {order.products.map((product) => {
-              return (
-                <div key={product.id}>
-                  <div>Artist: {product.artist}</div>
-                  <div>Title: {product.title}</div>
-                  <div>Price: {product.price}</div>
-                  <div>Quantity: {product.quantity}</div>
-                  <br></br>
-                </div>
-              );
-            })}
-            <hr />
-          </div>
+          <Card key={`${order.id}-${order.subtotal}`}>
+            <div >
+              <div>Order Number: {order.id}</div>
+              <div>Customer Number : {order.creatorId}</div>
+              <div>Subtotal: {order.subtotal}</div>
+              <h2>Products</h2>
+              {order.products.map((product) => {
+                return (
+                  <Card key={`${order.id}-${product.id}-${product.title}`}>
+                    <div >
+                      <div>Artist: {product.artist}</div>
+                      <div>Title: {product.title}</div>
+                      <div>Price: {product.price}</div>
+                      <div>Quantity: {product.quantity}</div>
+                      <br></br>
+                    </div>
+                  </Card>
+                );
+              })}
+            </div>
+          </Card>
         );
       })}
     </div>

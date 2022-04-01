@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import { useState, useEffect } from "react";
 import { capitalizeFirstLetter } from "../api/utils";
 import SingleReview from "./SingleReview";
@@ -9,19 +9,27 @@ import { useUserContext } from "../context/UserContext";
 import Button from "../shared/Button";
 
 const SingleProduct = ({ product, products }) => {
-  const navigate = useNavigate();
   const { productId, editProductId } = useParams();
-  const [singleProduct, setSingleProduct] = useState({});
+  const [singleProduct, setSingleProduct] = useState({
+    title: '',
+    artist: '',
+    price: '',
+    imgURL: '',
+    description: '',
+    inventoryQuantity: 0,
+    categories: []
+  });
   const { user } = useUserContext();
 
   useEffect(() => {
-    if (productId) {
+    if (productId && products.length) {
+      console.log(products)
       const [product] = products.filter(product => product.id === Number(productId));
       setSingleProduct(product)
     }
-  }, [])
+  }, [products])
 
-  const { title, artist, price, imgURL, description, inventoryQuantity, categories } = product || singleProduct;
+  const { title, artist, price, imgURL, description, inventoryQuantity, categories } = product ? product : singleProduct;
   // if the categories exist, we reformat them to be capitalized
   if (categories) {
     categories.forEach(category => {

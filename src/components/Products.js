@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { getAllProducts } from "../api/productsApi";
 import Spinner from "../shared/Spinner";
 import GenreList from "./GenreList";
 import SingleProduct from "./SingleProduct";
@@ -8,13 +7,8 @@ import Card from "../shared/Card";
 const Products = ({ products, setProducts, handleAdd, searchTerm }) => {
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchProducts = async () => {
-    setProducts(await getAllProducts());
-    setIsLoading(false);
-  };
-
   useEffect(() => {
-    fetchProducts();
+    setIsLoading(false);
   }, []);
 
   if (!isLoading && (!products || products.length === 0)) {
