@@ -6,7 +6,7 @@ import Card from "../shared/Card";
 import { updateProduct } from "../api/productsApi";
 import { useUserContext } from "../context/UserContext";
 
-const EditProduct = ({ products, setProducts }) => {
+const EditProduct = ({ products, setProducts, categories }) => {
   const navigate = useNavigate();
   const { editProductId } = useParams();
   const [productToEdit, setProductToEdit] = useState({});
@@ -51,7 +51,9 @@ const EditProduct = ({ products, setProducts }) => {
       <Card>
         <SingleProduct product={productToEdit}/>
       </Card>
-      <ProductForm state={productToEdit} setState={setProductToEdit} handleSubmit={handleEdit} />
+      <Card>
+        <ProductForm state={productToEdit} setState={setProductToEdit} handleSubmit={handleEdit} categories={categories}/>
+      </Card>
     </>
   )
 }
