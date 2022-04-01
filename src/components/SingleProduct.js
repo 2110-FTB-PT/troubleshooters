@@ -29,9 +29,9 @@ const SingleProduct = ({ product, products }) => {
     }
   }, [products])
 
-  const { title, artist, price, imgURL, description, inventoryQuantity, categories } = product ? product : singleProduct;
+  const { title, artist, price, imgURL, description, inventoryQuantity, categories = [] } = product ? product : singleProduct;
   // if the categories exist, we reformat them to be capitalized
-  if (categories) {
+  if (categories.length) {
     categories.forEach(category => {
       const capitalizedName = capitalizeFirstLetter(category.name)
       category.name = capitalizedName;
@@ -41,7 +41,7 @@ const SingleProduct = ({ product, products }) => {
   return (
     <div className='singleProduct'>
       <div className="album-image">
-      {!editProductId && <RatingDisplay product={product} singleProduct={singleProduct}/>}
+      {(product?.reviews || singleProduct?.reviews) && <RatingDisplay product={product} singleProduct={singleProduct}/>}
       {imgURL && <img src={require(`../assets/${imgURL}`)} />}
       </div>
       <h3 className="title">{title}</h3>
