@@ -22,6 +22,11 @@ const EditProduct = ({ products, setProducts, categories }) => {
     storeCategories = product.categories;
     delete product.categories;
     setProductToEdit(product);
+    // restores our product to its original state if the admin backs out of the edit
+    window.onpopstate = () => {
+      product.reviews = storeReviews;
+      product.categories = storeCategories;
+    }
   }, [])
 
   const handleEdit = async (event) => {
