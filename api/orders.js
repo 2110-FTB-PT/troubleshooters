@@ -8,6 +8,39 @@ const {
   addProductToOrder,
   destroyOrder,
 } = require("../db");
+const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
+const { SERVER_URL } = process.env;
+const storeItems = new Map([
+  [1, { priceInCents: 1000, name: "In Keeping Secrets Of Silent Earth: 3" }],
+  [2, { priceInCents: 1599, name: "always EP" }],
+  [3, { priceInCents: 1499, name: "My Way" }],
+  [4, { priceInCents: 1299, name: "Live at the Apollo" }],
+  [5, { priceInCents: 1299, name: "Let It Bleed" }],
+  [6, { priceInCents: 1599, name: "All My Friends We're Glorious" }],
+  [7, { priceInCents: 1099, name: "Innervisions" }],
+  [8, { priceInCents: 1499, name: "Nevermind" }],
+  [9, { priceInCents: 1399, name: "Purple Rain" }],
+  [10, { priceInCents: 1499, name: "Thriller" }],
+  [11, { priceInCents: 1099, name: "Cold Spring Harbor" }],
+  [12, { priceInCents: 1199, name: "Pet Sounds" }],
+  [13, { priceInCents: 1299, name: "The Dark Side of the Moon" }],
+  [14, { priceInCents: 1299, name: "Ready to Die" }],
+  [15, { priceInCents: 1599, name: "The Chronic" }],
+  [16, { priceInCents: 1299, name: "Legend" }],
+  [17, { priceInCents: 1499, name: "Abbey Road" }],
+  [18, { priceInCents: 1299, name: "Back to Black" }],
+  [19, { priceInCents: 1499, name: "Songs in the Key of Life" }],
+  [20, { priceInCents: 1099, name: "Blonde On Blonde" }],
+  [21, { priceInCents: 1299, name: "Random Access Memories" }],
+  [22, { priceInCents: 1399, name: "Rumours" }],
+  [23, { priceInCents: 1299, name: "A Love Supreme" }],
+  [24, { priceInCents: 1499, name: "What's Going On" }],
+  [25, { priceInCents: 1399, name: "Kind of Blue" }],
+  [26, { priceInCents: 1099, name: "Graceland" }],
+  [27, { priceInCents: 1599, name: "Moondance" }],
+  [28, { priceInCents: 1299, name: "Is This It" }],
+  [29, { priceInCents: 1299, name: "No Fences" }],
+]);
 
 router.get("/", async (req, res, next) => {
   try {
@@ -133,6 +166,33 @@ router.post("/:orderId/products", async (req, res, next) => {
         message: "User is not authorized to add products to this order.",
       });
     }
+  } catch ({ name, message }) {
+    next({ name, message });
+  }
+});
+
+router.post("/checkout", async (req, res, next) => {
+  try {
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      mode: "payment",
+      line_items: req.body.items.map((item) => {
+        const storeItem = storeItems.get(item.id);
+        return {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: storeItem.name,
+            },
+            unit_amount: storeItem.priceInCents,
+          },
+          quantity: item.quantity,
+        };
+      }),
+      success_url: `${SERVER_URL}/products`,
+      cancel_url: `${SERVER_URL}/cart`,
+    });
+    res.send({ url: session.url });
   } catch ({ name, message }) {
     next({ name, message });
   }
