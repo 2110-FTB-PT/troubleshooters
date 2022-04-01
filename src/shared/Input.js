@@ -18,6 +18,7 @@ const Input = ({ name, value, handleChange }) => {
 
   return (
     <>
+      <label>{name}</label>
       <input placeholder={name} type={typeSetter} value={input} onChange={e => {
         if (typeSetter === 'text') {
           setInput(e.target.value);
@@ -25,7 +26,6 @@ const Input = ({ name, value, handleChange }) => {
           setInput(Number(e.target.value));
         }
       }}/>
-      <label>{name}</label>
     </>
   )
 }
