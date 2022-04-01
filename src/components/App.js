@@ -166,6 +166,7 @@ const App = () => {
                 <AddProduct
                   products={products}
                   setProducts={setProducts}
+                  categories={categories}
                 />
               }
             />
@@ -174,7 +175,7 @@ const App = () => {
           </>
           }
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/products/edit/:editProductId" element={<EditProduct products={products} setProducts={setProducts} />} />
+          <Route path="/products/edit/:editProductId" element={<EditProduct products={products} setProducts={setProducts} categories={categories}/>} />
         </Routes>
         <AboutIconLink />
       </div>
