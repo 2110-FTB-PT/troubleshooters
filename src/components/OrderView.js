@@ -1,9 +1,18 @@
-import { stripeCheckout } from "../api";
+import { stripeCheckout, updateOrderProduct } from "../api";
 import Button from "../shared/Button";
+import { useUserContext } from "../context/UserContext";
 
 const OrderView = ({ cart, setCart }) => {
+  const { token } = useUserContext();
   const handleCheckout = async () => {
     try {
+      cart.products.forEach(async (product) => {
+        await updateOrderProduct(
+          product.quantity,
+          product.orderProductId,
+          token
+        );
+      });
       await stripeCheckout(cart.products);
     } catch (error) {
       console.error(error);
@@ -16,7 +25,7 @@ const OrderView = ({ cart, setCart }) => {
           cart.products.map((product) => {
             let optionsArray = [];
             for (let i = 1; i <= product.inventoryQuantity; i++) {
-              optionsArray.push[i];
+              optionsArray.push(i);
             }
             console.log(optionsArray);
             return (
