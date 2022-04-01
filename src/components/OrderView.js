@@ -1,4 +1,14 @@
+import { stripeCheckout } from "../api";
+import Button from "../shared/Button";
+
 const OrderView = ({ cart, setCart }) => {
+  const handleCheckout = async () => {
+    try {
+      const data = await stripeCheckout(cart.products);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <>
       <div>
@@ -38,8 +48,7 @@ const OrderView = ({ cart, setCart }) => {
             );
           })}
       </div>
-
-      <button>Checkout</button>
+      <Button onClick={handleCheckout}>Checkout</Button>
     </>
   );
 };
