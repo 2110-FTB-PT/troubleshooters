@@ -1,5 +1,5 @@
-import { useState } from "react";
 import InputFields from "../shared/InputFields";
+import Button from "../shared/Button";
 import "./ProductForm.css";
 
 const ProductForm = ({ state, setState, handleSubmit }) => {
@@ -7,7 +7,7 @@ const ProductForm = ({ state, setState, handleSubmit }) => {
   return (
     <form onSubmit={handleSubmit} className="product-form">
       <InputFields state={state} setState={setState} />
-      <button>Confirm Product</button>
+      <Button>Confirm Product</Button>
     </form>
   )
 }
