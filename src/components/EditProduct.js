@@ -22,12 +22,19 @@ const EditProduct = ({ products, setProducts, categories }) => {
     setStoreCategories(product.categories);
     delete product.categories;
     setProductToEdit(product);
-    // restores our product to its original state if the admin backs out of the edit
-    // window.onpopstate = () => {
-    //   product.reviews = storeReviews;
-    //   product.categories = storeCategories;
-    // }
   }, [])
+
+  // restores our product to its original state if the admin backs out of the edit
+  window.onpopstate = () => {
+    let copyProducts = products;
+    copyProducts.forEach((currProduct, index) => {
+      if (productToEdit.id === currProduct.id) {
+        copyProducts[index].reviews = storeReviews;
+        copyProducts[index].categories = storeCategories;
+      }
+    });
+    setProducts(copyProducts);
+  }
 
   const handleEdit = async (event) => {
     event.preventDefault();
