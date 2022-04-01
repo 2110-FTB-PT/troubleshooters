@@ -97,7 +97,6 @@ const App = () => {
   useEffect(() => {
     handleOrders();
     fetchProducts();
-    console.log('render')
   }, []);
 
   return (

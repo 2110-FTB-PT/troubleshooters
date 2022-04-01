@@ -157,3 +157,14 @@ export const deleteOrderProduct = async (token, orderProductId) => {
     console.error("Error at deleteOrderProduct", error);
   }
 };
+
+export const stripeCheckout = async (items) => {
+  try {
+    const { data } = await axios.post(`/api/orders/checkout`, {
+      items,
+    });
+    window.location = data.url;
+  } catch (error) {
+    console.error("Error at stripeCheckout", error);
+  }
+};
