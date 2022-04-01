@@ -13,7 +13,8 @@ import {
   Login,
   Register,
   Cart,
-  EditProduct
+  EditProduct,
+  Users
 } from "./";
 import {
   fetchOrders,
@@ -21,6 +22,7 @@ import {
   addProductToOrder,
   updateOrderProduct,
 } from "../api";
+import { getAllProducts } from "../api/productsApi";
 import AboutIconLink from "../shared/AboutIcon";
 import AboutPage from "./AboutPage";
 
@@ -29,7 +31,11 @@ const App = () => {
   const [orders, setOrders] = useState([]);
   const [cart, setCart] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
-  const { token } = useUserContext();
+  const { token, user } = useUserContext();
+
+  const fetchProducts = async () => {
+    setProducts(await getAllProducts());
+  };
 
   const handleOrders = async () => {
     try {
@@ -39,6 +45,7 @@ const App = () => {
       console.error("Error at fetchedOrders", error);
     }
   };
+
   const handleAdd = async (event, product) => {
     let orderData = {};
     try {
@@ -89,6 +96,8 @@ const App = () => {
 
   useEffect(() => {
     handleOrders();
+    fetchProducts();
+    console.log('render')
   }, []);
 
   return (
@@ -119,15 +128,6 @@ const App = () => {
             element={<SingleProduct products={products} />}
           />
           <Route
-            path="/orders"
-            element={
-              <Orders
-                orders={orders}
-                setOrders={setOrders}
-              />
-            }
-          />
-          <Route
             path="/myorders"
             element={
               <MyOrders
@@ -145,15 +145,21 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/myprofile" element={<MyProfile />} />
-          <Route
-            path="/addproduct"
-            element={
-              <AddProduct
-                products={products}
-                setProducts={setProducts}
-              />
-            }
-          />
+          { user?.isAdmin &&
+          <>
+            <Route
+              path="/addproduct"
+              element={
+                <AddProduct
+                  products={products}
+                  setProducts={setProducts}
+                />
+              }
+            />
+            <Route path="/admin/users" element={<Users />}/>
+            <Route path="/admin/orders" element={<Orders orders={orders} />}/>
+          </>
+          }
           <Route path="/about" element={<AboutPage />} />
           <Route path="/products/edit/:editProductId" element={<EditProduct products={products} setProducts={setProducts} />} />
         </Routes>
