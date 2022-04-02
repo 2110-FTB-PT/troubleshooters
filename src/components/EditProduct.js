@@ -5,6 +5,7 @@ import SingleProduct from "./SingleProduct";
 import Card from "../shared/Card";
 import { updateProduct } from "../api/productsApi";
 import { useUserContext } from "../context/UserContext";
+import { addCategoryToProduct } from "../api/categoryApi";
 
 const EditProduct = ({ products, setProducts, categories }) => {
   const navigate = useNavigate();
@@ -42,11 +43,35 @@ const EditProduct = ({ products, setProducts, categories }) => {
     try {
       const updatedProduct = await updateProduct(productToEdit, token)
       let copyProducts = products;
+      // grab ids of newly added categories
+      const newCategoryIds = categoryIds.filter(categoryId => {
+        let isNewCategory = true;
+        storeCategories.forEach(category => {
+          if (category.id === categoryId) {
+            isNewCategory = false;
+          }
+        })
+        return isNewCategory;
+      });
+      const id_categories = await Promise.all(newCategoryIds.map((categoryId) => {
+        return addCategoryToProduct(editProductId, categoryId, token);
+      }));
+      // add newly added categories into our storeCategories state
+      let newCategories = storeCategories
+      id_categories.forEach(category => {
+        categories.forEach(_category => {
+          if (_category.id === category.categoryId) {
+            console.log(_category)
+            newCategories.push(_category);
+          }
+        })
+      })
+      // rebuild all our products
       copyProducts.forEach((product, index) => {
         if (product.id === updatedProduct.id) {
           copyProducts[index] = updatedProduct;
           copyProducts[index].reviews = storeReviews;
-          copyProducts[index].categories = storeCategories;
+          copyProducts[index].categories = newCategories;
         }
       });
       setProducts(copyProducts);
