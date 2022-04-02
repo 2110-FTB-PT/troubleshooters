@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { login } from '../api';
 import { useNavigate, Link } from 'react-router-dom';
 import { useUserContext } from "../context/UserContext";
+import Button from "../shared/Button";
 
 const Login =  () => { 
     const { setToken } = useUserContext()
@@ -23,12 +24,12 @@ const Login =  () => {
        }
     }
     return (
-        <form onSubmit= {handleLogin}>
+        <form>
             <h1>Login</h1>
             {message && <div>{message}</div>}
             <input placeholder="username" value={username} onChange={(event) => {setUsername(event.target.value)}}/>
             <input placeholder="password" type="password" value={password} onChange={(event) => {setPassword(event.target.value)}}/>
-            <button>Login</button>
+            <Button onClick={handleLogin}>Login</Button>
             <div><Link to={'/register'}>Don't have an account? Sign up.</Link></div>
         </form> 
     );

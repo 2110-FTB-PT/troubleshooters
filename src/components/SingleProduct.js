@@ -63,7 +63,7 @@ const SingleProduct = ({ product, products }) => {
       {singleProduct.reviews?.map(review => {
         return (
           <Card key={`${review.id}-${review.name}`}>
-          <SingleReview  review={review} />
+          <SingleReview singleProduct={singleProduct} setSingleProduct={setSingleProduct} review={review} />
         </Card>
         )
       })}

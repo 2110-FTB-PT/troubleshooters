@@ -15,7 +15,7 @@ const Header = ({ text, bgColor, textColor, searchTerm, setSearchTerm, cart }) =
 
   return (
     <header style={headerStyles}>
-      <div className="container">
+      <div className="nav-container">
         <h1 className="logo">
           {text}
           <BsVinylFill />

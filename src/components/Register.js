@@ -2,6 +2,8 @@ import {useState} from 'react';
 import { register } from '../api';
 import { useNavigate, Link } from 'react-router-dom';
 import { useUserContext } from '../context/UserContext';
+import Button from '../shared/Button';
+
 const Register = () => {
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
@@ -25,13 +27,13 @@ const Register = () => {
         }
     } 
     return (
-        <form onSubmit= {submit}>
+        <form>
             <h1>Register</h1>
             {message && <div>{message}</div>}
             <input placeholder="email" value={email} onChange={(event) => {setEmail(event.target.value)}}/>
             <input placeholder="username" value={username} onChange={(event) => {setUsername(event.target.value)}}/>
             <input placeholder="password" type="password" value={password} onChange={(event) => {setPassword(event.target.value)}}/>
-            <button disabled={username.length === 0 || password.length === 0}>Register</button>
+            <Button onClick={submit} disabled={username.length === 0 || password.length === 0}>Register</Button>
             <div><Link to={'/login'}>Already have an account? Log in.</Link></div>
 
         </form>

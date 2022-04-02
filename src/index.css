@@ -43,8 +43,8 @@ ul {
   background-color: transparent;
   margin-left: 12%;
   font-size: calc(19px + 2vw);
-  text-decoration: none;
   z-index: 2;
+  text-decoration: none;
 }
 
 #myMenu {
@@ -58,11 +58,6 @@ ul {
   filter: blur(10%);
   margin: -20px;
   z-index: 1;
-  transition: width 0.4s ease-in-out;
-}
-
-#myMenu:focus {
-  width: calc(300px + 0.05vw);
 }
 
 header {
@@ -84,7 +79,6 @@ header:hover {
   justify-content: space-between;
   margin: 0;
   padding: 0;
-  overflow: hidden;
   background-color: #eeeeee;
   box-shadow: 0 0 22px #ccc;
   overflow: hidden;
@@ -177,7 +171,7 @@ a:focus {
   opacity: 0;
 }
 
-[type="radio"]:checked ~ label {
+[type="radio"]:checked~label {
   background: #ff6a95;
   color: #fff;
 }
@@ -214,8 +208,8 @@ input:focus {
   box-shadow: 0 -5px 3px -3px black, 0 5px 3px -3px black;
 }
 
-.close,
 .edit,
+.close,
 .checkout,
 .user {
   position: absolute;
@@ -226,6 +220,18 @@ input:focus {
   border: none;
   font-size: 30px;
 }
+
+.edit,
+.close {
+  position: absolute;
+  top: 1%;
+  right: 10px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 30px;
+}
+
 .checkout-number {
   position: absolute;
   top: 4px;
@@ -260,7 +266,7 @@ input:focus {
 }
 
 .edit {
-  right: 40px;
+  right:48px;
 }
 
 .sub-button {
@@ -312,6 +318,7 @@ input:focus {
 .about-link {
   display: flex;
   justify-content: flex-end;
+  top: 100%;
 }
 
 .about-link a {
@@ -373,16 +380,16 @@ img {
 
 .title {
   font-family: "DM Serif Display", serif;
-  line-height: 1.5;
+  line-height: 1.3;
   line-height: calc(1.1em + 2);
-  font-size: calc(13px + 2vw);
+  font-size: calc(9px + 1.3em);
   margin: 10px 10px 7px;
 }
 
 .artist {
   font-family: "DM Serif Display", serif;
   line-height: calc(1.1em + 2);
-  font-size: calc(13px + 1vw);
+  font-size: calc(8px + 1em);
   margin: 10px 10px;
 }
 
@@ -390,7 +397,7 @@ img {
   font-family: "DM Sans", sans-serif;
   width: fit-content;
   block-size: fit-content;
-  font-size: calc(16px + 1vw);
+  font-size: calc(11px + .9em);
   margin-top: 5%;
   margin-bottom: 5%;
 }
@@ -410,7 +417,7 @@ img {
 .logistics {
   font-family: "Karla", sans-serif;
   text-align: left;
-  font-size: calc(13px + 0.9vw);
+  font-size: calc(6px + 0.9em);
   margin-right: 25%;
   margin-left: 1.5%;
   bottom: 10px;
@@ -425,13 +432,19 @@ img {
   text-transform: uppercase;
   color: #fff;
   border-width: medium;
-  border-style: solid;
+  border-style: none;
   border-radius: 10rem 10rem 0rem 0rem;
-}
-
-.category:hover {
+  background-color: whitesmoke;
+  background: -webkit-linear-gradient(rgb(255, 255, 255), rgb(222, 222, 222));
   color: hotpink;
-}
+  text-shadow:
+    -2px 0px 0 rgb(255, 255, 255),
+    -2px 0px 0 #000,
+    1px 1px 0 rgb(207, 76, 76),
+    0px 0px 0 rgb(249, 249, 249),
+    1px 1px 0 rgb(255, 255, 255);
+    margin-top:7px;
+  }
 
 .rev-name {
   display: flex;
@@ -439,7 +452,8 @@ img {
   justify-content: right;
   font-family: "DM Serif Display", serif;
   color: hotpink;
-  font-size: calc(15px + 1vw);
+  font-size: calc(7px + 1em);
+  white-space: normal;
 }
 
 .rev-description {
@@ -447,7 +461,8 @@ img {
   text-indent: 48px;
   display: flex;
   flex-wrap: nowrap;
-  font-size: calc(16px + 1vw);
+  font-size: calc(6px + 1em);
+  margin-top: 5%;
 }
 
 .nav-search[type="text"] {
@@ -471,11 +486,12 @@ img {
 }
 
 .logo {
-  position: static;
-  top: 0;
+margin-left: 2px;
 }
 
 @media (min-width: 365px) and (max-width: 900px) {
+  
+
   .rating li {
     margin: 10px 3px;
   }
@@ -491,4 +507,49 @@ img {
   .input-group input {
     width: 80%;
   }
+}
+
+.gitButton {
+  font-size: 100px;
+  cursor: pointer;
+  pointer-events: auto;
+
+}
+
+.about {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome {
+  background-color: rgb(0, 0, 0);
+  color: #fff;
+  padding: 18px;
+  font-size: 25px;
+  letter-spacing: 10px;
+  text-align: center;
+  font-size: calc(9px + 1.3em);
+}
+
+.transbox{
+  text-align: center;
+  line-height: 2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+@media (min-width: 60px) and (max-width: 900px) {
+.dig2 { 
+  background: url("./assets/WebAssets/dig2.jpg");
+  position: absolute; 
+  box-shadow: none;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;    
+  min-width: 100%;
+  height: 100%;  
+}
 }
