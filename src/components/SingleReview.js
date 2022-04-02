@@ -1,7 +1,6 @@
 import RatingDisplay from "./RatingDisplay"
 import { FaTimes, FaEdit } from 'react-icons/fa'
-import { deleteReview, editReview } from "../api/ReviewApi";
-import { useState, useEffect } from "react";
+import { deleteReview } from "../api/ReviewApi";
 import { useUserContext } from "../context/UserContext";
 
 
@@ -18,23 +17,6 @@ const SingleReview = ({ singleProduct, setSingleProduct, review, review: { creat
             console.error(error)
         }
     }
-    /*/////////////////////////////////////////        WIP
-    const [reviewEdit, setReviewEdit] = useState({
-        review: {},
-        edit: false
-    });
-    
-    useEffect(() => {
-    if(editReview === true) {
-        setBtnDisabled(false)
-        setText(reviewEdit.review.description)
-        setRating(reviewEdit.review.rating)
-    }
-    })
-    
-    
-    
-    /////////////////////////////////////////*/
 
     return (
         <>
