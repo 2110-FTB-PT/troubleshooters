@@ -23,18 +23,32 @@ import {
   updateOrderProduct,
 } from "../api";
 import { getAllProducts } from "../api/productsApi";
+import { getAllCategories } from "../api/categoryApi";
 import AboutIconLink from "../shared/AboutIcon";
 import AboutPage from "./AboutPage";
 
 const App = () => {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([])
   const [orders, setOrders] = useState([]);
   const [cart, setCart] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
   const { token, user } = useUserContext();
 
+  const fetchCategories = async () => {
+    try {
+      setCategories(await getAllCategories());
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const fetchProducts = async () => {
-    setProducts(await getAllProducts());
+    try {
+      setProducts(await getAllProducts());
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleOrders = async () => {
@@ -97,6 +111,7 @@ const App = () => {
   useEffect(() => {
     handleOrders();
     fetchProducts();
+    fetchCategories();
   }, []);
 
   return (
@@ -152,6 +167,7 @@ const App = () => {
                 <AddProduct
                   products={products}
                   setProducts={setProducts}
+                  categories={categories}
                 />
               }
             />
@@ -160,7 +176,7 @@ const App = () => {
           </>
           }
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/products/edit/:editProductId" element={<EditProduct products={products} setProducts={setProducts} />} />
+          <Route path="/products/edit/:editProductId" element={<EditProduct products={products} setProducts={setProducts} categories={categories}/>} />
         </Routes>
         <AboutIconLink />
       </div>

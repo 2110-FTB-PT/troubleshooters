@@ -32,7 +32,7 @@ const GenreList = ({ products, setProducts, category, handleAdd }) => {
     // filters the products to be only products that contain the specified category
     const productsByGenre = products.filter((product) => {
       let containsCategory = false;
-      product.categories.forEach((category) => {
+      product.categories?.forEach((category) => {
         if (category.name.toLowerCase() === lowerCaseCategory) {
           containsCategory = true;
         }

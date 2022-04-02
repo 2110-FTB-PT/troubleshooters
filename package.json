@@ -17,6 +17,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@emotion/react": "^11.8.2",
+    "@emotion/styled": "^11.8.1",
+    "@mui/material": "^5.5.3",
     "axios": "^0.26.0",
     "bcrypt": "^5.0.1",
     "concurrently": "^7.0.0",
