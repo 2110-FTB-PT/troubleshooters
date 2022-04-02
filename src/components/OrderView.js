@@ -24,7 +24,6 @@ const OrderView = ({ cart, setCart }) => {
         token,
         product.orderProductId
       );
-      console.log(deletedOrderProductId);
       const remainingProductsInCart = cart.products.filter(
         (product) => product.orderProductId !== deletedOrderProductId
       );
