@@ -24,6 +24,30 @@ ul {
   padding: 0 20px;
 }
 
+a{
+  color: rgb(205, 113, 255);
+  text-decoration: none;
+  font-size: calc(25px + 1vw);
+display: flex;
+line-height: 2;
+line-height: calc(1.1em + 2);
+}
+
+.loginForm{
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+}
+
+.Login{
+  margin-top: 10%;
+}
+
+.loginBtn{
+  padding: 10px 10px 10px 10px;
+  font-size: larger;
+}
+
 #mySidenav {
   position: relative;
   top: 15%;
