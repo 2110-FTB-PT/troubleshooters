@@ -3,6 +3,7 @@ import Spinner from "../shared/Spinner";
 import GenreList from "./GenreList";
 import SingleProduct from "./SingleProduct";
 import Card from "../shared/Card";
+import crate from "../assets/WebAssets/crate.jpeg"
 
 const Products = ({ products, setProducts, handleAdd, searchTerm }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -30,7 +31,7 @@ const Products = ({ products, setProducts, handleAdd, searchTerm }) => {
   return isLoading ? (
     <Spinner />
   ) : searchTerm ? (
-    
+
     filteredProducts.map((product) => {
       return (
         <Card key={`${product.id}-${product.title}-${product.artist}`}>
@@ -39,6 +40,19 @@ const Products = ({ products, setProducts, handleAdd, searchTerm }) => {
       );
     })
   ) : (
+    
+    <>
+    <div className="crateBox">
+    <img src={crate} className="crate"/>
+    <div className="transbox2">
+        <span className="welcome2">"Where words fail,</span>
+        <br></br>
+        <span className="welcome2">music speaks."</span>
+        <br></br>
+        <span className="welcome2">-Hans Christian Anderson
+</span>
+      </div>
+    </div>
     <div className="allproducts">
       <GenreList
         handleAdd={handleAdd}
@@ -65,6 +79,7 @@ const Products = ({ products, setProducts, handleAdd, searchTerm }) => {
         category="Pop"
       />
     </div>
+    </>
   );
 };
 

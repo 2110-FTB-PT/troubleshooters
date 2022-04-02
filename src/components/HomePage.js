@@ -5,7 +5,8 @@ import dig2 from '../assets/WebAssets/dig2.jpg'
 const HomePage = () => {
   return (
     <div className="home">
-      <div className="transbox">
+           <img src={dig} className="dig2"/>
+ <div className="transbox">
         <span className="welcome">Welcome</span>
         <br></br>
         <span className="welcome">Crate</span>
