@@ -4,9 +4,12 @@ import { addProduct } from "../api/productsApi";
 import { useUserContext } from "../context/UserContext";
 import Card from "../shared/Card";
 import SingleProduct from "./SingleProduct";
+import { addCategoryToProduct } from "../api/categoryApi";
+import { useNavigate } from "react-router";
 
 const AddProduct = ({ products, setProducts, categories }) => {
   const { token } = useUserContext();
+  const navigate = useNavigate();
   const [productFormData, setProductFormData] = useState({title: '', artist: '', description: '', price: '', inventoryQuantity: 0, imgURL: ''})
   const [categoryIds, setCategoryIds] = useState([]);
 
@@ -14,9 +17,23 @@ const AddProduct = ({ products, setProducts, categories }) => {
     event.preventDefault();
     try {
       const product = await addProduct(productFormData, token);
+      const id_categories = await Promise.all(categoryIds.map((categoryId) => {
+        return addCategoryToProduct(product.id, categoryId, token);
+      }));
+      let newCategories = []
+      id_categories.forEach(category => {
+        categories.forEach(_category => {
+          if (_category.id === category.categoryId) {
+            newCategories.push(_category)
+          }
+        })
+      })
+      product.categories = newCategories;
+      product.reviews = [];
       const newProducts = products;
       newProducts.push(product);
       setProducts(newProducts);
+      navigate("/products");
     } catch (error) {
       console.error(error);
     }
