@@ -42,7 +42,7 @@ router.post('/', requireUser, async (req, res, next) => {
 // patch 
 router.patch('/:reviewId', requireUser, async (req, res, next) => {
     const { reviewId } = req.params;
-    const { description } = req.body;
+    const { description, rating } = req.body;
 
     try {
         const reviewById = await getReviewById(reviewId);
@@ -55,7 +55,8 @@ router.patch('/:reviewId', requireUser, async (req, res, next) => {
         } else {
             const reviewUpdate = await updateReview({
                 id: reviewId,
-                description
+                description,
+                rating
             })
             res.send(reviewUpdate)
         }

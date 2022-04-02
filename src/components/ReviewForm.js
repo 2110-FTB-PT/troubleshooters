@@ -7,11 +7,11 @@ import { useUserContext } from "../context/UserContext";
 
 
 const ReviewForm = ({ singleProduct, setSingleProduct, singleProduct: {id: productId} }) => {
-    const [rating, setRating] = useState(10);
     const {token} = useUserContext();
     const [btnDisabled, setBtnDisabled] = useState(true)
     const [description, setDescription] = useState('');
     const [message, setMessage] = useState('');
+    const [rating, setRating] = useState(10);
 
     const handleSubmit = async (event) => {
         event.preventDefault();

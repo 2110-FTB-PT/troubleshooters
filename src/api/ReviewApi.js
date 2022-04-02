@@ -26,38 +26,36 @@ export const addReview = async (token, productId, rating, description) => {
   }
 };
 
-export const deleteReview = async (token, productId) => {
+export const deleteReview = async (token, reviewId) => {
   try {
     if (window.confirm('Are you sure you want to delete?')) {
-    const response = await axios.delete(`/api/reviews/${productId}`, 
-    { 
-      headers: {
-        Authorization: `Bearer ${token}`
-      },
-      data: {
-        reviews: id
-      }
-      }
-    )}
-  }catch(error){
+      const response = await axios.delete(`/api/reviews/${reviewId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
+    }
+  } catch (error) {
     console.error(error)
   }
 };
 
-export const editReview = async ({productId, rating, description}, token) => {
-  try{
-    const { data } = await axios.patch(`api/reviews/${productId}`, {
+export const editReview = async ({ reviewId, rating, description }, token) => {
+  try {
+    const { data } = await axios.patch(`api/reviews/${reviewId}`, {
       rating,
       description
     },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
       }
-    }
     )
     return data;
-  }catch(error){
+  } catch (error) {
     console.error(error)
   }
 }
