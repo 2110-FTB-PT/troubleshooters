@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { AddOrder } from "./";
 import { deleteOrder } from "../api";
+import { useUserContext } from "../context/UserContext";
 
-const MyOrders = ({ token, user, orders, setOrders }) => {
+const MyOrders = ({ orders, setOrders }) => {
   const navigate = useNavigate();
+  const { token, user } = useUserContext();
 
   const handleDelete = async (id) => {
     try {
@@ -16,17 +17,17 @@ const MyOrders = ({ token, user, orders, setOrders }) => {
       console.error(error);
     }
   };
+  const filteredOrders = orders.filter(order => order.creatorId === user.id)
 
   return (
     <>
-      {token && <AddOrder token={token} order={order} setOrder={setOrder} />}
       <h2>My Orders</h2>
-      {orders.map((order) => {
+      {filteredOrders.map((order) => {
         return (
           <div key={order.id}>
             <div>Order Number : {order.id}</div>
             <div>Subtotal: {order.subtotal} </div>
-            {user?.id === order.creatorId && (
+            {/* {user?.id === order.creatorId && (
               <button onClick={() => navigate(`/orders/${order.id}`)}>
                 {" "}
                 Edit{" "}
@@ -34,7 +35,7 @@ const MyOrders = ({ token, user, orders, setOrders }) => {
             )}
             {user?.id === order.creatorId && (
               <button onClick={() => handleDelete(order.id)}> Delete </button>
-            )}
+            )} */}
             <h2>Items</h2>
             {order.products.map((product) => {
               return (

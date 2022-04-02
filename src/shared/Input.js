@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import InputMUI from '@mui/material/Input';
+import InputLabel from '@mui/material/InputLabel';
+
 const Input = ({ name, value, handleChange }) => {
   // set the initial value of our state to the init value of the state mapped over
   const [input, setInput] = useState(value)
@@ -18,14 +21,14 @@ const Input = ({ name, value, handleChange }) => {
 
   return (
     <>
-      <input placeholder={name} type={typeSetter} value={input} onChange={e => {
+      <InputLabel>{name}</InputLabel>
+      <InputMUI placeholder={name} value={input} onChange={e => {
         if (typeSetter === 'text') {
           setInput(e.target.value);
         } else if (typeSetter === 'number') {
           setInput(Number(e.target.value));
         }
       }}/>
-      <label>{name}</label>
     </>
   )
 }

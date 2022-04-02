@@ -1,54 +1,43 @@
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import { BsFillBagCheckFill, BsVinylFill } from "react-icons/bs";
-import { FaUserAlt, FaSearch } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { BsFillBagCheckFill, BsVinylFill } from "react-icons/bs";
+import { FaUserAlt } from "react-icons/fa";
+import Navigation from "../shared/Navigation";
+import { useUserContext } from "../context/UserContext";
 
-function Header({ text, bgColor, textColor }) {
+const Header = ({ text, bgColor, textColor, searchTerm, setSearchTerm, cart }) => {
   const navigate = useNavigate();
+  const { user } = useUserContext();
   const headerStyles = {
     backgroundColor: bgColor,
     color: textColor,
   };
+
   return (
     <header style={headerStyles}>
-      <div className="container">
-        <h1>
+      <div className="nav-container">
+        <h1 className="logo">
           {text}
           <BsVinylFill />
         </h1>
         <nav className="navbar">
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/products">Products</Link>
-          </li>
-          <li>
-            <Link to="/orders">Orders</Link>
-          </li>
-          <li>
-            <Link to="/myorders/:creatorId">My Orders</Link>
-          </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
+          <Navigation />
           <div className="search-container">
-            <input type="text" placeholder="Search.." name="search" />
-            <button type="submit">
-              <FaSearch className="search-btn"></FaSearch>
-            </button>
+            <input type="text" placeholder="Search.." className="nav-search" value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} />
           </div>
-          <li>
-            <BsFillBagCheckFill color="hotpink" className="checkout" />
-          </li>
-          <li>
-            <FaUserAlt
-              onClick={() => navigate("/myprofile")}
-              color="hotpink"
-              className="user"
-            />
-          </li>
+          <BsFillBagCheckFill
+            color="hotpink"
+            className="checkout"
+            onClick={() => navigate("/cart")}
+          />
+          <FaUserAlt
+            onClick={() => {
+              user.id ? navigate('/myprofile') : navigate('/login');
+            }}
+            color="hotpink"
+            className="user"
+          />
+          <div className="checkout-number">{cart.products?.length}</div>
         </nav>
       </div>
     </header>

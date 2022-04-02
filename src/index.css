@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans&family=DM+Serif+Display&family=Karla&family=Poppins:wght@400;600;700&display=swap");
 
 * {
   box-sizing: border-box;
@@ -8,8 +7,9 @@
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
-  background-color: #202142;
+  font-family: "Poppins", sans-serif;
+  /* background-color: #202142; */
+  background-color: #0f0f0f;
   color: #fff;
   line-height: 1.6;
 }
@@ -19,9 +19,45 @@ ul {
 }
 
 .App {
-  max-width: 360px;
+  max-width: 900px;
   margin: auto;
   padding: 0 20px;
+}
+
+#mySidenav {
+  position: relative;
+  top: 15%;
+  left: 25%;
+  color: black;
+  font-size: calc(25px + 0.8vw);
+  cursor: pointer;
+}
+
+#myLinks {
+  font-family: "Bebas Neue", cursive;
+  position: absolute;
+  display: flex;
+  flex-grow: 2;
+  flex-direction: column;
+  row-gap: calc(20% + 19px);
+  background-color: transparent;
+  margin-left: 12%;
+  font-size: calc(19px + 2vw);
+  z-index: 2;
+  text-decoration: none;
+}
+
+#myMenu {
+  content: "";
+  position: absolute;
+  background-color: hsla(0, 0%, 7%, 0.972);
+  top: 0;
+  left: 0;
+  right: 60%;
+  bottom: 0%;
+  filter: blur(10%);
+  margin: -20px;
+  z-index: 1;
 }
 
 header {
@@ -30,28 +66,32 @@ header {
   align-items: center;
   margin-bottom: 30px;
   display: inline-block;
+  position: static;
 }
 
-header:hover{
+header:hover {
   color: hotpink;
 }
 
 .navbar {
-  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   margin: 0;
   padding: 0;
+  background-color: #eeeeee;
+  box-shadow: 0 0 22px #ccc;
   overflow: hidden;
-  background-color: #EEEEEE;
 }
 
 nav.navbar li {
-  float:left;
+  float: left;
 }
 
 nav.navbar li a:link {
   display: block;
   color: #000000;
-  font-weight:bold;
+  font-weight: bold;
   padding: 8px 16px;
   text-decoration: none;
 }
@@ -60,17 +100,21 @@ a:hover {
   color: hotpink;
 }
 
+a:focus {
+  color: hotpink;
+}
+
 .card {
   background-color: #fff;
   color: #333;
   border-radius: 15px;
-  padding: 28px 50px;
-  margin: 20px 0;
+  padding: 10px 18px;
+  margin: 10px 0px;
   position: relative;
   cursor: grab;
   width: 100%;
   height: 100%;
-  border-radius: 2rem;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
 
 .card.reverse {
@@ -86,8 +130,8 @@ a:hover {
 
 .rating {
   display: flex;
-  align-items: center;
-  justify-content: space-around;
+  flex-wrap: wrap;
+  justify-content: center;
   margin: 30px 0 40px;
 }
 
@@ -95,9 +139,9 @@ a:hover {
 .num-display {
   position: relative;
   background: #f4f4f4;
-  width: 50px;
-  height: 50px;
-  padding: 10px;
+  width: 55px;
+  height: 55px;
+  padding: 11px 6px;
   text-align: center;
   border-radius: 50%;
   font-size: 19px;
@@ -123,11 +167,11 @@ a:hover {
   color: #fff;
 }
 
-[type='radio'] {
+[type="radio"] {
   opacity: 0;
 }
 
-[type='radio']:checked~label {
+[type="radio"]:checked~label {
   background: #ff6a95;
   color: #fff;
 }
@@ -159,14 +203,13 @@ input:focus {
 
 .num-display {
   position: absolute;
-  top: -10px;
-  left: -10px;
+  top: 0px;
+  left: 0px;
+  box-shadow: 0 -5px 3px -3px black, 0 5px 3px -3px black;
 }
 
-
-.cart,
+.edit,
 .close,
-.edit, 
 .checkout,
 .user {
   position: absolute;
@@ -178,7 +221,43 @@ input:focus {
   font-size: 30px;
 }
 
-.user{
+.edit,
+.close {
+  position: absolute;
+  top: 1%;
+  right: 10px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 30px;
+}
+
+.checkout-number {
+  position: absolute;
+  top: 4px;
+  right: 1px;
+  background: none;
+  border: none;
+  font-size: 30px;
+}
+
+.cart {
+  position: absolute;
+  bottom: 4%;
+  right: 25px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 45px;
+  stroke-width: 30px;
+  border-width: 3px;
+  border-image: initial;
+  border-radius: 25% 25% 25% 25%;
+  padding: 2% 3% 1% 2%;
+  display: block;
+}
+
+.user {
   right: 65px;
 }
 
@@ -187,10 +266,16 @@ input:focus {
 }
 
 .edit {
-  right: 40px;
+  right:48px;
+}
+
+.sub-button {
+  display: flex;
+  justify-content: center;
 }
 
 .btn {
+  margin-top: 15px;
   color: #fff;
   border: 0;
   border-radius: 8px;
@@ -230,15 +315,12 @@ input:focus {
   color: rebeccapurple;
 }
 
-/* FIX: Remove position: absolute to keep about icon at the bottom of the
-   * document */
 .about-link {
   display: flex;
   justify-content: flex-end;
+  top: 100%;
 }
 
-/* FIX: Remove position: absolute to keep about icon at the bottom of the
-   * document */
 .about-link a {
   color: #fff;
   cursor: pointer;
@@ -259,22 +341,157 @@ input:focus {
 .carousel {
   cursor: grab;
   overflow: hidden;
-      overflow: hidden;
-
 }
 
-.inner-carousel{
-  display:flex;
-
-  }
+.inner-carousel {
+  display: flex;
+  margin-bottom: 25px;
+}
 
 img {
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5%;
   width: 220px;
   height: 220px;
   pointer-events: none;
+  box-shadow: 0.5rem 0.5rem black, -0.5rem -0.5rem #ccc;
 }
 
-@media (max-width: 600px) {
+.album-image {
+  position: relative;
+  width: 260px;
+  height: 250px;
+  text-align: center;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+#spinner {
+  box-shadow: none;
+  width: auto;
+  height: auto;
+}
+
+.title {
+  font-family: "DM Serif Display", serif;
+  line-height: 1.3;
+  line-height: calc(1.1em + 2);
+  font-size: calc(9px + 1.3em);
+  margin: 10px 10px 7px;
+}
+
+.artist {
+  font-family: "DM Serif Display", serif;
+  line-height: calc(1.1em + 2);
+  font-size: calc(8px + 1em);
+  margin: 10px 10px;
+}
+
+.description {
+  font-family: "DM Sans", sans-serif;
+  width: fit-content;
+  block-size: fit-content;
+  font-size: calc(11px + .9em);
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.description::first-letter {
+  font-family: "DM Serif Display", serif;
+  color: white;
+  background-color: rgb(7, 13, 15);
+  border-radius: 2px;
+  box-shadow: 3px 3px 0 hotpink;
+  font-size: 250%;
+  padding: 6px 3px;
+  margin-right: 6px;
+  float: left;
+}
+
+.logistics {
+  font-family: "Karla", sans-serif;
+  text-align: left;
+  font-size: calc(6px + 0.9em);
+  margin-right: 25%;
+  margin-left: 1.5%;
+  bottom: 10px;
+  display: block;
+}
+
+.category {
+  font-family: "Poppins", sans-serif;
+  font-size: calc(22px + 0.5vw);
+  letter-spacing: 3px;
+  padding-left: 43%;
+  text-transform: uppercase;
+  color: #fff;
+  border-width: medium;
+  border-style: none;
+  border-radius: 10rem 10rem 0rem 0rem;
+  background-color: whitesmoke;
+  background: -webkit-linear-gradient(rgb(255, 255, 255), rgb(222, 222, 222));
+  color: hotpink;
+  text-shadow:
+    -2px 0px 0 rgb(255, 255, 255),
+    -2px 0px 0 #000,
+    1px 1px 0 rgb(207, 76, 76),
+    0px 0px 0 rgb(249, 249, 249),
+    1px 1px 0 rgb(255, 255, 255);
+    margin-top:7px;
+  }
+
+.rev-name {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: right;
+  font-family: "DM Serif Display", serif;
+  color: hotpink;
+  font-size: calc(7px + 1em);
+  white-space: normal;
+}
+
+.rev-description {
+  font-family: "Poppins", sans-serif;
+  text-indent: 48px;
+  display: flex;
+  flex-wrap: nowrap;
+  font-size: calc(6px + 1em);
+  margin-top: 5%;
+}
+
+.nav-search[type="text"] {
+  width: 100px;
+  margin-left: 50%;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 19px;
+  background-color: white;
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  padding: 10px 10px 10px 10px;
+  transition: width 0.4s ease-in-out;
+  float: right;
+}
+
+.nav-search[type="text"]:focus {
+  width: calc(300px + 0.05vw);
+  border-radius: 10px;
+}
+
+.logo {
+margin-left: 2px;
+}
+
+@media (min-width: 365px) and (max-width: 900px) {
+  
+
   .rating li {
     margin: 10px 3px;
   }
@@ -290,4 +507,49 @@ img {
   .input-group input {
     width: 80%;
   }
+}
+
+.gitButton {
+  font-size: 100px;
+  cursor: pointer;
+  pointer-events: auto;
+
+}
+
+.about {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome {
+  background-color: rgb(0, 0, 0);
+  color: #fff;
+  padding: 18px;
+  font-size: 25px;
+  letter-spacing: 10px;
+  text-align: center;
+  font-size: calc(9px + 1.3em);
+}
+
+.transbox{
+  text-align: center;
+  line-height: 2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+@media (min-width: 60px) and (max-width: 900px) {
+.dig2 { 
+  background: url("./assets/WebAssets/dig2.jpg");
+  position: absolute; 
+  box-shadow: none;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;    
+  min-width: 100%;
+  height: 100%;  
+}
 }
