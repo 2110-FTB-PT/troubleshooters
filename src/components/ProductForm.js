@@ -15,15 +15,10 @@ const ProductForm = ({ state, setState, handleSubmit, categories, storeCategorie
       let initialIds = [];
       storeCategories.forEach(category => {
         initialIds.push(category.id);
-        console.log(category.id)
       });
       setCategoryIds(initialIds);
     }
   }, [storeCategories])
-
-  // useEffect(() => {
-
-  // }, [categoryIds])
 
   const handleChange = (event) => {
     setCategoryIds(event.target.value)
