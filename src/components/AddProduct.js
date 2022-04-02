@@ -17,10 +17,12 @@ const AddProduct = ({ products, setProducts, categories }) => {
     event.preventDefault();
     try {
       const product = await addProduct(productFormData, token);
+      // adds categories to our newly created product at the same time
       const id_categories = await Promise.all(categoryIds.map((categoryId) => {
         return addCategoryToProduct(product.id, categoryId, token);
       }));
       let newCategories = []
+      // creates our categories array to update our local state product w the categories
       id_categories.forEach(category => {
         categories.forEach(_category => {
           if (_category.id === category.categoryId) {
