@@ -1,4 +1,4 @@
-import { stripeCheckout, updateOrderProduct } from "../api";
+import { deleteOrderProduct, stripeCheckout, updateOrderProduct } from "../api";
 import Button from "../shared/Button";
 import { useUserContext } from "../context/UserContext";
 
@@ -18,6 +18,20 @@ const OrderView = ({ cart, setCart }) => {
       console.error(error);
     }
   };
+  const handleRemoveProduct = async (product) => {
+    try {
+      const { id: deletedOrderProductId } = await deleteOrderProduct(
+        token,
+        product.orderProductId
+      );
+      const remainingProductsInCart = cart.products.filter(
+        (product) => product.orderProductId !== deletedOrderProductId
+      );
+      setCart({ ...cart, products: remainingProductsInCart });
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <>
       <div>
@@ -27,7 +41,6 @@ const OrderView = ({ cart, setCart }) => {
             for (let i = 1; i <= product.inventoryQuantity; i++) {
               optionsArray.push(i);
             }
-            console.log(optionsArray);
             return (
               <div key={`${product.id}-${product.title}`}>
                 <div>{product.title}</div>
@@ -42,7 +55,6 @@ const OrderView = ({ cart, setCart }) => {
                       }
                     });
                     setCart({ ...cart, products: tempArray });
-                    console.log(cart);
                   }}
                 >
                   {optionsArray.map((number) => {
@@ -53,6 +65,13 @@ const OrderView = ({ cart, setCart }) => {
                     );
                   })}
                 </select>
+                <Button
+                  onClick={() => {
+                    handleRemoveProduct(product);
+                  }}
+                >
+                  Remove from cart
+                </Button>
               </div>
             );
           })}
