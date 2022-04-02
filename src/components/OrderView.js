@@ -35,7 +35,7 @@ const OrderView = ({ cart, setCart }) => {
   return (
     <>
       <div>
-        {Object.keys(cart).length &&
+        {Object.keys(cart).length > 0 ? (
           cart.products.map((product) => {
             let optionsArray = [];
             for (let i = 1; i <= product.inventoryQuantity; i++) {
@@ -74,9 +74,12 @@ const OrderView = ({ cart, setCart }) => {
                 </Button>
               </div>
             );
-          })}
+          })
+        ) : (
+          <div>There are currently no items in your cart.</div>
+        )}
       </div>
-      <Button onClick={handleCheckout}>Checkout</Button>
+      {Object.keys(cart).length > 0 && <Button onClick={handleCheckout}>Checkout</Button>}
     </>
   );
 };
