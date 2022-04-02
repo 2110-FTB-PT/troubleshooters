@@ -57,13 +57,3 @@ export const deleteProduct = async (productId, token) => {
     console.error(error)
   }
 }
-
-export const getAllCategories = async () => {
-  try {
-    const { data: categories } = await axios.get('/api/categories');
-
-    return categories;
-  } catch (error) {
-    console.error(error);
-  }
-}
