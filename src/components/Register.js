@@ -35,7 +35,6 @@ const Register = () => {
             <input className="loginBtn" placeholder="password" type="password" value={password} onChange={(event) => {setPassword(event.target.value)}}/>
             <Button onClick={submit} disabled={username.length === 0 || password.length === 0}>Register</Button>
             <div><Link to={'/login'}>Already have an account? Log in.</Link></div>
-
         </form>
     );
 }

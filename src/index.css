@@ -6,8 +6,8 @@ a{
 display: flex;
 line-height: 2;
 line-height: calc(1.1em + 2);
-
 }
+
 * {
   box-sizing: border-box;
   margin: 0;
