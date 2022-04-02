@@ -558,6 +558,12 @@ margin-left: 2px;
   letter-spacing: 10px;
   text-align: center;
   font-size: calc(9px + 1.3em);
+  text-shadow:
+    -2px 0px 0 rgb(60, 60, 60),
+    -2px 0px 0 rgb(55, 55, 55),
+    1px 1px 0 rgb(111, 111, 111),
+    0px 0px 0 rgba(0, 0, 0, 0.25),
+    1px 1px 0 rgb(62, 62, 62);
 }
 
 .transbox{
@@ -567,16 +573,35 @@ margin-left: 2px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  animation-name: example;
+  animation-duration: 2s;
 }
-@media (min-width: 60px) and (max-width: 900px) {
-.dig2 { 
-  background: url("./assets/WebAssets/dig2.jpg");
-  position: absolute; 
+
+@keyframes example {
+  0%   {top:0px;}
+  100% {bottom:auto;}
+}
+
+.dig2{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: 6.1em;
+  /* margin-left: -5%; */
   box-shadow: none;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;    
-  min-width: 100%;
-  height: 100%;  
+  height: 100%;
+  min-width: 900px;
+  width: 100%;
+  opacity: 60%;
+  transform: translate(-50%, -50%);
+  background-size: cover;
+
 }
+
+.home{
+  overflow: hidden;
+position: relative;
+min-height: 575px;
+max-height: 100%;
+
 }
