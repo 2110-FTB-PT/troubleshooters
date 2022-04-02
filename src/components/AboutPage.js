@@ -18,7 +18,7 @@ function AboutPage() {
                 <h6>©2022</h6>
 
                 <p>
-                    <Link to='/'>Back to Home</Link>
+                    <Link to='/' className='aboutHome'>Back to Home</Link>
                 </p>
             </div>
         </Card>

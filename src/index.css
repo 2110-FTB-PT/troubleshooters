@@ -1,4 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans&family=DM+Serif+Display&family=Karla&family=Poppins:wght@400;600;700&display=swap");
+a{
+  color: rgb(205, 113, 255);
+  text-decoration: none;
+  font-size: calc(25px + 1vw);
+display: flex;
+line-height: 2;
+line-height: calc(1.1em + 2);
+}
 
 * {
   box-sizing: border-box;
@@ -22,6 +30,25 @@ ul {
   max-width: 900px;
   margin: auto;
   padding: 0 20px;
+}
+
+.loginForm{
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+}
+
+.Login{
+  margin-top: 10%;
+}
+
+.loginBtn{
+  padding: 10px 10px 10px 10px;
+  font-size: larger;
+}
+
+.aboutHome{
+  font-size: 20px;
 }
 
 #mySidenav {
@@ -275,7 +302,7 @@ input:focus {
 }
 
 .btn {
-  margin-top: 15px;
+  margin: 15px;
   color: #fff;
   border: 0;
   border-radius: 8px;
@@ -286,7 +313,7 @@ input:focus {
 }
 
 .btn-primary {
-  background-color: #202142;
+  background-color: rgb(205, 113, 255);
 }
 
 .btn-secondary {

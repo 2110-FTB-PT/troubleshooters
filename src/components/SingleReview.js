@@ -1,7 +1,8 @@
 import RatingDisplay from "./RatingDisplay"
 import { FaTimes, FaEdit } from 'react-icons/fa'
-import { deleteReview, editReview } from "../api/ReviewApi";
+import { deleteReview } from "../api/ReviewApi";
 import { useUserContext } from "../context/UserContext";
+
 
 const SingleReview = ({ singleProduct, setSingleProduct, review, review: { creatorName: name, description, rating } }) => {
     
