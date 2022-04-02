@@ -5,9 +5,10 @@ import { useUserContext } from "../context/UserContext";
 import Card from "../shared/Card";
 import SingleProduct from "./SingleProduct";
 
-const AddProduct = ({ products, setProducts }) => {
+const AddProduct = ({ products, setProducts, categories }) => {
   const { token } = useUserContext();
   const [productFormData, setProductFormData] = useState({title: '', artist: '', description: '', price: '', inventoryQuantity: 0, imgURL: ''})
+  const [categoryIds, setCategoryIds] = useState([]);
 
   const handleAdd = async (event) => {
     event.preventDefault();
@@ -28,7 +29,7 @@ const AddProduct = ({ products, setProducts }) => {
         <SingleProduct product={productFormData} />
       </Card>
       <Card>
-        <ProductForm state={productFormData} setState={setProductFormData} handleSubmit={handleAdd}/>
+        <ProductForm state={productFormData} setState={setProductFormData} handleSubmit={handleAdd} categories={categories} categoryIds={categoryIds} setCategoryIds={setCategoryIds} />
       </Card>
     </>
   )

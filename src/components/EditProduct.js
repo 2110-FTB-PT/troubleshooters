@@ -10,6 +10,7 @@ const EditProduct = ({ products, setProducts, categories }) => {
   const navigate = useNavigate();
   const { editProductId } = useParams();
   const [productToEdit, setProductToEdit] = useState({});
+  const [categoryIds, setCategoryIds] = useState([]);
   const { token } = useUserContext();
   const [storeCategories, setStoreCategories] = useState([])
   const [storeReviews, setStoreReviews] = useState([])
@@ -62,7 +63,7 @@ const EditProduct = ({ products, setProducts, categories }) => {
         <SingleProduct product={productToEdit}/>
       </Card>
       <Card>
-        <ProductForm state={productToEdit} setState={setProductToEdit} handleSubmit={handleEdit} categories={categories}/>
+        <ProductForm state={productToEdit} setState={setProductToEdit} handleSubmit={handleEdit} categories={categories} storeCategories={storeCategories} categoryIds={categoryIds} setCategoryIds={setCategoryIds}/>
       </Card>
     </>
   )
