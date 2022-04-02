@@ -1,0 +1,8 @@
+.product-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-form > input {
+  border: 1px solid black;
+}

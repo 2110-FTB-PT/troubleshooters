@@ -46,7 +46,7 @@ export const updateProduct = async ({ title, artist, description, price, invento
 
 export const deleteProduct = async (productId, token) => {
   try {
-    const { data } = await axios.delete(`api/products/${productId}`, {
+    const { data } = await axios.delete(`/api/products/${productId}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
