@@ -22,7 +22,8 @@ import {
   addProductToOrder,
   updateOrderProduct,
 } from "../api";
-import { getAllCategories, getAllProducts } from "../api/productsApi";
+import { getAllProducts } from "../api/productsApi";
+import { getAllCategories } from "../api/categoryApi";
 import AboutIconLink from "../shared/AboutIcon";
 import AboutPage from "./AboutPage";
 
