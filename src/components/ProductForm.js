@@ -9,8 +9,7 @@ import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import "./ProductForm.css";
 
-const ProductForm = ({ state, setState, handleSubmit, categories, storeCategories }) => {
-  const [categoryIds, setCategoryIds] = useState([]);
+const ProductForm = ({ state, setState, handleSubmit, categories, storeCategories, categoryIds, setCategoryIds }) => {
   useEffect(() => {
     if (storeCategories) {
       let initialIds = [];
@@ -19,7 +18,6 @@ const ProductForm = ({ state, setState, handleSubmit, categories, storeCategorie
         console.log(category.id)
       });
       setCategoryIds(initialIds);
-      console.log(categoryIds)
     }
   }, [storeCategories])
 
