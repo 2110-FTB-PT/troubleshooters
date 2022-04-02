@@ -1,6 +1,6 @@
 import InputFields from "../shared/InputFields";
 import Button from "../shared/Button";
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
