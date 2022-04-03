@@ -43,6 +43,7 @@ const OrderView = ({ cart, setCart }) => {
             }
             return (
               <div key={`${product.id}-${product.title}`}>
+                <div>{product.artist}</div>
                 <div>{product.title}</div>
                 <div>{product.price}</div>
                 <select
@@ -79,7 +80,9 @@ const OrderView = ({ cart, setCart }) => {
           <div>There are currently no items in your cart.</div>
         )}
       </div>
-      {Object.keys(cart).length > 0 && <Button onClick={handleCheckout}>Checkout</Button>}
+      {Object.keys(cart).length > 0 && (
+        <Button onClick={handleCheckout}>Checkout</Button>
+      )}
     </>
   );
 };
