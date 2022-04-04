@@ -5,6 +5,7 @@ import {
   updateOrderProduct,
 } from "../api";
 import Button from "../shared/Button";
+import Card from "../shared/Card";
 import { useUserContext } from "../context/UserContext";
 
 const OrderView = ({ cart, setCart }) => {
@@ -48,38 +49,45 @@ const OrderView = ({ cart, setCart }) => {
               optionsArray.push(i);
             }
             return (
-              <div key={`${product.id}-${product.title}`}>
-                <div>{product.artist}</div>
-                <div>{product.title}</div>
-                <div>{product.price}</div>
-                <select
-                  value={product.quantity}
-                  onChange={(event) => {
-                    let tempArray = cart.products;
-                    tempArray.forEach((item) => {
-                      if (item.id === product.id) {
-                        item.quantity = Number(event.target.value);
-                      }
-                    });
-                    setCart({ ...cart, products: tempArray });
-                  }}
-                >
-                  {optionsArray.map((number) => {
-                    return (
-                      <option key={number} value={number}>
-                        {number}
-                      </option>
-                    );
-                  })}
-                </select>
-                <Button
-                  onClick={() => {
-                    handleRemoveProduct(product);
-                  }}
-                >
-                  Remove from cart
-                </Button>
-              </div>
+              <Card key={`${product.id}-${product.title}`}>
+                <div className="cart-product">
+                  <div>
+                    <img className="small-image-cart" src={require(`../assets/${product.imgURL}`)}/>
+                  </div>
+                  <div>
+                    <div>{product.artist}</div>
+                    <div>{product.title}</div>
+                    <div>{product.price}</div>
+                    <select
+                      value={product.quantity}
+                      onChange={(event) => {
+                        let tempArray = cart.products;
+                        tempArray.forEach((item) => {
+                          if (item.id === product.id) {
+                            item.quantity = Number(event.target.value);
+                          }
+                        });
+                        setCart({ ...cart, products: tempArray });
+                      }}
+                    >
+                      {optionsArray.map((number) => {
+                        return (
+                          <option key={number} value={number}>
+                            {number}
+                          </option>
+                        );
+                      })}
+                    </select>
+                    <Button
+                      onClick={() => {
+                        handleRemoveProduct(product);
+                      }}
+                    >
+                      Remove from cart
+                    </Button>
+                  </div>
+                </div>
+              </Card>
             );
           })
         ) : (
