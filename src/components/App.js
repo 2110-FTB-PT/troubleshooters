@@ -15,6 +15,7 @@ import {
   Cart,
   EditProduct,
   Users,
+  MyReviews
 } from "./";
 import {
   fetchOrders,
@@ -167,6 +168,7 @@ const App = () => {
             path="/myorders"
             element={<MyOrders orders={orders} setOrders={setOrders} />}
           />
+          <Route path="/myreviews" element={<MyReviews />} />
           <Route
             path="/cart"
             element={
