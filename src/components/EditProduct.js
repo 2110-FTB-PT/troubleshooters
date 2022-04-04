@@ -84,12 +84,14 @@ const EditProduct = ({ products, setProducts, categories }) => {
   return (
     <>
       <h2>Edit Product</h2>
-      <Card>
-        <SingleProduct product={productToEdit}/>
-      </Card>
-      <Card>
-        <ProductForm state={productToEdit} setState={setProductToEdit} handleSubmit={handleEdit} categories={categories} storeCategories={storeCategories} categoryIds={categoryIds} setCategoryIds={setCategoryIds}/>
-      </Card>
+      <div className="product-form-preview">
+        <Card>
+          <SingleProduct product={productToEdit}/>
+        </Card>
+        <Card>
+          <ProductForm state={productToEdit} setState={setProductToEdit} handleSubmit={handleEdit} categories={categories} storeCategories={storeCategories} categoryIds={categoryIds} setCategoryIds={setCategoryIds}/>
+        </Card>
+      </div>
     </>
   )
 }

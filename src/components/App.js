@@ -14,7 +14,8 @@ import {
   Register,
   Cart,
   EditProduct,
-  Users
+  Users,
+  MyReviews
 } from "./";
 import {
   fetchOrders,
@@ -29,7 +30,7 @@ import AboutPage from "./AboutPage";
 
 const App = () => {
   const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([])
+  const [categories, setCategories] = useState([]);
   const [orders, setOrders] = useState([]);
   const [cart, setCart] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
@@ -41,7 +42,7 @@ const App = () => {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   const fetchProducts = async () => {
     try {
@@ -60,7 +61,7 @@ const App = () => {
     }
   };
 
-  const handleAdd = async (event, product) => {
+  const handleAdd = async (product) => {
     let orderData = {};
     try {
       if (Object.keys(cart).length === 0) {
@@ -71,18 +72,18 @@ const App = () => {
       }
       let isInCart = false;
       orderData.products.forEach((item) => {
-        if (product.id === item.productId) {
+        if (product.id === item.id) {
           isInCart = true;
           item.quantity += 1;
         }
       });
       if (isInCart) {
         const [productToUpdate] = orderData.products.filter(
-          (item) => product.id === item.productId
+          (item) => product.id === item.id
         );
         await updateOrderProduct(
           productToUpdate.quantity,
-          productToUpdate.id,
+          productToUpdate.orderProductId,
           token
         );
         setCart(orderData);
@@ -107,12 +108,32 @@ const App = () => {
       console.error(error);
     }
   };
+  const fetchUserOrders = async () => {
+    try {
+      if (Object.keys(user).length) {
+        const userOrders = orders.filter(
+          (order) => order.creatorId === user.id
+        );
+        userOrders.forEach((order) => {
+          if (order.currentStatus === "created") {
+            setCart(order);
+          }
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     handleOrders();
     fetchProducts();
     fetchCategories();
   }, []);
+
+  useEffect(() => {
+    fetchUserOrders();
+  }, [orders, user]);
 
   return (
     <Router>
@@ -134,49 +155,64 @@ const App = () => {
                 setCart={setCart}
                 handleAdd={handleAdd}
                 searchTerm={searchTerm}
-              />
-            }
-          />
-          <Route
-            path="/products/:productId"
-            element={<SingleProduct products={products} />}
-          />
-          <Route
-            path="/myorders"
-            element={
-              <MyOrders
                 orders={orders}
                 setOrders={setOrders}
               />
             }
           />
           <Route
+            path="/products/:productId"
+            element={<SingleProduct products={products} handleAdd={handleAdd}/>}
+          />
+          <Route
+            path="/myorders"
+            element={<MyOrders orders={orders} setOrders={setOrders} />}
+          />
+          <Route path="/myreviews" element={<MyReviews />} />
+          <Route
             path="/cart"
             element={
-              <Cart cart={cart} setCart={setCart} setOrders={setOrders} />
+              <Cart
+                cart={cart}
+                setCart={setCart}
+                setOrders={setOrders}
+                orders={orders}
+              />
             }
           />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/myprofile" element={<MyProfile />} />
-          { user?.isAdmin &&
-          <>
-            <Route
-              path="/addproduct"
-              element={
-                <AddProduct
-                  products={products}
-                  setProducts={setProducts}
-                  categories={categories}
-                />
-              }
-            />
-            <Route path="/admin/users" element={<Users />}/>
-            <Route path="/admin/orders" element={<Orders orders={orders} />}/>
-          </>
-          }
+          <Route path="/myprofile" element={<MyProfile setCart={setCart} />} />
+          {user?.isAdmin && (
+            <>
+              <Route
+                path="/addproduct"
+                element={
+                  <AddProduct
+                    products={products}
+                    setProducts={setProducts}
+                    categories={categories}
+                  />
+                }
+              />
+              <Route path="/admin/users" element={<Users />} />
+              <Route
+                path="/admin/orders"
+                element={<Orders orders={orders} />}
+              />
+            </>
+          )}
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/products/edit/:editProductId" element={<EditProduct products={products} setProducts={setProducts} categories={categories}/>} />
+          <Route
+            path="/products/edit/:editProductId"
+            element={
+              <EditProduct
+                products={products}
+                setProducts={setProducts}
+                categories={categories}
+              />
+            }
+          />
         </Routes>
         <AboutIconLink />
       </div>

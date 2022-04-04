@@ -27,15 +27,14 @@ const Register = () => {
         }
     } 
     return (
-        <form>
-            <h1>Register</h1>
+        <form className="loginForm">
+            <h1 className="Login">Register</h1>
             {message && <div>{message}</div>}
-            <input placeholder="email" value={email} onChange={(event) => {setEmail(event.target.value)}}/>
-            <input placeholder="username" value={username} onChange={(event) => {setUsername(event.target.value)}}/>
-            <input placeholder="password" type="password" value={password} onChange={(event) => {setPassword(event.target.value)}}/>
+            <input className="loginBtn" placeholder="email" value={email} onChange={(event) => {setEmail(event.target.value)}}/>
+            <input className="loginBtn" placeholder="username" value={username} onChange={(event) => {setUsername(event.target.value)}}/>
+            <input className="loginBtn" placeholder="password" type="password" value={password} onChange={(event) => {setPassword(event.target.value)}}/>
             <Button onClick={submit} disabled={username.length === 0 || password.length === 0}>Register</Button>
             <div><Link to={'/login'}>Already have an account? Log in.</Link></div>
-
         </form>
     );
 }

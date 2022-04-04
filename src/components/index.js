@@ -14,3 +14,4 @@ export { default as ProductForm } from "./ProductForm";
 export { default as EditProduct } from "./EditProduct";
 export { default as Register } from "./Register";
 export { default as Users } from "./Users";
+export { default as MyReviews } from "./MyReviews";

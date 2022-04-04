@@ -6,3 +6,40 @@
 .product-form > input {
   border: 1px solid black;
 }
+
+.product-form-preview {
+  display: flex;
+  align-items: center;
+}
+
+.product-form-preview > *:first-child {
+  margin-right: 5em;
+}
+
+.all-products-search-ver {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-content: flex-start;
+  margin-bottom: 5px;
+}
+
+.single-product-search-ver2 {
+  flex: 1 1 280px;
+  max-width: 280px;
+  overflow: hidden;
+  position: relative;
+  min-height: 500px;
+  border-radius: 1%;
+}
+
+.small-image-cart {
+  height: 100px;
+  width: 100px;
+  margin-right: 16px;
+}
+
+.cart-product {
+  display: flex;
+  align-items: center;
+}

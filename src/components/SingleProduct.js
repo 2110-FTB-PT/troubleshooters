@@ -8,7 +8,7 @@ import Card from "../shared/Card";
 import { useUserContext } from "../context/UserContext";
 import Button from "../shared/Button";
 
-const SingleProduct = ({ product, products }) => {
+const SingleProduct = ({ product, products, handleAdd }) => {
   const { productId, editProductId } = useParams();
   const [singleProduct, setSingleProduct] = useState({
     title: '',
@@ -23,7 +23,6 @@ const SingleProduct = ({ product, products }) => {
 
   useEffect(() => {
     if (productId && products.length) {
-      console.log(products)
       const [product] = products.filter(product => product.id === Number(productId));
       setSingleProduct(product)
     }
@@ -46,17 +45,26 @@ const SingleProduct = ({ product, products }) => {
       {/* imgURL will only fire off once the jpg/png part is applied to avoid errors */}
       {imgURL && (imgURL.includes('jpg') || imgURL.includes('png') || imgURL.includes('PNG')) && <img src={require(`../assets/${imgURL}`)} />}
       </div>
+      {/* ONLY renders as admin, prevents render in single product view and during add/edit product */}
+      { !productId && !editProductId && product.reviews && user?.isAdmin &&
+      <>
+        <Button>Edit</Button>
+        <Button>Delete</Button>
+      </>
+      }
       <h3 className="title">{title}</h3>
       <div className="artist">{artist}</div>
       {/* only renders in single product view or during an add/edit product */}
       {(productId || editProductId || !product.reviews) &&
         <>
-          <p className="description">{description}</p>
+          {/* limits product preview to 200 characters when edit/add a product */}
+          {!product?.reviews ? <p className="description">{description?.substring(0, 200)}{description?.length > 200 && "..."}</p>: <p className="description">{description}</p>}
           <div className="logistics">Amount in Stock: {inventoryQuantity}</div>
         </>
       }
       <div className="logistics">{categories?.map(category => <span key={`${category.id}-${category.name}`}>{category.name} </span>)}</div>
       <div className="logistics">${price}</div>
+      {handleAdd && <Button onClick={() => handleAdd(singleProduct)}>Add To Cart</Button>}
       {/* only renders in single product view */}
       {productId && <ReviewForm singleProduct={singleProduct} setSingleProduct={setSingleProduct} />}
       
@@ -67,13 +75,6 @@ const SingleProduct = ({ product, products }) => {
         </Card>
         )
       })}
-      {/* ONLY renders as admin, prevents render in single product view and during add/edit product */}
-      { !productId && !editProductId && product.reviews && user?.isAdmin &&
-      <>
-        <Button>Edit</Button>
-        <Button>Delete</Button>
-      </>
-      }
     </div>
   )
 }

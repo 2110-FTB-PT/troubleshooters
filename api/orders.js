@@ -7,7 +7,9 @@ const {
   updateOrder,
   addProductToOrder,
   destroyOrder,
+  getAllOrdersByUser,
 } = require("../db");
+const { requireUser } = require("./utils");
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 const { SERVER_URL } = process.env;
 const storeItems = new Map([
@@ -83,6 +85,7 @@ router.post("/", async (req, res, next) => {
       orderData.creatorId = req.user.id;
     }
     orderData.subtotal = subtotal;
+    orderData.status = "created";
 
     const order = await createOrder(orderData);
 
@@ -101,7 +104,7 @@ router.post("/", async (req, res, next) => {
 
 router.patch("/:orderId", async (req, res, next) => {
   const { orderId } = req.params;
-  const { subtotal } = req.body;
+  const { subtotal, currentStatus } = req.body;
 
   try {
     const orderById = await getOrderById(orderId);
@@ -110,12 +113,14 @@ router.patch("/:orderId", async (req, res, next) => {
       const updatedGuestOrder = await updateOrder({
         id: orderId,
         subtotal,
+        currentStatus,
       });
       res.send(updatedGuestOrder);
     } else if (req.user && orderById.creatorId === req.user.id) {
       const updatedUserOrder = await updateOrder({
         id: orderId,
         subtotal,
+        currentStatus,
       });
       res.send(updatedUserOrder);
     } else {
