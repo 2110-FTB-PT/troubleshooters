@@ -32,7 +32,7 @@ const Header = ({ text, bgColor, textColor, searchTerm, setSearchTerm, cart }) =
           />
           <FaUserAlt
             onClick={() => {
-              user.id ? navigate('/myprofile') : navigate('/login');
+              user?.id ? navigate('/myprofile') : navigate('/login');
             }}
             color="hotpink"
             className="user"

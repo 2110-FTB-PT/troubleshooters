@@ -6,10 +6,11 @@ const Cart = ({ cart, setCart }) => {
   const handleFetchSingleOrder = async () => {
     const order = await fetchSingleOrder(cart.id);
     setCart(order);
-    console.log(order);
   };
   useEffect(() => {
-    handleFetchSingleOrder();
+    if (Object.keys(cart).length) {
+      handleFetchSingleOrder();
+    }
   }, []);
 
   return (
