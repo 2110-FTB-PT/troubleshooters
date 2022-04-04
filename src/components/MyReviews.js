@@ -28,7 +28,7 @@ const MyReviews = () => {
     <h2>My Reviews</h2>
       {reviews?.map(review => {
         return (
-          <Card>
+          <Card key={`${review.id}`}>
             <SingleReview review={review}/>
           </Card>
         )
