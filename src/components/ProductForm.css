@@ -32,3 +32,14 @@
   min-height: 500px;
   border-radius: 1%;
 }
+
+.small-image-cart {
+  height: 100px;
+  width: 100px;
+  margin-right: 16px;
+}
+
+.cart-product {
+  display: flex;
+  align-items: center;
+}
