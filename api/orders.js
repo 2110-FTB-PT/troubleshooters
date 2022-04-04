@@ -194,8 +194,8 @@ router.post("/checkout", async (req, res, next) => {
           quantity: item.quantity,
         };
       }),
-      success_url: `${SERVER_URL}/products`,
-      cancel_url: `${SERVER_URL}/cart`,
+      success_url: `${SERVER_URL}products`,
+      cancel_url: `${SERVER_URL}cart`,
     });
     res.send({ url: session.url });
   } catch ({ name, message }) {
