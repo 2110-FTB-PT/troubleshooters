@@ -104,7 +104,7 @@ router.post("/", async (req, res, next) => {
 
 router.patch("/:orderId", async (req, res, next) => {
   const { orderId } = req.params;
-  const { subtotal, status } = req.body;
+  const { subtotal, currentStatus } = req.body;
 
   try {
     const orderById = await getOrderById(orderId);
@@ -113,14 +113,14 @@ router.patch("/:orderId", async (req, res, next) => {
       const updatedGuestOrder = await updateOrder({
         id: orderId,
         subtotal,
-        status,
+        currentStatus,
       });
       res.send(updatedGuestOrder);
     } else if (req.user && orderById.creatorId === req.user.id) {
       const updatedUserOrder = await updateOrder({
         id: orderId,
         subtotal,
-        status,
+        currentStatus,
       });
       res.send(updatedUserOrder);
     } else {

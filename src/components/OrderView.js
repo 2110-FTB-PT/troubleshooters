@@ -1,4 +1,9 @@
-import { deleteOrderProduct, stripeCheckout, updateOrderProduct } from "../api";
+import {
+  deleteOrderProduct,
+  stripeCheckout,
+  updateOrder,
+  updateOrderProduct,
+} from "../api";
 import Button from "../shared/Button";
 import { useUserContext } from "../context/UserContext";
 
@@ -14,6 +19,7 @@ const OrderView = ({ cart, setCart }) => {
         );
       });
       await stripeCheckout(cart.products);
+      const updatedOrder = await updateOrder(0, "processing", cart.id, token);
     } catch (error) {
       console.error(error);
     }

@@ -131,7 +131,6 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    console.log("render");
     fetchUserOrders();
   }, [orders, user]);
 
@@ -155,6 +154,8 @@ const App = () => {
                 setCart={setCart}
                 handleAdd={handleAdd}
                 searchTerm={searchTerm}
+                orders={orders}
+                setOrders={setOrders}
               />
             }
           />
@@ -169,7 +170,13 @@ const App = () => {
           <Route
             path="/cart"
             element={
-              <Cart cart={cart} setCart={setCart} setOrders={setOrders} />
+              <Cart
+                cart={cart}
+                setCart={setCart}
+                setOrders={setOrders}
+                orders={orders}
+                setOrders={setOrders}
+              />
             }
           />
           <Route path="/login" element={<Login />} />
