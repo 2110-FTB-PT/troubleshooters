@@ -6,3 +6,12 @@
 .product-form > input {
   border: 1px solid black;
 }
+
+.product-form-preview {
+  display: flex;
+  align-items: center;
+}
+
+.product-form-preview > *:first-child {
+  margin-right: 5em;
+}
