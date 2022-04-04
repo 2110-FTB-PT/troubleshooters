@@ -19,8 +19,8 @@ const MyOrders = ({ orders, setOrders }) => {
               <h2>Items</h2>
               {order.products.map((product) => {
                 return (
-                  <Card>
-                    <div key={product.id}>
+                  <Card key={product.id}>
+                    <div>
                       <div>Artist: {product.artist}</div>
                       <div>Title: {product.title}</div>
                       <div>Price: {product.price}</div>
