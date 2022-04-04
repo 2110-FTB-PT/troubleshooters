@@ -15,3 +15,15 @@
 .product-form-preview > *:first-child {
   margin-right: 5em;
 }
+
+.all-products-search-ver {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: space-between;
+}
+
+.single-product-search-ver {
+  flex: 1 1 280px;
+  max-width: 280px;
+}

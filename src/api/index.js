@@ -72,11 +72,20 @@ export const addOrder = async (orderToAdd, token) => {
   }
 };
 
-export const updateOrder = async (subtotal, orderId) => {
+export const updateOrder = async (subtotal, currentStatus, orderId, token) => {
   try {
-    const { data } = await axios.patch(`/api/orders/${orderId}`, {
-      subtotal,
-    });
+    const { data } = await axios.patch(
+      `/api/orders/${orderId}`,
+      {
+        subtotal,
+        currentStatus,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return data;
   } catch (error) {
     console.error("Error at updateOrder", error);

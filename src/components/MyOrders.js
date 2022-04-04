@@ -14,6 +14,7 @@ const MyOrders = ({ orders, setOrders }) => {
           <Card key={order.id}>
             <div>
               <div>Order Number : {order.id}</div>
+              <div>{order.currentStatus}</div>
               <div>Subtotal: {order.subtotal} </div>
               <h2>Items</h2>
               {order.products.map((product) => {
