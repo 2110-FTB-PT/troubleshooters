@@ -80,7 +80,7 @@ const GenreList = ({ products, setProducts, category, handleAdd }) => {
                         cart === "svg" ||
                         cart === "path"
                       ) {
-                        handleAdd(event, product);
+                        handleAdd(product);
                       } else {
                         navigate(`/products/${product.id}`);
                       }
