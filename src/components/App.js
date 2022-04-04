@@ -61,7 +61,7 @@ const App = () => {
     }
   };
 
-  const handleAdd = async (event, product) => {
+  const handleAdd = async (product) => {
     let orderData = {};
     try {
       if (Object.keys(cart).length === 0) {
@@ -72,18 +72,18 @@ const App = () => {
       }
       let isInCart = false;
       orderData.products.forEach((item) => {
-        if (product.id === item.productId) {
+        if (product.id === item.id) {
           isInCart = true;
           item.quantity += 1;
         }
       });
       if (isInCart) {
         const [productToUpdate] = orderData.products.filter(
-          (item) => product.id === item.productId
+          (item) => product.id === item.id
         );
         await updateOrderProduct(
           productToUpdate.quantity,
-          productToUpdate.id,
+          productToUpdate.orderProductId,
           token
         );
         setCart(orderData);
@@ -162,7 +162,7 @@ const App = () => {
           />
           <Route
             path="/products/:productId"
-            element={<SingleProduct products={products} />}
+            element={<SingleProduct products={products} handleAdd={handleAdd}/>}
           />
           <Route
             path="/myorders"
