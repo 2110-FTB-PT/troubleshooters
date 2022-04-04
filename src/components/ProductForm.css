@@ -19,11 +19,16 @@
 .all-products-search-ver {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  align-content: space-between;
+  justify-content: space-evenly;
+  align-content: flex-start;
+  margin-bottom: 5px;
 }
 
-.single-product-search-ver {
+.single-product-search-ver2 {
   flex: 1 1 280px;
   max-width: 280px;
+  overflow: hidden;
+  position: relative;
+  min-height: 500px;
+  border-radius: 1%;
 }

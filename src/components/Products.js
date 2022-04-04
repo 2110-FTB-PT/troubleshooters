@@ -68,7 +68,7 @@ const Products = ({
     <div className="all-products-search-ver">
       {filteredProducts.map((product) => {
         return (
-          <div className="single-product-search-ver" key={`${product.id}-${product.title}-${product.artist}`}>
+          <div className="single-product-search-ver2" key={`${product.id}-${product.title}-${product.artist}`}>
             <Card>
               <SingleProduct product={product} />
             </Card>
