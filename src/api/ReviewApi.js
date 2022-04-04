@@ -59,3 +59,13 @@ export const editReview = async ({ reviewId, rating, description }, token) => {
     console.error(error)
   }
 }
+
+export const fetchReviewByUser = async ({ id }) => {
+  try {
+    const { data } = await axios.get(`/api/reviews/user/${id}`);
+
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}

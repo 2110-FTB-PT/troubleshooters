@@ -8,7 +8,7 @@ import Card from "../shared/Card";
 import { useUserContext } from "../context/UserContext";
 import Button from "../shared/Button";
 
-const SingleProduct = ({ product, products }) => {
+const SingleProduct = ({ product, products, handleAdd }) => {
   const { productId, editProductId } = useParams();
   const [singleProduct, setSingleProduct] = useState({
     title: '',
@@ -64,6 +64,7 @@ const SingleProduct = ({ product, products }) => {
       }
       <div className="logistics">{categories?.map(category => <span key={`${category.id}-${category.name}`}>{category.name} </span>)}</div>
       <div className="logistics">${price}</div>
+      {handleAdd && <Button onClick={() => handleAdd(singleProduct)}>Add To Cart</Button>}
       {/* only renders in single product view */}
       {productId && <ReviewForm singleProduct={singleProduct} setSingleProduct={setSingleProduct} />}
       

@@ -1,9 +1,11 @@
 import { useState } from "react"
 import { FaBars } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useUserContext } from '../context/UserContext';
 
-function Navigation({ token }) {
+function Navigation() {
     const [showMenu, setShowMenu] = useState(false)
+    const { user } = useUserContext();
 
     let menu
     let menuMask
@@ -13,7 +15,13 @@ function Navigation({ token }) {
             <ul id="myLinks" onClick={(() => setShowMenu(false))}>
                 <Link to="/">Home</Link>
                 <Link to="/products">Products</Link>
-                <Link to="/login">Login</Link>
+                {user?.id && 
+                    <>
+                        <Link to="/myreviews">My Reviews</Link>
+                        <Link to="/myorders">My Orders</Link>
+                    </>
+                }
+                <Link to="/about">About Us</Link>
             </ul>
 
         menuMask =
