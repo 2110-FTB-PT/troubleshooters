@@ -17,7 +17,7 @@ const MyOrders = ({ orders, setOrders }) => {
       console.error(error);
     }
   };
-  const filteredOrders = orders.filter(order => order.creatorId === user.id)
+  const filteredOrders = orders.filter((order) => order.creatorId === user.id);
 
   return (
     <>
@@ -27,15 +27,6 @@ const MyOrders = ({ orders, setOrders }) => {
           <div key={order.id}>
             <div>Order Number : {order.id}</div>
             <div>Subtotal: {order.subtotal} </div>
-            {/* {user?.id === order.creatorId && (
-              <button onClick={() => navigate(`/orders/${order.id}`)}>
-                {" "}
-                Edit{" "}
-              </button>
-            )}
-            {user?.id === order.creatorId && (
-              <button onClick={() => handleDelete(order.id)}> Delete </button>
-            )} */}
             <h2>Items</h2>
             {order.products.map((product) => {
               return (

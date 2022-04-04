@@ -145,7 +145,7 @@ const getAllOrdersByUser = async ({ username }) => {
   }
 };
 
-const createOrder = async ({ creatorId, subtotal }) => {
+const createOrder = async ({ creatorId, subtotal, status }) => {
   try {
     if (!subtotal && subtotal !== 0) {
       throw {
@@ -157,11 +157,11 @@ const createOrder = async ({ creatorId, subtotal }) => {
       rows: [order],
     } = await client.query(
       `
-                INSERT INTO orders("creatorId", subtotal)
-                VALUES($1, $2)
+                INSERT INTO orders("creatorId", subtotal, "currentStatus")
+                VALUES($1, $2, $3)
                 RETURNING *;
             `,
-      [creatorId, subtotal]
+      [creatorId, subtotal, status]
     );
     return await getOrderById(order.id);
   } catch (error) {

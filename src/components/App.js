@@ -14,7 +14,7 @@ import {
   Register,
   Cart,
   EditProduct,
-  Users
+  Users,
 } from "./";
 import {
   fetchOrders,
@@ -29,7 +29,7 @@ import AboutPage from "./AboutPage";
 
 const App = () => {
   const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([])
+  const [categories, setCategories] = useState([]);
   const [orders, setOrders] = useState([]);
   const [cart, setCart] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
@@ -41,7 +41,7 @@ const App = () => {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   const fetchProducts = async () => {
     try {
@@ -107,12 +107,33 @@ const App = () => {
       console.error(error);
     }
   };
+  const fetchUserOrders = async () => {
+    try {
+      if (Object.keys(user).length) {
+        const userOrders = orders.filter(
+          (order) => order.creatorId === user.id
+        );
+        userOrders.forEach((order) => {
+          if (order.currentStatus === "created") {
+            setCart(order);
+          }
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     handleOrders();
     fetchProducts();
     fetchCategories();
   }, []);
+
+  useEffect(() => {
+    console.log("render");
+    fetchUserOrders();
+  }, [orders, user]);
 
   return (
     <Router>
@@ -143,12 +164,7 @@ const App = () => {
           />
           <Route
             path="/myorders"
-            element={
-              <MyOrders
-                orders={orders}
-                setOrders={setOrders}
-              />
-            }
+            element={<MyOrders orders={orders} setOrders={setOrders} />}
           />
           <Route
             path="/cart"
@@ -158,25 +174,37 @@ const App = () => {
           />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/myprofile" element={<MyProfile />} />
-          { user?.isAdmin &&
-          <>
-            <Route
-              path="/addproduct"
-              element={
-                <AddProduct
-                  products={products}
-                  setProducts={setProducts}
-                  categories={categories}
-                />
-              }
-            />
-            <Route path="/admin/users" element={<Users />}/>
-            <Route path="/admin/orders" element={<Orders orders={orders} />}/>
-          </>
-          }
+          <Route path="/myprofile" element={<MyProfile setCart={setCart} />} />
+          {user?.isAdmin && (
+            <>
+              <Route
+                path="/addproduct"
+                element={
+                  <AddProduct
+                    products={products}
+                    setProducts={setProducts}
+                    categories={categories}
+                  />
+                }
+              />
+              <Route path="/admin/users" element={<Users />} />
+              <Route
+                path="/admin/orders"
+                element={<Orders orders={orders} />}
+              />
+            </>
+          )}
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/products/edit/:editProductId" element={<EditProduct products={products} setProducts={setProducts} categories={categories}/>} />
+          <Route
+            path="/products/edit/:editProductId"
+            element={
+              <EditProduct
+                products={products}
+                setProducts={setProducts}
+                categories={categories}
+              />
+            }
+          />
         </Routes>
         <AboutIconLink />
       </div>
