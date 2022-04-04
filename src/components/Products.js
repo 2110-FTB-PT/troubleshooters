@@ -65,13 +65,17 @@ const Products = ({
   return isLoading ? (
     <Spinner />
   ) : searchTerm ? (
-    filteredProducts.map((product) => {
-      return (
-        <Card key={`${product.id}-${product.title}-${product.artist}`}>
-          <SingleProduct product={product} />
-        </Card>
-      );
-    })
+    <div className="all-products-search-ver">
+      {filteredProducts.map((product) => {
+        return (
+          <div className="single-product-search-ver" key={`${product.id}-${product.title}-${product.artist}`}>
+            <Card>
+              <SingleProduct product={product} />
+            </Card>
+          </div>
+        );
+      })}
+    </div>
   ) : (
     <>
       <div className="crateBox">

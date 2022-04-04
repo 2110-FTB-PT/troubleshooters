@@ -44,12 +44,14 @@ const AddProduct = ({ products, setProducts, categories }) => {
   return (
     <>
       <h2>Add Product</h2>
-      <Card>
-        <SingleProduct product={productFormData} />
-      </Card>
-      <Card>
-        <ProductForm state={productFormData} setState={setProductFormData} handleSubmit={handleAdd} categories={categories} categoryIds={categoryIds} setCategoryIds={setCategoryIds} />
-      </Card>
+      <div className="product-form-preview">
+        <Card>
+          <SingleProduct product={productFormData} />
+        </Card>
+        <Card>
+          <ProductForm state={productFormData} setState={setProductFormData} handleSubmit={handleAdd} categories={categories} categoryIds={categoryIds} setCategoryIds={setCategoryIds} />
+        </Card>
+      </div>
     </>
   )
 }

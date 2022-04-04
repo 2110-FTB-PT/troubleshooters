@@ -22,7 +22,7 @@ const Input = ({ name, value, handleChange }) => {
   return (
     <>
       <InputLabel>{name}</InputLabel>
-      <InputMUI placeholder={name} value={input} onChange={e => {
+      <InputMUI multiline={true} placeholder={name} value={input} onChange={e => {
         if (typeSetter === 'text') {
           setInput(e.target.value);
         } else if (typeSetter === 'number') {

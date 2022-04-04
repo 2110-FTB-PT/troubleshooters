@@ -175,7 +175,6 @@ const App = () => {
                 setCart={setCart}
                 setOrders={setOrders}
                 orders={orders}
-                setOrders={setOrders}
               />
             }
           />
