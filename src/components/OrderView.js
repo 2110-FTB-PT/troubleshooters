@@ -52,7 +52,7 @@ const OrderView = ({ cart, setCart }) => {
               <Card key={`${product.id}-${product.title}`}>
                 <div className="cart-product">
                   <div>
-                    <img className="small-image-cart" src={require(`../assets/${product.imgURL}`)}/>
+                    { product?.imgURL && <img className="small-image-cart" src={require(`../assets/${product.imgURL}`)}/>}
                   </div>
                   <div>
                     <div>{product.artist}</div>
