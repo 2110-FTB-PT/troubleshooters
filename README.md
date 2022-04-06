@@ -1,4 +1,4 @@
-![CrateDiggers](https://user-images.githubusercontent.com/91855160/161881637-f75e2f31-df27-4d14-abdd-0a3685f0a9c8.PNG)
+[![CrateDiggers](https://user-images.githubusercontent.com/91855160/161881637-f75e2f31-df27-4d14-abdd-0a3685f0a9c8.PNG)](https://the-crate-diggers.herokuapp.com/)]
 
 # About Our Project
 Crate Diggers is an e-commerce site developed by an inspired programming team for the music enthusiasts. Our objective is to bring that feeling of browsing in a brick and mortar to the digital medium for those looking to recapture that excitement of treasure hunting and discovery. Get in, checkout, and come back for more!
