@@ -1,4 +1,4 @@
-[![CrateDiggers](https://user-images.githubusercontent.com/91855160/161881637-f75e2f31-df27-4d14-abdd-0a3685f0a9c8.PNG)](https://the-crate-diggers.herokuapp.com/)]
+[![CrateDiggers](https://user-images.githubusercontent.com/91855160/161881637-f75e2f31-df27-4d14-abdd-0a3685f0a9c8.PNG)](https://the-crate-diggers.herokuapp.com/)
 
 # About Our Project
 Crate Diggers is an e-commerce site developed by an inspired programming team for the music enthusiasts. Our objective is to bring that feeling of browsing in a brick and mortar to the digital medium for those looking to recapture that excitement of treasure hunting and discovery. Get in, checkout, and come back for more!
@@ -18,3 +18,9 @@ Behind the hood, we've produced a full stack react application built using SQL d
   - React
   - Stripe
   - axios
+
+## Admin Actions
+Be sure to checkout the admin actions available! First, log on to one of the admin accounts listed below, then move to the profile page to see the extra actions available to you! You can also edit and delete products from the products page.
+
+- Admin Accounts (case-sensitive)
+  - Username: albert   Password: albert99
