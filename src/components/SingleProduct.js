@@ -20,6 +20,10 @@ const SingleProduct = ({ product, products, handleAdd }) => {
     categories: []
   });
   const { user } = useUserContext();
+  const [rating, setRating] = useState(10);
+  const [reviewDescription, setReviewDescription] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+  const [reviewId, setReviewId] = useState(0)
 
   useEffect(() => {
     if (productId && products.length) {
@@ -66,12 +70,12 @@ const SingleProduct = ({ product, products, handleAdd }) => {
       <div className="logistics">${price}</div>
       {handleAdd && <Button onClick={() => handleAdd(singleProduct)}>Add To Cart</Button>}
       {/* only renders in single product view */}
-      {productId && <ReviewForm singleProduct={singleProduct} setSingleProduct={setSingleProduct} />}
+      {productId && <ReviewForm isEditing={isEditing} setIsEditing={setIsEditing} singleProduct={singleProduct} setSingleProduct={setSingleProduct} description={reviewDescription} setDescription={setReviewDescription} rating={rating} setRating={setRating} reviewId={reviewId} setReviewId={setReviewId}/>}
       
       {singleProduct.reviews?.map(review => {
         return (
           <Card key={`${review.id}-${review.name}`}>
-          <SingleReview singleProduct={singleProduct} setSingleProduct={setSingleProduct} review={review} />
+          <SingleReview setIsEditing={setIsEditing} singleProduct={singleProduct} setSingleProduct={setSingleProduct} review={review} setDescription={setReviewDescription} setRating={setRating} setReviewId={setReviewId}/>
         </Card>
         )
       })}

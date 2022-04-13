@@ -44,7 +44,7 @@ export const deleteReview = async (token, reviewId) => {
 
 export const editReview = async ({ reviewId, rating, description }, token) => {
   try {
-    const { data } = await axios.patch(`api/reviews/${reviewId}`, {
+    const { data } = await axios.patch(`/api/reviews/${reviewId}`, {
       rating,
       description
     },

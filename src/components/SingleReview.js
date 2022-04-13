@@ -4,9 +4,9 @@ import { deleteReview } from "../api/ReviewApi";
 import { useUserContext } from "../context/UserContext";
 
 
-const SingleReview = ({ singleProduct, setSingleProduct, review, review: { creatorName: name, description, rating } }) => {
+const SingleReview = ({ setReviewId, setIsEditing, singleProduct, setSingleProduct, review, setDescription, setRating, review: { creatorName: name, description, rating } }) => {
     
-    const { token } = useUserContext();
+    const { token, user } = useUserContext();
 
     const handleDelete = async () => {
         try {
@@ -18,13 +18,20 @@ const SingleReview = ({ singleProduct, setSingleProduct, review, review: { creat
         }
     }
 
+    const handleEdit = () => {
+        setDescription(description)
+        setRating(rating);
+        setIsEditing(true); 
+        setReviewId(review.id)
+    }
+
     return (
         <>
             <RatingDisplay rating={rating} />
             <button onClick={handleDelete}className="close">
                 <FaTimes color='purple' />
             </button>
-            <button onClick={() => reviewEdit(review)} className="edit">
+            <button onClick={handleEdit} className="edit">
                 <FaEdit color='purple' />
             </button>
             <div className="rev-description">{description}</div>
