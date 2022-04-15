@@ -5,14 +5,14 @@ import { useUserContext } from "../context/UserContext";
 
 
 const SingleReview = ({ setReviewId, setIsEditing, singleProduct, setSingleProduct, review, setDescription, setRating, review: { creatorName: name, description, rating } }) => {
-    
-    const { token, user } = useUserContext();
+
+    const { token, user } = useUserContext(useUserContext);
 
     const handleDelete = async () => {
         try {
             await deleteReview(token, review.id)
             const tempReviews = singleProduct.reviews.filter(singleReview => review.id !== singleReview.id)
-            setSingleProduct({...singleProduct, reviews: tempReviews})
+            setSingleProduct({ ...singleProduct, reviews: tempReviews })
         } catch (error) {
             console.error(error)
         }
@@ -21,19 +21,22 @@ const SingleReview = ({ setReviewId, setIsEditing, singleProduct, setSingleProdu
     const handleEdit = () => {
         setDescription(description)
         setRating(rating);
-        setIsEditing(true); 
+        setIsEditing(true);
         setReviewId(review.id)
     }
+    //console.log(">>>>>>>>>", username)
 
     return (
         <>
             <RatingDisplay rating={rating} />
+            {token && user.username === review.creatorName && 
             <button onClick={handleDelete}className="close">
                 <FaTimes color='purple' />
-            </button>
+            </button>}
+            {token && user.username === review.creatorName &&
             <button onClick={handleEdit} className="edit">
                 <FaEdit color='purple' />
-            </button>
+            </button>}
             <div className="rev-description">{description}</div>
             <div className="rev-name">{name}</div>
         </>
