@@ -24,8 +24,7 @@ const SingleReview = ({ setReviewId, setIsEditing, singleProduct, setSingleProdu
         setIsEditing(true);
         setReviewId(review.id)
     }
-    //console.log(">>>>>>>>>", username)
-
+    
     return (
         <>
             <RatingDisplay rating={rating} />
