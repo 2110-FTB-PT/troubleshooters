@@ -1,17 +1,21 @@
-import { useState } from "react";
-import { addReview } from "../api/ReviewApi";
+import { useState, useEffect } from "react";
+import { addReview, editReview } from "../api/ReviewApi";
 import Card from "../shared/Card";
 import RatingSelect from "./RatingSelect";
 import Button from "../shared/Button";
 import { useUserContext } from "../context/UserContext";
 
 
-const ReviewForm = ({ singleProduct, setSingleProduct, singleProduct: {id: productId} }) => {
-    const {token} = useUserContext();
+const ReviewForm = ({ reviewId, isEditing, singleProduct, setSingleProduct, description, setDescription, rating, setRating, singleProduct: { id: productId } }) => {
+    const { token } = useUserContext();
     const [btnDisabled, setBtnDisabled] = useState(true)
-    const [description, setDescription] = useState('');
     const [message, setMessage] = useState('');
-    const [rating, setRating] = useState(10);
+
+    useEffect(() => {
+        if (isEditing) {
+            setBtnDisabled(false)
+        }
+    }, [isEditing]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -19,13 +23,25 @@ const ReviewForm = ({ singleProduct, setSingleProduct, singleProduct: {id: produ
             const addedReview = await addReview(token, productId, rating, description);
             const newReviews = singleProduct.reviews
             newReviews.push(addedReview)
-            setSingleProduct({...singleProduct, reviews: newReviews})
+            setSingleProduct({ ...singleProduct, reviews: newReviews })
         } catch (error) {
             throw (error)
         }
     };
 
-    const handleTextChange = ({target: {value}}) => {
+    const handleEdit = async (event) => {
+        event.preventDefault();
+        try {
+            const editedReview = await editReview({ reviewId: reviewId, rating: rating, description: description }, token)
+            const newReviews = singleProduct.reviews.filter(review => review.id !== reviewId)
+            newReviews.push(editedReview)
+            setSingleProduct({ ...singleProduct, reviews: newReviews })
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleTextChange = ({ target: { value } }) => {
         if (value === '') {
             setMessage(null)
         } else if (value.trim().length < 10) {
@@ -42,9 +58,9 @@ const ReviewForm = ({ singleProduct, setSingleProduct, singleProduct: {id: produ
 
     return (
         <Card>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={isEditing ? handleEdit : handleSubmit}>
                 <h2>Add a review to this product</h2>
-                <RatingSelect select={setRating} selected={rating} className="rate-select"/>
+                <RatingSelect select={setRating} selected={rating} className="rate-select" />
                 <div className="input-group">
                     <input
                         onChange={handleTextChange}
@@ -55,12 +71,12 @@ const ReviewForm = ({ singleProduct, setSingleProduct, singleProduct: {id: produ
                 </div>
                 {message && <div className="message">{message}</div>}
                 <div className="sub-button">
-                <Button type="submit" isDisabled={btnDisabled}>submit</Button>
+                    <Button type="submit" isDisabled={btnDisabled}>{isEditing ? "edit" : "submit"}</Button>
                 </div>
             </form>
         </Card>
 
     )
-}
+};
 
 export default ReviewForm
