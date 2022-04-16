@@ -24,18 +24,18 @@ const SingleReview = ({ setReviewId, setIsEditing, singleProduct, setSingleProdu
         setIsEditing(true);
         setReviewId(review.id)
     };
-    
+
     return (
         <>
             <RatingDisplay rating={rating} />
-            {token && user.username === review.creatorName && 
-            <button onClick={handleDelete}className="close">
-                <FaTimes color='purple' />
-            </button>}
             {token && user.username === review.creatorName &&
-            <button onClick={handleEdit} className="edit">
-                <FaEdit color='purple' />
-            </button>}
+                <button onClick={handleDelete} className="close">
+                    <FaTimes color='purple' />
+                </button>}
+            {token && user.username === review.creatorName &&
+                <button onClick={handleEdit} className="edit">
+                    <FaEdit color='purple' />
+                </button>}
             <div className="rev-description">{description}</div>
             <div className="rev-name">{name}</div>
         </>

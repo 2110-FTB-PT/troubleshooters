@@ -44,17 +44,17 @@ const SingleProduct = ({ product, products, handleAdd }) => {
   return (
     <div className='singleProduct'>
       <div className="album-image">
-      {/* this conditional render avoids rendering RatingDisplay when we are adding or editing a product */}
-      {(product?.reviews || singleProduct?.reviews) && <RatingDisplay product={product} singleProduct={singleProduct}/>}
-      {/* imgURL will only fire off once the jpg/png part is applied to avoid errors */}
-      {imgURL && (imgURL.includes('jpg') || imgURL.includes('png') || imgURL.includes('PNG')) && <img src={require(`../assets/${imgURL}`)} />}
+        {/* this conditional render avoids rendering RatingDisplay when we are adding or editing a product */}
+        {(product?.reviews || singleProduct?.reviews) && <RatingDisplay product={product} singleProduct={singleProduct} />}
+        {/* imgURL will only fire off once the jpg/png part is applied to avoid errors */}
+        {imgURL && (imgURL.includes('jpg') || imgURL.includes('png') || imgURL.includes('PNG')) && <img src={require(`../assets/${imgURL}`)} />}
       </div>
       {/* ONLY renders as admin, prevents render in single product view and during add/edit product */}
-      { !productId && !editProductId && product.reviews && user?.isAdmin &&
-      <>
-        <Button>Edit</Button>
-        <Button>Delete</Button>
-      </>
+      {!productId && !editProductId && product.reviews && user?.isAdmin &&
+        <>
+          <Button>Edit</Button>
+          <Button>Delete</Button>
+        </>
       }
       <h3 className="title">{title}</h3>
       <div className="artist">{artist}</div>
@@ -62,7 +62,7 @@ const SingleProduct = ({ product, products, handleAdd }) => {
       {(productId || editProductId || !product.reviews) &&
         <>
           {/* limits product preview to 200 characters when edit/add a product */}
-          {!product?.reviews ? <p className="description">{description?.substring(0, 200)}{description?.length > 200 && "..."}</p>: <p className="description">{description}</p>}
+          {!product?.reviews ? <p className="description">{description?.substring(0, 200)}{description?.length > 200 && "..."}</p> : <p className="description">{description}</p>}
           <div className="logistics">Amount in Stock: {inventoryQuantity}</div>
         </>
       }
@@ -70,13 +70,13 @@ const SingleProduct = ({ product, products, handleAdd }) => {
       <div className="logistics">${price}</div>
       {handleAdd && <Button onClick={() => handleAdd(singleProduct)}>Add To Cart</Button>}
       {/* only renders in single product view */}
-      {productId && <ReviewForm isEditing={isEditing} setIsEditing={setIsEditing} singleProduct={singleProduct} setSingleProduct={setSingleProduct} description={reviewDescription} setDescription={setReviewDescription} rating={rating} setRating={setRating} reviewId={reviewId} setReviewId={setReviewId}/>}
-      
+      {productId && <ReviewForm isEditing={isEditing} setIsEditing={setIsEditing} singleProduct={singleProduct} setSingleProduct={setSingleProduct} description={reviewDescription} setDescription={setReviewDescription} rating={rating} setRating={setRating} reviewId={reviewId} setReviewId={setReviewId} />}
+
       {singleProduct.reviews?.map(review => {
         return (
           <Card key={`${review.id}-${review.name}`}>
-          <SingleReview setIsEditing={setIsEditing} singleProduct={singleProduct} setSingleProduct={setSingleProduct} review={review} setDescription={setReviewDescription} setRating={setRating} setReviewId={setReviewId}/>
-        </Card>
+            <SingleReview setIsEditing={setIsEditing} singleProduct={singleProduct} setSingleProduct={setSingleProduct} review={review} setDescription={setReviewDescription} setRating={setRating} setReviewId={setReviewId} />
+          </Card>
         )
       })}
     </div>
