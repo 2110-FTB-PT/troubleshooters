@@ -30,7 +30,7 @@ const SingleProduct = ({ product, products, handleAdd }) => {
       const [product] = products.filter(product => product.id === Number(productId));
       setSingleProduct(product)
     }
-  }, [products])
+  }, [products]);
 
   const { title, artist, price, imgURL, description, inventoryQuantity, categories = [] } = product ? product : singleProduct;
   // if the categories exist, we reformat them to be capitalized
@@ -38,8 +38,8 @@ const SingleProduct = ({ product, products, handleAdd }) => {
     categories.forEach(category => {
       const capitalizedName = capitalizeFirstLetter(category.name)
       category.name = capitalizedName;
-    });
-  }
+    })
+  };
 
   return (
     <div className='singleProduct'>
@@ -81,6 +81,6 @@ const SingleProduct = ({ product, products, handleAdd }) => {
       })}
     </div>
   )
-}
+};
 
 export default SingleProduct;

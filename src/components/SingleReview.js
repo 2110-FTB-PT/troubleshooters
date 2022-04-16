@@ -16,14 +16,14 @@ const SingleReview = ({ setReviewId, setIsEditing, singleProduct, setSingleProdu
         } catch (error) {
             console.error(error)
         }
-    }
+    };
 
     const handleEdit = () => {
         setDescription(description)
         setRating(rating);
         setIsEditing(true);
         setReviewId(review.id)
-    }
+    };
     
     return (
         <>
@@ -40,6 +40,6 @@ const SingleReview = ({ setReviewId, setIsEditing, singleProduct, setSingleProdu
             <div className="rev-name">{name}</div>
         </>
     )
-}
+};
 
 export default SingleReview
